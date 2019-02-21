@@ -1,0 +1,97 @@
+﻿@model System.Data.DataTable
+@{
+    Layout = "";
+    string columnFilterStr = "";
+    string tableName = ViewBag.TableName;
+    List<string> denyFields = ViewBag.DenyFields;
+}
+<table class="table table-bordered">
+    <tr>
+        <th>Column / Field Name</th>
+        <th>Type</th>
+        <th>Display</th>
+        <th>Placeholder</th>
+        <th>DataSource</th>
+        <th>Sort</th>
+    </tr>
+    @if (Model != null && Model.Rows.Count > 0)
+    {
+        foreach (System.Data.DataRow row in Model.Rows)
+        {
+            string colName = row["COLUMN_NAME"].ToString();
+            if (!denyFields.Contains(colName))
+            {
+                columnFilterStr += columnFilterStr == "" ? colName : ";" + colName;
+                <tr>
+                    <th>@colName</th>
+                    <th style="min-width: 150px;">
+                        @Html.DropDownList("FieldType",
+                                EnumHelper.GetSelectList(typeof(eTraining.Helpers.Defines.FieldType)),
+                                " - Chọn Loại - ",
+                                new { @class = "form-control", Name = colName + "-FieldType", id = colName + "-FieldType" })
+                        <script>
+                        $('#' + '@colName' + '-FieldType').val('@row["FieldType"]');
+                        </script>
+                    </th>
+                    <th>
+                        <input name="@(colName + "-DisplayName")" id="@(colName + "-DisplayName")" class="form-control" value="@row["DisplayName"]" />
+                    </th>
+                    <th>
+                        <input name="@(colName + "-PlaceHolder")" id="@(colName + "-PlaceHolder")" class="form-control" value="@row["PlaceHolder"]" />
+                    </th>
+                    <th>
+                        <input name="@(colName + "-DataSource")" id="@(colName + "-DataSource")" class="form-control" value="@row["DataSource"]" />
+                    </th>
+                    <th>
+                        <input name="@(colName + "-Sort")" id="@(colName + "-Sort")" class="form-control" value="@row["Sort"]" />
+                    </th>
+                </tr>
+            }
+        }
+    }
+</table>
+
+<script>
+    var colDataFilter = [];
+    $('.act-save-filter').click(function () {
+        var colStr = '@columnFilterStr'.split(';');
+        if (colStr.length > 0) {
+            for (var i = 0; i < colStr.length; i++) {
+                addDataFilterColumn(colStr[i]);
+            }
+        }
+        var jColDataFilter = JSON.stringify(colDataFilter);
+        $.ajax({
+            type: "POST",
+            url: '/Configulation/Auto/CreateFieldFilter',
+            data: "jColData=" + jColDataFilter,
+            success: function (response) {
+                if (response > 0) {
+                    colDataFilter = [];
+                    $('.close').click();
+                }
+                else {
+                    alert('Lưu thất bại');
+                }
+                location.reload();
+            }
+        });
+    });
+
+    function addDataFilterColumn(columnName) {
+        var fieldType = $('#' + columnName + '-FieldType').val();
+        if (fieldType != '') {
+            var col = {
+                TableRender: '@tableName',
+                FieldName: columnName,
+                DisplayName: $('#' + columnName + '-DisplayName').val(),
+                PlaceHolder: $('#' + columnName + '-PlaceHolder').val(),
+                Note: $('#' + columnName + '-Note').val(),
+                FieldType: $('#' + columnName + '-FieldType').val(),
+                DataSource: $('#' + columnName + '-DataSource').val(),
+                Sort: $('#' + columnName + '-Sort').val()
+            }
+            colDataFilter.push(col);
+        }
+    }
+</script>

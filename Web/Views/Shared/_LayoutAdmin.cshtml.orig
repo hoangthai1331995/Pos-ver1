@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>aaaa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Loading Bootstrap -->
+    <link href="/Content/Templates/ETTemplate/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Loading Stylesheets -->
+    <link href="/Content/Templates/ETTemplate/css/style.css" rel="stylesheet">
+    <link href="/Content/Templates/ETTemplate/css/responsive.css" rel="stylesheet">
+    <link href="/Content/Templates/ETTemplate/css/prettify.css" rel="stylesheet">
+    <!-- Loading Custom Stylesheets -->
+    <link href="/Content/Templates/ETTemplate/css/custom.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+    <script src="/Content/Templates/ETTemplate/js/html5shiv.js"></script>
+    <![endif]-->
+    <script src="/Content/Templates/ETTemplate/js/jquery-1.8.3.min.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <link href="~/Content/Templates/ETTemplate/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+
+    <style>
+        .menu-icon-10 {
+            font-size: 6pt !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <div class="sidebar">
+            @Html.Action("LoadSidebar", "Home", new { area = "" })
+        </div><!-- /Sidebar -->
+        <!-- Main content starts here-->
+        <div class="content">
+            <div class="navbar">
+                <a href="#" onclick="return false;" class="btn pull-left toggle-sidebar"><i class="fa fa-list"></i></a>
+                <a class="navbar-brand" href="/Home">E-TRAINING</a>
+                <!-- Top right user menu -->
+                <ul class="nav navbar-nav user-menu pull-right">
+                    <!-- First nav user item -->
+                    <li class="dropdown user-name">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><img src="~/Content/Templates/ETTemplate/img/26712.jpg" class="user-avatar" alt="" />Administrator</a>
+                        <ul class="dropdown-menu right inbox user">
+                            <li class="user-avatar">
+                                <img src="~/Content/Templates/ETTemplate/img/26712.jpg" class="user-avatar" alt="" />
+                                Administrator
+                            </li>
+                        </ul>
+                    </li><!-- / dropdown -->
+                </ul><!-- / Top right user menu -->
+
+            </div><!-- / Navbar-->
+            <div id="main-content">
+                @RenderBody()
+            </div>
+        </div>
+
+        <div class="row footer">
+            <div class="col-md-12 text-center">
+                © @DateTime.Now.Year <a href="http://pti.opendev.vn/" style="font-weight:bold;">OpenDev E-TRAINING</a>
+            </div>
+        </div>
+    </div> <!-- Frame -->
+    <!-- Load JS here for greater good =============================-->
+
+    @*<script src="/Content/Templates/ETTemplate/js/jquery.ui.touch-punch.min.js"></script>*@
+    <script src="/Content/Templates/ETTemplate/js/bootstrap.min.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/bootstrap-select.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/bootstrap-switch.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/jquery.tagsinput.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/jquery.placeholder.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/bootstrap-typeahead.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/application.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/moment.min.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/jquery.dataTables.min.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/jquery.sortable.js"></script>
+<<<<<<< HEAD
+    <script type="text/javascript" src="/Content/Templates/ETTemplate/js/jquery.gritter.js"></script>
+    <script src="/Scripts/bootstrap-notify.min.js"></script>
+=======
+    <script src="/Content/Templates/ETTemplate/js/jquery.gritter.js"></script>
+
+>>>>>>> 6817af4781c9d2974110215ccf3a27b2e405a660
+
+    <!-- Archon JS =============================-->
+    <script src="/Content/Templates/ETTemplate/js/archon.js"></script>
+    <script src="/Content/Templates/ETTemplate/js/dashboard-custom.js"></script>
+
+    <!-- Plugin =============================-->
+    <script src="/Content/Templates/Plugin/select2/select2.min.js"></script>
+<<<<<<< HEAD
+    <script src="/Scripts/custom.js"></script>
+
+    <script>
+        var successMessage = '@TempData["success"]';
+        var errorMessage = '@TempData["error"]';
+        if (successMessage != '') {
+            ShowMessage('success', 'Thành công!', successMessage, 1000, '');
+        }
+        if (errorMessage != '') {
+            ShowMessage('danger', 'Thông báo!', errorMessage, 500, '');
+        }
+
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                startDate: '-3d'
+            });
+            $('.select2').select2();
+        })
+    </script>
+=======
+    <script src="~/Content/Templates/ETTemplate/js/bootstrap-datetimepicker.min.js"></script>
+    @RenderSection("scripts", required: false)
+>>>>>>> 6817af4781c9d2974110215ccf3a27b2e405a660
+</body>
+
+</html>

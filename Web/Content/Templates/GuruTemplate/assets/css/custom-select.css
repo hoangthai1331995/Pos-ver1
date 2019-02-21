@@ -1,0 +1,45 @@
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    background-color: transparent;
+    color: #495057;
+    padding: 7.5px 30px 7.5px 20px;
+    line-height: 18px;
+    min-height: 33px;
+}
+.select2-container--default .select2-selection--single {
+    color: #fff;
+    height: auto;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 4px;
+    right: 0px;
+    color: #495057;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #495057 transparent transparent transparent;
+    border-width: 6px 3px 0 3px;
+
+}
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #495057 transparent;
+    border-width: 0 3px 6px 3px;
+}
+.select2-container--default .select2-selection--single {
+    border-radius: 2px;
+    border: 1px solid #cccccc;
+}
+.select2-container--default .select2-selection--multiple {
+    padding: 2px 3.5px 1px 3.5px;
+}
+.select2-container .select2-selection--multiple {
+  min-height: 35px;
+}
+.select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-radius: 2px;
+    border: 1px solid #cccccc;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #4680ff;
+  margin-top: 3px;
+  padding: 2px 5px;
+  border: none;
+}

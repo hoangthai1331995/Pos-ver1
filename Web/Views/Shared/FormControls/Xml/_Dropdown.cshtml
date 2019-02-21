@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "";
+    BussinessModels.fitem control = (BussinessModels.fitem)ViewData["FormControl"];
+}
+
+@if (control != null)
+{
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="dropdown">
+            <button class="btn btn-outline-info btn-info btn-sm dropdown-toggle" type="button" id="@control.key" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="@control.value">@control.display</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownStatus" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                @*@if (lstStatus != null)
+                    {
+                        foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                        {
+                            <a class="dropdown-item pointer" onclick="setValueInputByID('StatusType','@status.Code')" data-value="@status.Code">@status.Name</a>
+                        }
+                    }*@
+                <a class="dropdown-item pointer" onclick="" data-value="1">Name 1</a>
+                <a class="dropdown-item pointer" onclick="" data-value="2">Name 2</a>
+                <a class="dropdown-item pointer" onclick="" data-value="3">Name 3</a>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(".dropdown-menu a").click(function () {
+        $(this).parents(".dropdown").find('.btn').html($(this).text());
+        $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+    });
+</script>

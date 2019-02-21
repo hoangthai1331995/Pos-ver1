@@ -1,0 +1,15 @@
+@{
+    string tableName = ViewBag.TableName;
+    string areaName = HttpContext.Current.Request.RequestContext.RouteData.DataTokens["area"].ToString();
+}
+<!-- Start Render Filter Form -->
+@Html.Action("FRender", "Form", new { area = "Configulation", tableName = ViewBag.TableName, formTitle = "Tra cứu [" + tableName.Replace("tbl", "") + "]", targetArea = areaName })
+<!-- End Render Filter Form -->
+
+<!-- Start Render List Data -->
+@Html.Action("LRender", "Form", new { area = "Configulation", tableName = ViewBag.TableName, formTitle = "Danh sách [" + tableName.Replace("tbl", "") + "]", targetArea = areaName })
+<!-- End Render List Data -->
+
+<!-- Start Render Add Update Popup Form -->
+@Html.Action("AURender", "Form", new { area = "Configulation", tableName = ViewBag.TableName, formTitle = "Thêm / cập nhật [" + tableName.Replace("tbl", "") + "]", targetArea = areaName })
+<!-- End Render Add Update Popup Form -->

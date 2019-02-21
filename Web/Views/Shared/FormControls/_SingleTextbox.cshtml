@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "";
+    eTraining.BussinessModels.FormControl control = (eTraining.BussinessModels.FormControl)ViewData["FormControl"];
+    string formGroup = ViewData["FormGroup"].ToString();
+}
+
+@if (control != null)
+{
+	<div class="col-lg-4 col-md-6 col-sm-12">
+		<div class="form-group row">
+		    <label class="col-12 txt-left col-form-label">@control.Display</label>
+		    <div class="col-12">
+		        <input type="text" class="form-control w-100" id="usernameP" name="Username" name="@control.Name" id="@(formGroup + control.Key)" value="@control.Value" placeholder="@control.PlaceHolder" data-required="@control.IsRequire" data-number="@control.IsNumber" data-email="@control.IsEmail">
+		        <span class="messages popover-valid"></span>
+		        @if (!String.IsNullOrEmpty(control.Note))
+			    {
+			        <small class="form-text text-muted">@control.Note</small>
+			    }
+		    </div>
+		</div>
+	</div>
+}
+

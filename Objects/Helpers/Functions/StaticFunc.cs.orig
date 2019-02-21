@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Helpers.Functions
+{
+    public static class StaticFunc
+    {
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+<<<<<<< HEAD
+        #region Encrypt - Decrypt Functions
+        public static string DecryptIntranet(string encrypted)
+        {
+            return Decrypt(encrypted, "1qaz2wsx0okm9ijn");
+        }
+        public static string EncryptIntranet(string original)
+        {
+            return Encrypt(original, "1qaz2wsx0okm9ijn");
+        }
+        public static string Encrypt(string original)
+        {
+            return Encrypt(original, "!@#$%^&*()~_+|");
+        }
+        public static string EncryptSimple_Link(string original)
+        {
+            return Encrypt(original, "!@#$");
+        }
+        public static string DecryptSimple_Link(string encrypted)
+        {
+            return Decrypt(encrypted, "!@#$");
+        }
+        public static string Decrypt(string encrypted)
+        {
+            return Decrypt(encrypted, "!@#$%^&*()~_+|");
+        }
+        public static string Encrypt(string original, string key)
+        {
+            TripleDESCryptoServiceProvider objDESProvider;
+            MD5CryptoServiceProvider objHashMD5Provider;
+            byte[] keyhash;
+            byte[] buffer;
+            try
+            {
+                objHashMD5Provider = new MD5CryptoServiceProvider();
+                keyhash = objHashMD5Provider.ComputeHash(UnicodeEncoding.Unicode.GetBytes(key));
+                objHashMD5Provider = null;
+
+                objDESProvider = new TripleDESCryptoServiceProvider();
+                objDESProvider.Key = keyhash;
+                objDESProvider.Mode = CipherMode.ECB;
+
+                buffer = UnicodeEncoding.Unicode.GetBytes(original);
+                return Convert.ToBase64String(objDESProvider.CreateEncryptor().TransformFinalBlock(buffer, 0, buffer.Length));
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public static string Decrypt(string encrypted, string key)
+        {
+            TripleDESCryptoServiceProvider objDESProvider;
+            MD5CryptoServiceProvider objHashMD5Provider;
+            byte[] keyhash;
+            byte[] buffer;
+
+            try
+            {
+                objHashMD5Provider = new MD5CryptoServiceProvider();
+                keyhash = objHashMD5Provider.ComputeHash(UnicodeEncoding.Unicode.GetBytes(key));
+                objHashMD5Provider = null;
+
+                objDESProvider = new TripleDESCryptoServiceProvider();
+                objDESProvider.Key = keyhash;
+                objDESProvider.Mode = CipherMode.ECB;
+
+                buffer = Convert.FromBase64String(encrypted);
+                return UnicodeEncoding.Unicode.GetString(objDESProvider.CreateDecryptor().TransformFinalBlock(buffer, 0, buffer.Length));
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        #endregion
+=======
+        public static string CowndownTime(DateTime inputDay)
+        {
+            TimeSpan Time = inputDay - DateTime.Now;
+            decimal totalDate = Time.Days;
+            if(totalDate >= 365)
+            {
+                decimal year = Math.Floor(totalDate / 365);
+                return "Còn " + year + " năm";
+            }
+            else
+            {
+                decimal month = Math.Floor(totalDate / 30);
+                if (month >= 1)
+                    return "Còn " + month + " tháng";
+                else
+                {
+                    if(totalDate > 0)
+                        return "Còn " + totalDate + " ngày";
+                    else
+                    {
+                        return "Đã quá hạn";
+                    }
+                }
+            }
+        }
+>>>>>>> 97e6c68e69302beec450375fd59c54e54d7563c7
+    }
+}

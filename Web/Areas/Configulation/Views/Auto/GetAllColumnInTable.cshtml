@@ -1,0 +1,111 @@
+﻿@model System.Data.DataTable
+@{
+    Layout = "";
+    string columnStr = "";
+    string tableName = ViewBag.TableName;
+    List<string> denyFields = ViewBag.DenyFields;
+}
+<table class="table table-bordered">
+    <tr>
+        <th>Column / Field Name</th>
+        <th>Type</th>
+        <th>Display</th>
+        <th>Placeholder</th>
+        <th>DataSource</th>
+        <th>Note</th>
+        <th>Spec</th>
+        <th>Sort</th>
+    </tr>
+    @if (Model != null && Model.Rows.Count > 0)
+    {
+        foreach (System.Data.DataRow row in Model.Rows)
+        {
+
+            string colName = row["COLUMN_NAME"].ToString();
+            if (!denyFields.Contains(colName))
+            {
+                columnStr += columnStr == "" ? colName : ";" + colName;
+                <tr>
+                    <th>@colName</th>
+                    <th style="min-width: 150px;">
+                        @Html.DropDownList("FieldType",
+                               EnumHelper.GetSelectList(typeof(eTraining.Helpers.Defines.FieldType)) ,
+                               " - Chọn Loại - ",
+                               new { @class = "form-control", Name = colName + "-FieldType", id= colName + "-FieldType" })
+                        <script>
+                        $('#' + '@colName' + '-FieldType').val('@row["FieldType"]');
+                        </script>
+                    </th>
+                    <th>
+                        <input name="@(colName + "-DisplayName")" id="@(colName + "-DisplayName")" class="form-control" value="@row["DisplayName"]" />
+                    </th>
+                    <th>
+                        <input name="@(colName + "-PlaceHolder")" id="@(colName + "-PlaceHolder")" class="form-control" value="@row["PlaceHolder"]" />
+                    </th>
+                    <th>
+                        <input name="@(colName + "-DataSource")" id="@(colName + "-DataSource")" class="form-control" value="@row["DataSource"]" />
+                    </th>
+                    <th>
+                        <input name="@(colName + "-Note")" id="@(colName + "-Note")" class="form-control" value="@row["Note"]" />
+                    </th>
+                    <th>
+                        <label><input type="checkbox" name="@(colName + "-IsRequired")" id="@(colName + "-IsRequired")" @(Convert.ToInt32(row["IsRequired"]) == 1 ? "checked" : "") /> IsRequired</label>
+                        <label><input type="checkbox" name="@(colName + "-IsNumber")" id="@(colName + "-IsNumber")" @(Convert.ToInt32(row["IsNumber"]) == 1 ? "checked" : "") /> IsNumber</label>
+                        <label><input type="checkbox" name="@(colName + "-IsEmail")" id="@(colName + "-IsEmail")" @(Convert.ToInt32(row["IsEmail"]) == 1 ? "checked" : "") /> IsEmail</label>
+                    </th>
+                    <th>
+                        <input name="@(colName + "-Sort")" id="@(colName + "-Sort")" class="form-control" value="@row["Sort"]" />
+                    </th>
+                </tr>
+            }
+        }
+    }
+</table>
+
+<script>
+    var colData = [];
+    $('.act-save').click(function () {
+        var colStr = '@columnStr'.split(';');
+        if (colStr.length > 0) {
+            for (var i = 0; i < colStr.length; i++) {
+                addDataColumn(colStr[i]);
+            }
+        }
+        var jColData = JSON.stringify(colData);
+        $.ajax({
+            type: "POST",
+            url: '/Configulation/Auto/CreateFieldAddUpdate',
+            data: "jColData=" + jColData,
+            success: function (response) {
+                if (response > 0) {
+                    alert('Lưu thành công');
+                    colData = [];
+                }
+                else {
+                    alert('Lưu thất bại');
+                }
+                location.reload();
+            }
+        });
+    });
+
+    function addDataColumn(columnName) {
+        var fieldType = $('#' + columnName + '-FieldType').val();
+        if (fieldType != '') {
+            var col = {
+                TableRender: '@tableName',
+                FieldName: columnName,
+                DisplayName: $('#' + columnName + '-DisplayName').val(),
+                PlaceHolder: $('#' + columnName + '-PlaceHolder').val(),
+                Note: $('#' + columnName + '-Note').val(),
+                FieldType: $('#' + columnName + '-FieldType').val(),
+                DataSource: $('#' + columnName + '-DataSource').val(),
+                IsRequired: $('#' + columnName + '-IsRequired').is(":checked"),
+                IsNumber: $('#' + columnName + '-IsNumber').is(":checked"),
+                IsEmail: $('#' + columnName + '-IsEmail').is(":checked"),
+                Sort: $('#' + columnName + '-Sort').val()
+            }
+            colData.push(col);
+        }
+    }
+</script>

@@ -1,0 +1,162 @@
+﻿@{
+    BussinessObjects.NI10_Employee info = (BussinessObjects.NI10_Employee)ViewData["Info"];
+}
+<div class="tab-pane fade active show" id="home-3-1" role="tabpanel" aria-labelledby="tab-3-1">
+    <form id="editable-form" class="editable-form">
+        <div id="UpdatePanel2">
+            <div class="col-12 p-0">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="phone" class="col-4 col-lg-3 col-form-label">Số điện thoại</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <input name="Phone" type="text" id="Phone" class="form-control maxlength-textarea" maxlength="11" value="@(!String.IsNullOrEmpty(info.PhoneNumber) ? info.PhoneNumber : "")">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtAddress" class="col-4 col-lg-3 col-form-label">Địa chỉ</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <textarea name="Address" id="Address" class="form-control maxlength-textarea" maxlength="255">@(!String.IsNullOrEmpty(info.Address) ? info.Address : "")</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-lg-3 col-form-label">Giới tính</label>
+                        <div class="col-4 col-lg-4 d-flex">
+                            <div class="form-check">
+                                <label class="form-check-label mt-0">
+                                    <input type="radio" class="form-check-input" name="Gender" disabled value="0" @(!info.Gender ? "checked" : "")>
+                                    Nam
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-5 d-flex">
+                            <div class="form-check">
+                                <label class="form-check-label mt-0">
+                                    <input type="radio" class="form-check-input" name="Gender" disabled value="1" @(info.Gender ? "checked" : "")>
+                                    Nữ
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-lg-3 col-form-label">Ngày sinh</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <input name="Birthday" type="text" id="Birthday" class="form-control" disabled="disabled" value="@(info.Birthday.ToString("dd/MM/yyyy"))">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-lg-3 col-form-label">Hôn nhân</label>
+                        <div class="col-4 col-lg-4 d-flex">
+                            <div class="form-check">
+                                <label class="form-check-label mt-0">
+                                    <input type="radio" class="form-check-input" name="Marry" value="1" @(info.Marry ? "checked" : "")>
+                                    Đã kết hôn
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-5 d-flex">
+                            <div class="form-check">
+                                <label class="form-check-label mt-0">
+                                    <input type="radio" class="form-check-input" name="Marry" value="0" @(!info.Marry ? "checked" : "")>
+                                    Chưa kết hôn
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="FptCare" class="col-4 col-lg-3 col-form-label">FPT Care</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <div class="form-check form-check-flat mt-2">
+                                <label class="form-check-label">
+                                    <input name="FptCare" type="checkbox" id="FptCare" class="form-check-input" disabled="disabled" @(info.FPTCare ? "checked" : "")>
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-4 col-lg-3 col-form-label">CMND</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <input name="IDCard" type="text" id="IDCard" class="form-control" data-inputmask="'mask':'###-###-###'" disabled="disabled" value="@(!String.IsNullOrEmpty(info.IDCard) ? info.IDCard : "")">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtIDCardPlace" class="col-4 col-lg-3 col-form-label">Nơi cấp</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <input name="IDCardPlace" type="text" id="IDCardPlace" class="form-control" disabled="disabled" value="@(!String.IsNullOrEmpty(info.IDCardPlace) ? info.IDCardPlace : "")">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtIDCardDate" class="col-4 col-lg-3 col-form-label">Ngày cấp</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <input name="IDCardDate" type="text" id="IDCardDate" class="form-control" disabled="disabled" value="@info.IDCardDate.ToString("dd/MM/yyyy")">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtIDCardAddress" class="col-4 col-lg-3 col-form-label">Địa chỉ thường trú</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <textarea name="IDCardAddress" id="IDCardAddress" class="form-control" disabled="disabled">@(!String.IsNullOrEmpty(info.IDCardAddress) ? info.IDCardAddress : "")</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtIpPhone" class="col-4 col-lg-3 col-form-label">IP Phone</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <input name="IpPhone" type="text" id="IpPhone" class="maxlength-textarea form-control" maxlength="5" value="@(!String.IsNullOrEmpty(info.IPPhone) ? info.IPPhone : "")">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtNoiDungCV" class="col-4 col-lg-3 col-form-label">Mô tả công việc</label>
+                        <div class="col-8 col-lg-9 d-flex">
+                            <textarea name="NoteContact" id="NoteContact" class="maxlength-textarea form-control" maxlength="255">@(!String.IsNullOrEmpty(info.NoteContact) ? info.NoteContact : "")</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row text-right">
+                        <span class="btn btn-success" onclick="Save_info();">Lưu thông tin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('.maxlength-textarea').maxlength({
+        alwaysShow: true,
+        warningClass: "badge mt-1 badge-success",
+        limitReachedClass: "badge mt-1 badge-danger"
+    });
+
+    function Save_info() {
+        var phone = $('#Phone').val();
+        var address = $('#Address').val();
+        var marry = $("input[name='Marry']:checked").val();
+        var ipphone = $('#IpPhone').val();
+        var noteContact = $('#NoteContact').val();
+        if (phone == '') {
+            ShowMessage('danger', 'Thông báo', 'Yêu cầu nhập số điện thoại', 500, '');
+            $('#Phone').focus();
+            return false;
+        }
+        if (phone.length < 9 && phone.length > 11) {
+            ShowMessage('danger', 'Thông báo', 'Số điện thoại phải từ 9-11 ký tự', 500, '');
+            $('#Phone').focus();
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/User/UpdateInfo",
+            data: "phone=" + phone + '&address=' + address + '&marry=' + marry + '&ipphone=' + ipphone + '&noteContact=' + noteContact,
+            success: function (response) {
+                if (response != '1') {
+                    ShowMessage('danger', 'Thông báo', response, 500, '');
+                }
+                else {
+                    ShowMessage('success', 'Thông báo', 'Cập nhật thông tin thành công', 500, '');
+                }
+            }
+        });
+    }
+</script>

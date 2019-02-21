@@ -1,0 +1,196 @@
+﻿@{
+    Layout = "";
+    List<TaskList.Models.ListTasklistStatusModel>
+        lstStatus = ViewBag.ListStatus;
+    var StatusColor = "";
+    var PriorityColor = "";
+    var SttBorder = "";
+}
+<div class="row px-2">
+    <div class="col-md-12 mb-2 m-0 parent" style="overflow: auto">
+        <div class="box-col row">
+            @if (lstStatus != null)
+            {
+                foreach (TaskList.Models.ListTasklistStatusModel stt in lstStatus)
+                {
+                    if (stt.Code == "TO-DO")
+                    {
+                        SttBorder = "border-danger";
+                    }
+                    else if (stt.Code == "IN-PROGRESS")
+                    {
+                        SttBorder = "border-doing";
+                    }
+                    else if (stt.Code == "CHECK")
+                    {
+                        SttBorder = "border-test";
+                    }
+                    else if (stt.Code == "DONE")
+                    {
+                        SttBorder = "border-success";
+                    }
+                    <div class="col-md-3 box-col-child mb-2 px-0 pr-md-2">
+                        <div class="@SttBorder border-radius-5 p-1 box-shadow-1 text-body">
+                            <div class="table-responsive table-qlcv">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="p-2">
+                                                <i class="icon-note text-doing mr-1 ml-0"></i>
+                                                @stt.Name
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            foreach (TaskList.Models.TasklistModel item in Model)
+                                            {
+                                                if (item.StatusType == "TO-DO")
+                                                {
+                                                    StatusColor = "text-danger";
+                                                }
+                                                else if (item.StatusType == "IN-PROGRESS")
+                                                {
+                                                    StatusColor = "text-info";
+                                                }
+                                                else if (item.StatusType == "CHECK")
+                                                {
+                                                    StatusColor = "text-test";
+                                                }
+                                                else if (item.StatusType == "DONE")
+                                                {
+                                                    StatusColor = "text-success";
+                                                }
+                                                if (item.PriorityLevel == "L")
+                                                {
+                                                    PriorityColor = "text-success";
+                                                }
+                                                else if (item.PriorityLevel == "M")
+                                                {
+                                                    PriorityColor = "text-info";
+                                                }
+                                                else if (item.PriorityLevel == "H")
+                                                {
+                                                    PriorityColor = "text-test";
+                                                }
+                                                else if (item.PriorityLevel == "C")
+                                                {
+                                                    PriorityColor = "text-danger";
+                                                }
+                                                if (item.StatusType == stt.Code)
+                                                {
+                                                    <tr id="taskID_@item.TaskID">
+                                                        <td class="p-2 task-des">
+                                                            <div class="task-des-title" onclick="viewTaskListDetail('@item.TaskID')">
+                                                                @item.TaskTitle
+                                                                @*<span class="task-des-des ml-1">
+                                                                    @{
+                                                                        if (@item.ItemsDesc != null)
+                                                                        {
+                                                                            HtmlString htmlString = new HtmlString(@item.ItemsDesc.Replace("<b>", "").Replace("<b/>", "").Replace("<u>", "").Replace("<u/>", "").Replace("<i>", "").Replace("<i/>", "").Replace("<p>", "").Replace("</p>", ""));
+                                                                            @htmlString
+                                                                        }
+                                                                    }
+                                                                </span>*@
+                                                                <div class="des-shadow">
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex f-wrap">
+                                                                <div class="dropdown mr-2">
+                                                                    <i class="fa fa-list-ol text-test mr-1 mt-2 pointer" id="more-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>@item.CheckListItemList.Count
+                                                                    <div class="dropdown-menu" aria-labelledby="more-menu">
+                                                                        <a class="dropdown-item" href="/TaskList/Home/AddUpdate">
+                                                                            <i class="icon-plus text-doing pointer"></i>
+                                                                            Tạo công việc con
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mr-2">
+                                                                    <i class="fa fa-clock-o text-danger mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày kết thúc"></i>
+                                                                    @item.ToDateTime.ToString("dd-MM-yyyy HH:ss")
+                                                                </div>
+                                                            </div>
+                                                            <div class="mr-2">
+                                                                <div class="d-flex flex-wrap">
+                                                                    <div class="mr-2 mt-1">
+                                                                        Mức độ: <span class="@PriorityColor">@item.PriorityName</span>
+                                                                    </div>
+                                                                    <div class="dropdown mr-2 pointer mt-1">
+                                                                        <div id="more-menu-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trạng thái: <span id="taskStatusMobile_@item.TaskID" class="@StatusColor like-btn">@item.StatusName</span></div>
+                                                                        <div class="dropdown-menu" aria-labelledby="more-menu-2">
+                                                                            @if (lstStatus != null)
+                                                                            {
+                                                                                foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                                                                                {
+                                                                                    <a onclick="ChangeStatus('@item.TaskID','@status.Code')" class="dropdown-item pointer" data-value="@status.Code">@status.Name</a>
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<style>
+    .parent {
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer */
+        -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+        -webkit-user-select: none; /* Chrome, Safari, and Opera */
+        -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+    }
+    .table-qlcv {
+        min-height: 0px;
+        max-height: unset;
+    }
+</style>
+<script type="text/javascript">
+    var clicked = false, onDragula = false, clickX;
+    $('.box-col').on({
+    	'mousemove': function(e) {
+    	    if (!onDragula) {
+    	        clicked && updateScrollPos(e);
+    	    }
+    	},
+    	'mousedown': function(e) {
+    	    clicked = true;
+    	    clickX = e.pageX;
+    	},
+    	'mouseup': function() {
+    	    clicked = false;
+    	    $('.parent').css('cursor', 'auto');
+    	}
+    });
+    $('.rounded').on({
+    	'mousedown': function(e) {
+    	    clicked = false;
+    	},
+    	'mouseleave': function() {
+    	    console.log(270, 'leave')
+    	    clicked = false;
+    	    onDragula = false;
+    	}
+    });
+
+    var updateScrollPos = function(e) {
+    	$('.parent').css('cursor', 'grabbing');
+    	$('.parent').scrollLeft($('.parent').scrollLeft() + window.Math.ceil((clickX - e.pageX) / 5));
+    }
+    var array = @Html.Raw(Json.Encode(@ViewBag.lstStatus));
+    // console.log(111111, array);
+</script>

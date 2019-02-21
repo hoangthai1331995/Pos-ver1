@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "";
+    eTraining.BussinessModels.FormControl control = (eTraining.BussinessModels.FormControl)ViewData["FormControl"];
+    string formGroup = ViewData["FormGroup"].ToString();
+}
+<!-- Date-time picker css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/pages/advance-elements/css/bootstrap-datetimepicker.min.css">
+@if (control != null)
+{
+    <!-- <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group row">
+            <label class="col-12 txt-left col-form-label">@control.Display</label>
+            <div class="col-12">
+                <input class="form-control w-100" type="date" name="@control.Name" id="@(formGroup + control.Key)" value="@control.Value" placeholder="@control.PlaceHolder" data-required="@control.IsRequire" data-number="@control.IsNumber" data-email="@control.IsEmail">
+                <span class="messages popover-valid"></span>
+                @if (!String.IsNullOrEmpty(control.Note))
+                {
+                    <small class="form-text text-muted">@control.Note</small>
+                }
+            </div>
+        </div>
+    </div> -->
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group row">
+            <label class="col-12 txt-left col-form-label">@control.Display</label>
+            <div class="col-12">
+                <div class="form-group mb-0 w-100">
+                    <div class='input-group date mb-0' id="@(formGroup + control.Key)">
+                        <input class="form-control text-right" type="text" id="@(formGroup + control.Key)_input" value="@control." placeholder="@control.PlaceHolder" data-required="@control.IsRequire" data-number="@control.IsNumber" data-email="@control.IsEmail">
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                    @if (!String.IsNullOrEmpty(control.Note))
+                    {
+                        <small class="form-text text-muted">@control.Note</small>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    (function($) {
+      'use strict';
+        var dateNow = new Date();
+        if (@control && $("#" + @(formGroup + control.Key)).length) {
+            $("#" + @(formGroup + control.Key)).datetimepicker({
+                format:'HH:mm DD/MM/YYYY',
+                defaultDate:dateNow,
+                locale:'vi',
+                icons: {
+                    time: "icon-clock",
+                    date: "icon-calendar"
+                },
+            });
+        }
+    })(jQuery);
+</script>

@@ -1,0 +1,7 @@
+﻿@model BussinessModels.ReportItemModel
+
+
+@Html.Partial("_Filter", new ViewDataDictionary { { "Filter", Model.filter } })
+
+@Html.Partial("_List", new ViewDataDictionary { { "Display", Model.list }, { "Data", Model.data } })
+

@@ -1,0 +1,680 @@
+﻿@model TaskList.Models.TasklistModel
+@{
+    /**/
+    List<TaskList.Models.ListTasklistStatusModel>
+        lstStatus = ViewBag.ListStatus;
+    var StatusColor = "";
+    var PriorityColor = "";
+    if (Model.PriorityLevel == "L")
+    {
+        PriorityColor = "text-success";
+    }
+    else if (Model.PriorityLevel == "M")
+    {
+        PriorityColor = "text-info";
+    }
+    else if (Model.PriorityLevel == "H")
+    {
+        PriorityColor = "text-test";
+    }
+    else if (Model.PriorityLevel == "C")
+    {
+        PriorityColor = "text-danger";
+    }
+    var PriorityColorParent = "";
+    var StatusColorParent = "";
+    if (ViewBag.taskParentDetail.StatusType == "TO-DO")
+    {
+        StatusColorParent = "text-danger";
+    }
+    else if (ViewBag.taskParentDetail.StatusType == "IN-PROGRESS")
+    {
+        StatusColorParent = "text-info";
+    }
+    else if (ViewBag.taskParentDetail.StatusType == "CHECK")
+    {
+        StatusColorParent = "text-test";
+    }
+    else if (ViewBag.taskParentDetail.StatusType == "DONE")
+    {
+        StatusColorParent = "text-success";
+    }
+    if (ViewBag.taskParentDetail.PriorityLevel == "L")
+    {
+        PriorityColorParent = "text-success";
+    }
+    else if (ViewBag.taskParentDetail.PriorityLevel == "M")
+    {
+        PriorityColorParent = "text-info";
+    }
+    else if (ViewBag.taskParentDetail.PriorityLevel == "H")
+    {
+        PriorityColorParent = "text-test";
+    }
+    else if (ViewBag.taskParentDetail.PriorityLevel == "C")
+    {
+        PriorityColorParent = "text-danger";
+    }
+}
+
+<link rel="stylesheet" href="/Content/Templates/Plugin/summernote/summernote-bs4.css">
+<link rel="stylesheet" href="/Content/Templates/GuruTemplate/bower_components/select2/css/select2.min.css" />
+<!-- Multi Select css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css" />
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/multiselect/css/multi-select.css" />
+<!-- custom-select.css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/custom-select.css">
+<div class="page-header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"> </i> Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/TaskList/Home">Quản lý công việc</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Chi tiết</a></li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <form method="post" enctype="multipart/form-data" id="editable-form" class="editable-form">
+                <div class="card-body">
+                    <div class="row mt-2">
+                        <div class="col-md-8">
+                            <div class="d-flex justify-content-between">
+                                <div class="">
+                                    <h5 class="mb-0">
+                                        @Model.TaskTitle
+                                    </h5>
+                                    <div class="f-s-12 text-danger">
+                                        @Model.TaskTypeName
+                                    </div>
+                                </div>
+                                <div class="text-nowrap">
+                                    <a href="/TaskList/Home/AddUpdate?id=@Model.TaskID">
+                                        <span class="btn btn-sm btn-outline-info btn-info">
+                                            <i class="icon-pencil" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Sửa"></i>
+                                        </span>
+                                    </a>
+                                    <a id="follow-btn" href="javascript:void(0);" onclick="action_follow('@Model.TaskID');">
+                                        <span class="btn btn-sm btn-outline-info btn-info @(Model.IsFollow ? "follow" : "")">
+                                            <i class="icon-pin" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Đánh dấu"></i>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-12">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div>Độ ưu tiên: <span class="@PriorityColor">@Model.PriorityName</span></div>
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-info btn-info btn-sm dropdown-toggle ml-2" type="button" id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="@Model.StatusType">@Model.StatusName</button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                @if (lstStatus != null)
+                                                {
+                                                    foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                                                    {
+                                                        <a onclick="ChangeStatus('@Model.TaskID','@status.Code')" class="dropdown-item pointer" data-value="@status.Code">@status.Name</a>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <textarea class="input-block-level" id="Description" name="Description" rows="6">
+                                        @{
+                                            if(Model.ItemsDesc != null)
+                                            {
+                                            HtmlString htmlString = new HtmlString(Model.ItemsDesc);
+                                            @htmlString
+                                            }
+                                        }  
+                					</textarea>
+                                    <h5 class="card-title mb-3 d-flex align-items-center mt-3">
+                                        Checklist
+                                    </h5>
+                                    <div class="">
+                                        <div class="new-task">
+                                            @if (Model.CheckListItemList != null)
+                                            {
+                                                foreach (TaskList.Models.CheckListItem item in Model.CheckListItemList)
+                                                {
+                                                    <div class="to-do-list">
+                                                        <div class="checkbox-fade fade-in-primary">
+                                                            <label class="check-task @(item.IsCheck ? "done-task" : "")">
+                                                                <input id="CheckList_@item.CheckListID" type="checkbox" value="" @(item.IsCheck ? "checked" : "") onclick="doneCheckList(@Model.TaskID, @Model.CheckList, @item.CheckListID)">
+                                                                <span class="cr">
+                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                </span>
+                                                                <span>@item.CheckListTitle</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive table-qlcv mb-1" style="min-height: 0px">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="m-0 p-0 py-2 font-weight-normal">
+                                                        Công Việc Liên Quan
+                                                        <button type="button" class="btn btn-outline-danger btn-icon-text btn-sm ml-1" onclick="goAddUpdate(@Model.TaskID)">
+                                                            <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Thêm/Sửa công việc liên quan" style="margin-left: 0px;"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            @if (ViewBag.taskParentDetail.TaskID > 0)
+                                            {
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="p-2 task-des">
+                                                            <div class="task-des-title" onclick="viewTaskListDetail('@ViewBag.taskParentDetail.TaskID')">
+                                                                @ViewBag.taskParentDetail.TaskTitle
+                                                                @*<span class="task-des-des ml-1">
+                                                                        @{
+                                                                            if (@ViewBag.taskParentDetail.ItemsDesc != null)
+                                                                            {
+                                                                                HtmlString htmlString = new HtmlString(@ViewBag.taskParentDetail.ItemsDesc.Replace("<b>", "").Replace("<b/>", "").Replace("<u>", "").Replace("<u/>", "").Replace("<i>", "").Replace("<i/>", "").Replace("<p>", "").Replace("</p>", ""));
+                                                                                @htmlString
+                                                                            }
+                                                                        }
+                                                                    </span>*@
+                                                                <div class="des-shadow">
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex f-wrap">
+                                                                <div class="dropdown mr-2">
+                                                                    <i class="fa fa-list-ol text-test mr-1 mt-2 pointer" id="more-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                                    @ViewBag.taskParentDetail.CheckListItemList.Count
+                                                                    <div class="dropdown-menu" aria-labelledby="more-menu">
+                                                                        <a class="dropdown-item" href="/TaskList/Home/Add">
+                                                                            <i class="icon-plus text-doing pointer"></i>
+                                                                            Tạo công việc con
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="hidden-xs mr-2">
+                                                                    <i class="fa fa-clock-o text-info mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngay bắt đầu"></i>
+                                                                    @ViewBag.taskParentDetail.FromDateTime.ToString("dd-MM-yyyy HH:ss")
+                                                                </div>
+                                                                <div class="mr-2">
+                                                                    <i class="fa fa-clock-o text-danger mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày kết thúc"></i>
+                                                                    @ViewBag.taskParentDetail.ToDateTime.ToString("dd-MM-yyyy HH:ss")
+                                                                </div>
+                                                            </div>
+                                                            <div class="mr-2">
+                                                                <div class="d-flex flex-wrap">
+                                                                    <div class="mr-2 mt-1">
+                                                                        Mức độ: <span class="@PriorityColorParent">@ViewBag.taskParentDetail.PriorityName</span>
+                                                                    </div>
+                                                                    <div class="mr-2 mt-1">
+                                                                        Trạng thái: <span class="@StatusColorParent">@ViewBag.taskParentDetail.StatusName</span>
+                                                                    </div>
+                                                                    @*<div class="dropdown mr-2 pointer mt-1">
+                                                                            <div id="more-menu-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trạng thái: <span class="@StatusColorParent">@ViewBag.taskParentDetail.StatusName</span></div>
+                                                                            <div class="dropdown-menu" aria-labelledby="more-menu-2">
+                                                                                @if (lstStatus != null)
+                                                                                {
+                                                                                    foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                                                                                    {
+                                                                                        <a onclick="ChangeStatus('@ViewBag.taskParentDetail.TaskID','@status.Code')" class="dropdown-item pointer" data-value="@status.Code">@status.Name</a>
+                                                                                    }
+                                                                                }
+                                                                            </div>
+                                                                        </div>*@
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            }
+                                            else
+                                            {
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="p-2 task-des">Không có công việc liên quan</td>
+                                                    </tr>
+                                                </tbody>
+                                            }
+                                        </table>
+                                    </div>
+                                    @if (Model != null && Model.OptionListView.Count() > 0)
+                                    {
+                                        foreach (TaskList.Models.OptionListModel gT in Model.OptionListView)
+                                        {
+                                            <div class="row">
+                                                <div class="col-12 mt-1">
+                                                    <div class="checkbox-fade fade-in-default">
+                                                        <label>
+                                                            <input id="Option_@gT.Code" type="checkbox" value="" @(@gT.Val ? "checked" : "") disabled>
+                                                            <span class="cr">
+                                                                <i class="cr-icon fa fa-check txt-primary"></i>
+                                                            </span>
+                                                            <span>@gT.Name</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 f-s-13">
+                            <div class="accordion simple-accordion" id="accordion" role="tablist">
+                                <div class="">
+                                    <div class="d-flex justify-content-between align-items-center" role="tab" id="heading-1">
+                                        <h5 class="card-title mb-0 flex-1">
+                                            <a class="collapsed" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                                Thời gian thực hiện
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapse-1" class="collapse show" role="tabpanel" aria-labelledby="heading-1" data-parent="#accordion">
+                                        <div class="row mt-3">
+                                            <div class="timeline w-100 box-order">
+                                                <div id="day-start" class="timeline-wrapper timeline-wrapper-info">
+                                                    <div class="timeline-badge"></div>
+                                                    <div class="timeline-panel p-2">
+                                                        <div class="timeline-body">
+                                                            <p data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày bắt đầu"><i class="icon-calendar text-info mr-1"></i> <span>@Model.FromDateTime.ToString("dd-MM-yyyy HH:ss")</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="day-end" class="timeline-wrapper timeline-wrapper-danger">
+                                                    <div class="timeline-badge"></div>
+                                                    <div class="timeline-panel p-2">
+                                                        <div class="timeline-body">
+                                                            <p data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày kết thúc"><i class="icon-calendar text-danger mr-1"></i> <span>@Model.ToDateTime.ToString("dd-MM-yyyy HH:ss")</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="day-now" class="timeline-wrapper timeline-wrapper-warning">
+                                                    <div class="timeline-badge"></div>
+                                                    <div class="timeline-panel p-2">
+                                                        <div class="timeline-body">
+                                                            <p data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày hiện tại"><i class="icon-calendar text-test mr-1"></i> <span id="date-now"></span> </p>
+                                                            <p class="text-danger">@Model.DownTime để hoàn thành công việc</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if (Model.IsRepeated != false)
+                                        {
+                                            <div class="text-danger">
+                                                Công việc này có lặp lại
+                                            </div>
+                                        }
+                                        <hr class="my-2" />
+                                        @*<div class="d-flex justify-content-between align-items-center">
+                                                <div class="list d-flex align-items-center">
+                                                    <img class="img-sm rounded-circle m-1" src="/Content/Templates/GuruTemplate/assets/images/faces/avatarnull.png" alt="">
+                                                    <div>
+                                                        <div class="d-flex align-items-center pb-1">
+                                                            Phụ trách
+                                                            <button type="button" class="p-0 px-2 btn btn-link  btn-icon-text btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                                                <i class="icon-pencil" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Thay đổi người phụ trách"></i>
+                                                            </button>
+                                                        </div>
+                                                        @Model.ObjectInCharge
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <i class="icon-user text-info mr-1"></i>
+                                                Phụ trách: @Model.ObjectInChargeTypeName
+                                            </div>
+                                            @*<div class="col-6 text-right">
+                                                    @Model.ObjectInChargeTypeName
+                                                </div>*@
+                                            <div class="col-12 text-left my-1">
+                                                @Model.ObjectInChargeName
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <i class="icon-user text-info mr-1"></i>
+                                                Chịu trách nhiệm
+                                            </div>
+                                            <div class="col-12 text-left my-1">
+                                                @Model.PersonsControlName
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <i class="icon-user-following text-info mr-1"></i>
+                                                Người tạo
+                                            </div>
+                                            <div class="col-12 text-left mt-1">
+                                                @Model.UserCreatedName
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-2" />
+                            <div class="row">
+                                <h5 class="col-md-12 card-title mb-2">
+                                    <!-- <i class="fa fa-file text-info mr-1 mt-1"></i> -->
+                                    Đính kèm
+                                </h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (Model.FileStringItemList != null)
+                                    {
+                                        foreach (TaskList.Models.FileStringItem item in Model.FileStringItemList)
+                                        {
+                                            <div class="to-do-list file-download-list position-relative">
+                                                <a href="@item.FilePath" target="_blank" class="download">
+                                                    <i class="fa fa-file text-info mr-1 ml-2"></i>
+                                                    @item.FileName
+                                                </a>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            @*comment đã gắn code*@
+                            @*<div class="feed-post-informers-cont border-bottom border-top w-100 p-1 mb-2">
+                                    <span class="bx-ilike-button">
+                                        <span class="bx-ilike-right-wrap">
+                                            <i class="fa fa-thumbs-up bx-ilike-right-icon @(bool.Parse(Model.Rows[0]["IsLike"].ToString()) ? "text-info" : "")"></i>
+                                        </span>
+                                        <span class="bx-ilike-left-wrap">
+                                            <a href="#" class="bx-ilike-text like-link" onclick="action_like('@Model.Rows[0]["ID"].ToString()');">@(bool.Parse(Model.Rows[0]["IsLike"].ToString()) ? "Hủy thích" : "Thích")</a>
+                                        </span>
+                                    </span>
+                                    <span class="bx-ilike-button">
+                                        <span class="bx-ilike-right-wrap">
+                                            <span class="badge badge-pill badge-info">
+                                                <i class="fa fa-thumbs-up"></i>
+                                            </span>
+                                        </span>
+                                        <span class="bx-ilike-left-wrap">
+                                            <span class="bx-ilike-text" id="sp_countlike">@Model.Rows[0]["CountLike"].ToString()</span>
+                                        </span>
+                                    </span>
+                                </div>*@
+                            @*<div id=@("divContainer"+Model.Rows[0]["ID"].ToString()) class="w-100">
+                                    <div id=@("divChat"+ Model.Rows[0]["ID"].ToString()) class='chatRoom'>
+                                        <div class="feed-com-add-box-outer">
+                                            <div class="feed-com-avatar feed-com-avatar-Y">
+                                                <img id="myavatar" width="37" height="37" src="@user.AvatarImageLink" />
+                                            </div>
+                                            <div class="feed-com-add-box">
+                                                <div class="feed-com-add">
+                                                    <textarea id=@("txtMessage"+Model.Rows[0]["ID"].ToString()) class='maxlength-textarea feed-com-add-link' maxlength='500' rows='1' placeholder='Nhập bình luận...'></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="feed-com-avatar">
+                                                <i class="mdi mdi-send p_hidden" id=@("btnSendMsg"+Model.Rows[0]["ID"].ToString()) onclick='SendMsgGeneral("@Model.Rows[0]["ID"].ToString()","@Model.Rows[0]["SendToUser"].ToString()","DC");'></i>
+                                            </div>
+                                        </div>
+
+                                        <div class='content'>
+                                            <div id=@("divChatWindow"+Model.Rows[0]["ID"].ToString()) class='chatWindow'>
+                                            </div>
+                                            <div id=@("divusers"+Model.Rows[0]["ID"].ToString()) class='users'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-md" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thay đổi người phụ trách</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body pt-0 pb-0">
+                                    <div class="row mt-2">
+                                        <div class="col-md-12 mb-2">
+                                            <div class="form-group row m-1">
+                                                <label for="txtTitle" class="col-sm-3 col-form-label pl-0">Phụ trách</label>
+                                                <div class="col-sm-9 d-flex p-0">
+                                                    <select class="js-example-basic-single col-sm-12">
+                                                        <optgroup label="Developer">
+                                                            <option value="AL">Alabama</option>
+                                                            <option value="WY">Wyoming</option>
+                                                        </optgroup>
+                                                        <optgroup label="Designer">
+                                                            <option value="WY">Peter</option>
+                                                            <option value="WY">Hanry Die</option>
+                                                            <option value="WY">John Doe</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+            </form>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    tr:first-child td {
+        border-top: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .form-check .form-check-label input[type="checkbox"]:disabled:checked + .input-helper:after {
+        color: #b00404;
+    }
+
+    .box-order {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #follow-btn .follow {
+        background-color: #0B94F7;
+        border-color: #0B94F7;
+        color: #fff;
+    }
+</style>
+@section scripts {
+    <!-- Todo js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/todo/todo.js"></script>
+    <script src="/Content/Templates/Plugin/summernote/summernote-bs4.min.js"></script>
+    <!-- Select 2 js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/select2/js/select2.full.min.js"></script>
+    <!-- Multiselect js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js">
+
+
+    </script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/multiselect/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/select2-custom.js"></script>
+    <script type="text/javascript">
+        var currentdate = new Date();
+        var datetime =
+            ("00" + currentdate.getDate()).slice(-2) + "-" +
+            ("00" + (currentdate.getMonth() + 1)).slice(-2) + "-" +
+            currentdate.getFullYear() + " " +
+            ("00" + currentdate.getHours()).slice(-2) + ":" +
+            ("00" + currentdate.getMinutes()).slice(-2);
+        document.getElementById("date-now").innerHTML = datetime;
+        var startDate = new Date("@Model.FromDateTimeCal");
+        startDate.setDate(startDate.getDate() - 1);
+        var endDate = new Date("@Model.ToDateTimeCal");
+        endDate.setDate(endDate.getDate() - 1);
+        if (currentdate < startDate) {
+            $("#day-now").css("order", "1");
+            $("#day-start").css("order", "2");
+            $("#day-end").css("order", "3");
+        }
+        if (currentdate > startDate && currentdate < endDate) {
+            $("#day-now").css("order", "2");
+            $("#day-start").css("order", "1");
+            $("#day-end").css("order", "3");
+        }
+        if (currentdate > startDate && currentdate > endDate) {
+            $("#day-now").css("order", "3");
+            $("#day-start").css("order", "1");
+            $("#day-end").css("order", "2");
+        }
+        function AlertDownloadFailed() {
+            alert('Bạn không có quyền download tài liệu này hoặc tài liệu đã không còn tồn tại.');
+        }
+        function AutoDownload(Path, FileName) {
+            // http://odf.vn/TaskList/Home/DownLoadPopup?Path=/Duongdancha/Duongdancon/tenfile.pdf&FileName=tenfile.pdf
+            setTimeout(
+                function () {
+                    var l_win = window.open("/TaskList/Home/DownLoadPopup?Path=" + Path + "&FileName=" + FileName);
+                    setTimeout(
+                        function () {
+                            l_win.close();
+                        }, 100);
+                }, 50);
+        }
+        function viewTaskListDetail(id) {
+            window.location.href = '/TaskList/Home/Detail?id=' + id;
+        }
+        function goAddUpdate(id) {
+            window.location.href = '/TaskList/Home/AddUpdate?id=' + id;
+        }
+        $(".dropdown-menu a").click(function (event) {
+            if ($(event.target).parents().hasClass('dropdown-nochange-value')) {
+                // console.log($(this).data('value'), $(this).text())
+                return;
+            }
+            $(this).parents(".dropdown").find('.btn').html($(this).text());
+            $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+        });
+        $('.js-data-example-ajax').select2({
+            ajax: {
+                url: "https://api.github.com/search/repositories",
+                dataType: 'json',
+                delay: 500,
+                // data: function (params) {
+                //   return {
+                //     q: params.term, // search term
+                //     page: params.page
+                //   };
+                // },
+                processResults: function (data, params) {
+                    return {
+                        results: [
+                            {
+                                "id": 1,
+                                "text": "ThaiNH20"
+                            },
+                            {
+                                "id": 2,
+                                "text": "BinhVT"
+                            }
+                        ]
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Search for a repository',
+            minimumInputLength: 1,
+            language: {
+                inputTooShort: function () {
+                    return 'Nhập tìm kiếm';
+                },
+                searching: function () {
+                    return "Đang tìm kiếm...";
+                },
+                noResults: function () {
+                    return "Không có kết quả";
+                },
+            }
+        });
+        if ($("#Description").length) {
+            $('#Description').summernote({
+                toolbar: [],
+                height: 300,
+                tabsize: 2,
+                disableDragAndDrop: true,
+            });
+            $("#Description").summernote("disable");
+        }
+        function ChangeStatus(TaskID, StatusType) {
+            $.ajax({
+                type: "GET",
+                url: "/TaskList/Home/ChangeStatus",
+                data: "TaskID=" + TaskID + "&StatusType=" + StatusType,
+                success: function (response) {
+                    if (response.StatusCode === "DONE") {
+                        notify('top', 'right', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', response.StatusMess);
+                    } else {
+                        notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', response.StatusMess);
+                    }
+
+                },
+                error: function (response) {
+                    notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Thất bại');
+                }
+
+            });
+        }
+        function doneCheckList(TaskID, CheckList, CheckListID) {
+            CheckList.find(function (element) {
+                if (element.CheckListID == CheckListID) {
+                    element.IsCheck = $('#CheckList_' + CheckListID).is(":checked") ? 1 : 0;
+                    return element;
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "/TaskList/Home/ChangeIsCheckCheckList",
+                data: "TaskID=" + TaskID + "&CheckList=" + JSON.stringify(CheckList),
+                success: function (response) {
+                    notify('top', 'right', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Thành công');
+                },
+                error: function () {
+                    notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Thất bại');
+                }
+
+            });
+        }
+        var IsFollow = "@Model.IsFollow";
+        function action_follow(TaskID) {
+            IsFollow = (IsFollow == "False" ? "True" : "False");
+            $.ajax({
+                type: "POST",
+                url: '/TaskList/Home/Follow',
+                data: "TaskID=" + TaskID + "&IsFollow=" + IsFollow,
+                success: function (response) {
+                    if (response && response.StatusCode === 'DONE') {
+                        IsFollow = (IsFollow == "False" ? "False" : "True");
+                        if ($('#follow-btn span').hasClass("follow")) {
+                            $('#follow-btn span').removeClass("follow");
+                        } else {
+                            $('#follow-btn span').addClass("follow");
+                        }
+                    }
+                }
+            });
+        }
+        @*var array = @Html.Raw(Json.Encode(@Model));
+        console.log('detail', array);
+        var array = @Html.Raw(Json.Encode(@ViewBag.taskParentDetail));
+        console.log('parent', array);*@
+    </script>
+}

@@ -1,0 +1,139 @@
+﻿@model System.Data.DataTable
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-archon">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Danh sách bảng
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Schema</th>
+                            <th>Bảng</th>
+                            <th style="text-align:right;">Cấu hình</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < Model.Rows.Count; i++)
+                            {
+                                <tr>
+                                    <td>[@Model.Rows[i]["TABLE_SCHEMA"]]</td>
+                                    <td>[@Model.Rows[i]["TABLE_NAME"]]</td>
+                                    <td style="text-align:right;">
+                                        <span class="btn btn-primary" style="padding-left:5px; padding-right:5px;" onclick="GetAllTableColumn('@Model.Rows[i]["TABLE_NAME"]');" data-toggle="modal" data-target="#modalConfigAddUpdate"><i class="fa fa-plus"></i> Add/Update Field</span>&nbsp;
+                                        <span class="btn btn-primary" style="padding-left:5px; padding-right:5px;" onclick="GetAllTableColumnForFilter('@Model.Rows[i]["TABLE_NAME"]');" data-toggle="modal" data-target="#modalConfigListFilter"><i class="fa fa-filter"></i> Filter Field</span>&nbsp;
+                                        <span class="btn btn-primary" style="padding-left:5px; padding-right:5px;" onclick="GetAllTableColumnForList('@Model.Rows[i]["TABLE_NAME"]');" data-toggle="modal" data-target="#modalConfigListColumn"><i class="fa fa-list-alt"></i> List DataSource</span>&nbsp;
+                                        <a href="/Configulation/Resource" target="_blank" class="btn btn-primary" style="padding-left:5px; padding-right:5px;"><i class="fa fa-laptop"></i> List Display</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div> <!-- /panel body -->
+        </div>
+    </div> <!-- /col-md-6 -->
+</div>
+
+<div class="modal fade" id="modalConfigAddUpdate" tabindex="-1" role="dialog" aria-labelledby="modalConfigAddUpdatelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:80%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cấu hình form thêm mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body js-data-bind">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary act-save">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalConfigListFilter" tabindex="-1" role="dialog" aria-labelledby="modalConfigAddUpdatelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:80%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cấu hình form search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body js-filter-bind">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary act-save-filter">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalConfigListColumn" tabindex="-1" role="dialog" aria-labelledby="modalConfigListColumnLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:80%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cấu hình form danh sách</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body js-list-bind">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary act-save-list">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function GetAllTableColumn(tableName) {
+        $.ajax({
+            type: "POST",
+            url: '/Configulation/Auto/GetAllColumnInTable',
+            data: "tableName=" + tableName,
+            success: function (response) {
+                $('.js-data-bind').html(response)
+            }
+        });
+    }
+
+    function GetAllTableColumnForFilter(tableName) {
+        $.ajax({
+            type: "POST",
+            url: '/Configulation/Auto/GetAllTableColumnForFilter',
+            data: "tableName=" + tableName,
+            success: function (response) {
+                $('.js-filter-bind').html(response)
+            }
+        });
+    }
+
+    function GetAllTableColumnForList(tableName) {
+        $.ajax({
+            type: "POST",
+            url: '/Configulation/Auto/GetAllTableColumnForList',
+            data: "tableName=" + tableName,
+            success: function (response) {
+                $('.js-list-bind').html(response)
+            }
+        });
+    }
+</script>
+
+

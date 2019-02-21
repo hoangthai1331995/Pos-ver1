@@ -1,0 +1,302 @@
+﻿
+@{
+    var lstGroup = ViewBag.Groups;
+    var lstTrainingType = ViewBag.TrainingType;
+    var lstObjectTraining = ViewBag.ObjectTraining;
+    var lstUserTitle = ViewBag.UserTitle;
+    var lstDepartment = ViewBag.Department;
+    var lstRegion = ViewBag.Region;
+    var lstLibraryDocument = ViewBag.LibraryDocument;
+    var lstCheck = ViewBag.Check;
+}
+<style>
+    .nopadding {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .form-group.required .control-label:after {
+		  content:"*";
+		  color:red;
+    }
+</style>
+<div class="row">
+    <div class="col-mod-12">
+        <ul class="breadcrumb">
+            <li><a href="/">Trang chủ</a></li>
+            <li>Chương trình đào tạo</li>
+            <li class="active">Đăng ký khóa đào tạo</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="panel panel-archon">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                THÔNG TIN GIẢNG VIÊN   <input type="checkbox" style="margin-left: 20px;" /><i style="color:#000;font-size: 14px;">Giống với thông tin đăng nhập</i>
+                <span class="pull-right">
+                    <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
+                </span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Mã giáo viên</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group" style="text-align:left;">
+                        <label>Tên giảng viên</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group" style="text-align:left;">
+                        <label>Chức danh giảng viên</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-archon">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                THÔNG TIN KHÓA ĐÀO TẠO
+                <span class="pull-right">
+                    <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
+                </span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Hình thức đào tạo</label>
+
+                        <select class="form-control">
+                            <option value="0">--Chọn hình thức đào tạo--</option>
+                            @foreach (var item in lstTrainingType)
+                            {
+                                <option value="@item.Code">@item.Name</option>
+                            }
+
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Thời gian(Từ ngày)</label>
+                        <div class='input-group date'>
+                            <input type='text' class="form-control datepicker" data-date-format="dd/mm/yyyy hh:mm" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Thời gian(Đến ngày)</label>
+                        <div class='input-group date'>
+                            <input type='text' class="form-control datepicker" data-date-format="dd/mm/yyyy hh:mm" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Đối tượng đào tạo</label>
+                        <select class="form-control">
+                            <option value="0">--Chọn đối tượng đào tạo--</option>
+                            @foreach (var item in lstObjectTraining)
+                            {
+                                <option value="@item.Code">@item.Name</option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Chức danh học viên</label>
+                        <select class="form-control">
+                            <option value="0">--Chọn chức danh học viên--</option>
+                            @foreach (var item in lstUserTitle)
+                            {
+                                <option value="@item.Code">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Khu vực/Phòng ban</label>
+                        <select class="form-control">
+                            <option value="0">--Chọn khu vực--</option>
+                            @foreach (var item in lstDepartment)
+                            {
+                                <option value="@item.Code">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Tên chương trình đào tạo</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Nội dung đào tạo</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group required" style="text-align:left;">
+                        <label class="control-label">Địa điểm đào tạo</label>
+                        <select class="form-control">
+                            <option value="0">--Chọn địa điểm đào tạo--</option>
+                            @foreach (var item in lstRegion)
+                            {
+                                <option value="@item.Code">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-archon">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                THÔNG TIN TÀI LIỆU
+                <span class="pull-right">
+                    <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
+                </span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                            Đã cập nhật tài liệu trên hệ thống
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 nopadding">
+                        <label>Tài liệu</label>
+                        <select class="form-control">
+                            <option value="0">--Chọn tài liệu--</option>
+                            @foreach (var item in lstLibraryDocument)
+                            {
+                                <option value="@item.Code">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 nopadding">
+                        <label>Kiểm tra</label>
+                        <select class="form-control">
+                            <option value="0">--Chọn kiểm tra--</option>
+                            @foreach (var item in lstCheck)
+                            {
+                                <option value="@item.Code">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" name="optionsRadios2" id="optionsRadiosa" value="option1" checked="">
+                            Không hiệu chỉnh
+                        </label>
+                    </div>
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" name="optionsRadios2" id="optionsRadiosb" value="option1">
+                            Có hiệu chỉnh
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Tải file</label>
+                        <input type="file" id="exampleInputFile2">
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+                            Chưa cập nhật tài liệu trên hệ thống
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="form-group">
+                        <label>Tải file</label>
+                        <input type="file" id="exampleInputFile">
+                    </div>
+                </div>
+            </div>
+			 <div class="row">
+			  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                   <div class="form-group">
+                        <label>Ghi chú chi tiết tài liệu</label>
+                       <textarea class="form-control" rows="2" id="comment"></textarea>
+                    </div>
+                </div>
+               
+            </div>
+			<div class="row">
+                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                   <div class="form-group">
+                        <label>Ghi chú trên thời khóa biểu</label>
+                          <textarea class="form-control" rows="2" id="comment"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-archon">
+        <div class="panel-body">
+            <div style="float:right">
+                <button class="btn btn-info">Quay lại</button>
+                <button class="btn btn-info">Hoàn tất</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datetimepicker();
+        });
+    </script>
+}

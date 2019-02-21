@@ -1,0 +1,57 @@
+﻿<ReportItemModel>
+  <pkey>RPT1902-00001</pkey>
+  <filter>
+    <fitem>
+      <index>0</index>
+      <key>Name</key>
+      <type>Textbox</type>
+      <value></value>
+      <holder>Nhập tên</holder>
+      <display>Tên</display>
+      <defaultvalue></defaultvalue>
+      <datasource></datasource>
+    </fitem>
+    <fitem>
+      <index>1</index>
+      <key>Name1</key>
+      <type>Textbox</type>
+      <value></value>
+      <holder>Nhập tên 1</holder>
+      <display>Tên 1</display>
+      <defaultvalue></defaultvalue>
+      <datasource></datasource>
+    </fitem>
+    <fitem>
+      <index>2</index>
+      <key>Name2</key>
+      <type>Textbox</type>
+      <value></value>
+      <holder>Nhập tên 2</holder>
+      <display>Tên 2</display>
+      <defaultvalue></defaultvalue>
+      <datasource></datasource>
+    </fitem>
+  </filter>
+  <list>
+    <litem>
+      <key>Name</key>
+      <display>Tên</display>
+    </litem>
+    <litem>
+      <key>Name1</key>
+      <display>Tên 1</display>
+    </litem>
+    <litem>
+      <key>Name2</key>
+      <display>Tên 2</display>
+    </litem>
+    <litem>
+      <key>Name3</key>
+      <display>Tên 3</display>
+    </litem>
+  </list>
+  <paging>
+    <pagesize>100</pagesize>
+    <pagenum>100</pagenum>
+  </paging>
+</ReportItemModel>

@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "";
+    BussinessModels.fitem control = (BussinessModels.fitem)ViewData["FormControl"];
+}
+
+@if (control != null)
+{
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group row">
+            <label class="col-12 txt-left col-form-label">@control.display</label>
+            <div class="col-12">
+                <select class="form-control" style="width:100%;" name="@control.key" id="@control.key" value="@control.value"></select>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                var placeHolder = '@Html.Raw(HttpUtility.JavaScriptStringEncode(control.holder))';
+                    var newStateDefault = new Option('- ' + placeHolder + ' -', '', true, true);
+                    $('select[id=' + '@control.key' + ']').append(newStateDefault);
+                    $.ajax({
+                    type: "POST",
+                    url: '/Configulation/Control/ComboboxByDataSource',
+                    data: "dataSource=" + '@control.datasource',
+                        success: function (response) {
+                        $.map(response, function (item) {
+                            var newState = new Option(item.Name, item.Code, true, true);
+                            $('select[id=' + '@control.key' + ']').append(newState);
+                        });
+                        $('select[id=' + '@control.key' + ']').val('@control.value').trigger('change');
+                    }
+                });
+            })
+        </script>
+    </div>
+}
+

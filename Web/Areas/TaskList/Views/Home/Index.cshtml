@@ -1,0 +1,299 @@
+﻿@{
+    /**/
+    List<TaskList.Models.TasklistModel> lstTasklist = ViewBag.lstTasklist;
+    List<TaskList.Models.ListTasklistStatusModel>
+        lstStatus = ViewBag.ListStatus;
+    List<BussinessObjects.SelectList>
+        lstTaskType = ViewBag.ListTaskType;
+}
+
+@*<link rel="stylesheet" href="/Content/template/css/workflow.css">*@
+<div class="page-header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"> </i> Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/TaskList/Home">Quản lý công việc</a></li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card" id="divFullScreen">
+            <form method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between hidden-xs">
+                        <h5 class="card-title">Quản lý công việc</h5>
+                        <div class="d-flex icon-btn">
+                            <button type="button" class="btn btn-outline-info btn-info btn-icon-text btn-sm ml-1 mb-2" onclick="zoomPage('fa-expand', 'fa-fast-backward')">
+                                <i class="fa fa-expand" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Thu / Phóng"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="template-demo">
+                        <a href="/TaskList/Home/AddUpdate" class="hidden-xs">
+                            <button type="button" class="btn btn-outline-danger btn-icon-text btn-sm">
+                                <i class="icon-plus" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Thêm"></i>
+                                <span class="hidden-xs">Thêm</span>
+                            </button>
+                        </a>
+                        <button type="button" class="btn btn-outline-info btn-info btn-sm" onclick="viewRender('ALL')">
+                            <i class="icon-grid" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tất cả"></i>
+                            <span class="hidden-xs">Tất cả</span>
+                        </button>
+                        <button type="button" class="btn btn-outline-info btn-info btn-sm hidden-xs" onclick="viewRender('FROM_ME')">
+                            <i class="icon-user-following" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tạo bởi tôi"></i>
+                            <span class="hidden-xs">Tạo bởi tôi</span>
+                        </button>
+                        <button type="button" class="btn btn-outline-info btn-info btn-sm hidden-xs" onclick="viewRender('TO_ME')">
+                            <i class="icon-user" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Giao cho tôi"></i>
+                            <span class="hidden-xs">Giao cho tôi</span>
+                        </button>
+                        <button type="button" class="btn btn-outline-info btn-info btn-sm hidden-xs" onclick="viewRender('FOLLOW')">
+                            <i class="icon-pin" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Theo dõi"></i>
+                            <span class="hidden-xs">Theo dõi</span>
+                        </button>
+                        <div class="dropdown mr-2">
+                            <button class="btn btn-outline-info btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuListStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-emotsmile" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Trạng thái"></i>
+                                <span class="hidden-xs">Trạng thái</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuListStatus" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item pointer" onclick="viewRender('', 'ALL', '')">Tất cả</a>
+                                @if (lstStatus != null)
+                                {
+                                    foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                                    {
+                                        <a onclick="viewRender('', '@status.Code', '')" class="dropdown-item pointer" data-value="@status.Code">@status.Name</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="dropdown mr-2">
+                            <button class="btn btn-outline-info btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuListTaskType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Nhóm
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuListTaskType" x-placement="bottom-start">
+                                <a class="dropdown-item pointer" onclick="viewRender('', '', 'ALL')">Tất cả</a>
+                                @if (lstTaskType != null)
+                                {
+                                    foreach (BussinessObjects.SelectList status in lstTaskType)
+                                    {
+                                        <a onclick="viewRender('', '', '@status.Code')" class="dropdown-item pointer" data-value="@status.Code">@status.Name</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-danger btn-sm dropdown-toggle mr-0" type="button" id="nhom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-list" data-toggle="tooltip" data-placement="bottom" title="" data-original-title=""></i>
+                                <span class="hidden-xs">Hiển thị</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="nhom" x-placement="bottom-start">
+                                <ul class="view-left-search nav" id="pills-tab" role="tablist">
+                                    <li class="" onclick="ShowPage('ViewList')">
+                                        <a class="active show" id="table-tab" data-toggle="pill" href="#pills-ViewList" role="tab" aria-controls="pills-ViewList" aria-selected="true">
+                                            <i class="icon-list" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Xem theo danh sách"></i>
+                                            Xem theo danh sách
+                                        </a>
+                                    </li>
+                                    <li class="" onclick="ShowPage('ViewCalendar')">
+                                        <a class="" id="calendar-tab" data-toggle="pill" href="#pills-ViewCalendar" role="tab" aria-controls="pills-ViewCalendar" aria-selected="false">
+                                            <i class="icon-calendar" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Xem theo lịch"></i>
+                                            Xem theo lịch
+                                        </a>
+                                    </li>
+                                    <li class="" onclick="ShowPage('ViewCol')">
+                                        <a class="" id="col-tab" data-toggle="pill" href="#pills-ViewCol" role="tab" aria-controls="pills-ViewCol" aria-selected="false">
+                                            <i class="icon-chart" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Xem theo cột"></i>
+                                            Xem theo cột
+                                        </a>
+                                    </li>
+                                </ul>
+                                <a href="/TaskList/Home/AddUpdate" class="dropdown-item pointer visible-xs" data-value="4">
+                                    <i class="icon-plus" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Thêm"></i>
+                                    <span class="">Thêm công việc mới</span>
+                                </a>
+                                <a class="dropdown-item pointer visible-xs" data-value="5" onclick="viewRender('FROM_ME')">
+                                    <i class="icon-user-following" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tạo bởi tôi"></i>
+                                    <span class="">Tạo bởi tôi</span>
+                                </a>
+                                <a class="dropdown-item pointer visible-xs" data-value="6" onclick="viewRender('TO_ME')">
+                                    <i class="icon-user" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Giao cho tôi"></i>
+                                    <span class="">Giao cho tôi</span>
+                                </a>
+                                <a class="dropdown-item pointer visible-xs" data-value="7" onclick="viewRender('FOLLOW')">
+                                    <i class="icon-pin" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Theo dõi"></i>
+                                    <span class="">Theo dõi</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-ViewList" role="tabpanel" aria-labelledby="table-tab">
+                                    @* @Html.Partial("~/Areas/TaskList/Views/Home/ViewList.cshtml")*@
+                                </div>
+                                <div class="tab-pane fade" id="pills-ViewCalendar" role="tabpanel" aria-labelledby="calendar-tab">
+                                    @*@Html.Partial("~/Areas/TaskList/Views/Home/ViewCalendar.cshtml")*@
+                                </div>
+                                <div class="tab-pane fade" id="pills-ViewCol" role="tabpanel" aria-labelledby="col-tab">
+                                    @*@Html.Partial("~/Areas/TaskList/Views/Home/ViewCol.cshtml")*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    #divFullScreen.fullscreen {
+        z-index: 9999;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-radius: 0px;
+        border: none;
+    }
+
+    .table thead th {
+        font-size: 14px;
+    }
+
+    .fc-month-view .fc-scroller {
+        height: 100% !important;
+    }
+
+    .table th {
+        border-top: none;
+    }
+</style>
+@section scripts {
+    <script type="text/javascript">
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+        var obj = getUrlVars(window.location.href);
+        var pageView = "ViewList";
+        var objFilter = {
+            action: "",
+            status: obj.status ? obj.status : "",
+            taskType: ""
+        };
+        ShowPage();
+        function ShowPage(name) {
+            // khi chọn hiển thị view mới vào if
+            if (name) {
+                pageView = name;
+                objFilter = {
+                    action: "",
+                    status: "",
+                    taskType: ""
+                };
+            }
+            viewRender("", "", "");
+        }
+        function viewRender(action = '', status = '', taskType = '') {
+            $('#pills-' + pageView).html('');
+            if (action && (!objFilter.action || objFilter.action !== action)) {
+                if (action === 'ALL') {
+                    objFilter = {
+                        action: "",
+                        status: "",
+                        taskType: ""
+                    };
+                }
+                objFilter.action = action;
+            }
+            if (status && (!objFilter.status || objFilter.status !== status)) {
+                if (status === 'ALL') {
+                    status = '';
+                }
+                objFilter.status = status;
+            }
+            if (taskType && (!objFilter.taskType || objFilter.taskType !== taskType)) {
+                if (taskType === 'ALL') {
+                    taskType = '';
+                }
+                objFilter.taskType = taskType;
+            }
+            console.log(11111, objFilter)
+            $.ajax({
+                type: "GET",
+                url: "/TaskList/Home/" + pageView,
+                data: "typeAction=" + objFilter.action + "&status=" + objFilter.status + "&taskType=" + objFilter.taskType,
+                success: function (response) {
+                    $('#pills-' + pageView).html(response);
+                }
+            });
+        }
+        $(".dropdown-menu a").click(function (event) {
+            if ($(event.target).parents().hasClass('dropdown-nochange-value')) {
+                // console.log($(this).data('value'), $(this).text())
+                return;
+            }
+            $(this).parents(".dropdown").find('.btn').html($(this).text());
+            $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+            $(this).parents(".dropdown").find('.like-btn').html($(this).text());
+            $(this).parents(".dropdown").find('.like-btn').val($(this).data('value'));
+        });
+        function zoomPage() {
+            $('#divFullScreen').toggleClass('fullscreen');
+        }
+        function viewTaskListDetail(id) {
+            window.location.href = '/TaskList/Home/Detail?id=' + id;
+        }
+        //$(".table-qlcv").scroll(function () {
+        //    console.log('load more table-qlcv');
+        //    if ($(".table-qlcv").scrollTop() + $(".table-qlcv").height() >= $(".table-qlcv .table").height()) {
+        //        console.log('load more table-qlcv');
+        //    }
+        //});
+        function getColorStatus(StatusID) {
+            if (StatusID == 1) {
+                return "text-info";
+            }
+            else if (StatusID == 2) {
+                return "text-danger";
+            }
+            else if (StatusID == 3) {
+                return "text-test";
+            }
+            else if (StatusID == 4) {
+                return "text-success";
+            }
+        }
+        function ChangeStatus(TaskID, StatusType) {
+            $.ajax({
+                type: "GET",
+                url: "/TaskList/Home/ChangeStatus",
+                data: "TaskID=" + TaskID + "&StatusType=" + StatusType,
+                success: function (response) {
+                    if (response.StatusCode === "DONE") {
+                        notify('top', 'right', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', response.StatusMess);
+                    } else {
+                        notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', response.StatusMess);
+                    }
+                    viewRender("", "", "");
+
+                },
+                error: function (response) {
+                    notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Thất bại');
+                }
+
+            });
+        }
+        //var array = @Html.Raw(Json.Encode(@ViewBag.lstTasklist));
+        // console.log(321, array);
+    </script>
+
+}

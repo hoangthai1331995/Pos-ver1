@@ -1,0 +1,17 @@
+﻿@{
+    /**/
+
+    Layout = "";
+    BussinessModels.fitem control = (BussinessModels.fitem)ViewData["FormControl"];
+}
+<!-- Switch component css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/switchery/css/switchery.min.css">
+@if (control != null)
+{
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="" id="@control.key" name="@control.key">@control.display</div>
+        <input type="checkbox" class="js-single" id="@control.key" name="@control.key" @(control.value == "True" ? "checked" : "") />
+    </div>
+}
+
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/swithces.js"></script>

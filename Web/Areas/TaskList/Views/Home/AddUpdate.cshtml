@@ -1,0 +1,1368 @@
+﻿@model TaskList.Models.TasklistModel
+@{
+    List<TaskList.Models.ListTasklistStatusModel>
+        lstStatus = ViewBag.ListStatus;
+
+    /**/
+    /**/ }
+
+<link rel="stylesheet" href="/Content/Templates/Plugin/summernote/summernote-bs4.css">
+<link rel="stylesheet" href="/Content/Templates/GuruTemplate/bower_components/select2/css/select2.min.css" />
+<!-- Multi Select css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css" />
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/multiselect/css/multi-select.css" />
+<!-- custom-select.css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/custom-select.css">
+<!-- Date-time picker css -->
+@**@
+<!-- jquery file upload Frame work -->
+<link href="/Content/Templates/GuruTemplate/assets/pages/jquery.filer/css/jquery.filer.css" type="text/css" rel="stylesheet" />
+<link href="/Content/Templates/GuruTemplate/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
+<div class="page-header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"> </i> Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/TaskList/Home">Quản lý công việc</a></li>
+            <li class="breadcrumb-item"><a href="/TaskList/Home/AddUpdate">@(Model.TaskID > 0 ? "Sửa" : "Thêm mới")</a></li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <form method="post" enctype="multipart/form-data" id="editable-form" class="editable-form">
+                <input type="hidden" id="TaskID" name="TaskID" value="@Model.TaskID" />
+                <input type="hidden" id="IsActive" name="IsActive" value="1" />
+                <input type="hidden" id="IsFollow" name="IsFollow" value="@(Model.IsFollow == true ? 1 : 0)" />
+                <div class="card-body">
+                    <div class="row mt-2">
+                        <div class="col-md-8">
+                            <h5 class="card-title mb-2">Thông tin công việc</h5>
+                            <div class="form-group row m-1">
+                                <label for="txtTitle" class="col-sm-3 col-form-label">Loại công việc(*)</label>
+                                <div class="col-sm-9 d-flex p-0">
+                                    <select class="js-example-basic-single col-sm-12" id="TaskType" name="TaskType">
+                                        <option value="">- Chọn loại công việc -</option>
+                                        @if (Model != null && Model.TaskTypeList.Count() > 0)
+                                        {
+                                            foreach (BussinessObjects.SelectList gT in Model.TaskTypeList)
+                                            {
+                                                <option @(Model.TaskType == gT.Code ? "selected" : "") value="@gT.Code">@gT.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <button type="button" class="btn btn-outline-info btn-info btn-icon-text btn-sm ml-1" data-toggle="modal" data-target="#exampleModal" style="max-height: 35px;">
+                                        <!-- fa fa-bookmark -->
+                                        <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Thêm nhóm công việc mới"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group row m-1">
+                                <label for="txtTitle" class="col-sm-3 col-form-label">Công việc cha</label>
+                                <div class="col-sm-9 d-flex p-0">
+                                    <select class="js-data-example-ajax-2 col-sm-12" id="ParentID" name="ParentID">
+                                        <option selected value="0">Không chọn</option>
+                                        @if (Model != null && Model.ParentID != 0)
+                                        {
+                                            <option selected value="@Model.ParentID">@Model.ParentName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row m-1">
+                                <label for="txtTitle" class="col-sm-3 col-form-label">Tên công việc(*)</label>
+                                <div class="col-sm-9 d-flex p-0">
+                                    <input type="text" class="form-control max-length-title" id="TaskTitle" name="TaskTitle" maxlength="250" value="@Model.TaskTitle" placeholder="Tên công việc">
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-2 mt-3">Mô tả công việc</h5>
+                            <textarea class="input-block-level" id="Description" name="ItemsDesc" rows="6">
+                                @{
+                                    if(Model.ItemsDesc != null)
+                                    {
+                                    HtmlString htmlString = new HtmlString(Model.ItemsDesc);
+                                    @htmlString
+                                    }
+                                }    
+                            </textarea>
+                            <input type="hidden" id="CheckList" name="CheckList" value="@Model.CheckList" />
+                            <h5 class="card-title mb-2 mt-3">Checklist</h5>
+                            <div class="">
+                                <div class="input-group input-group-button">
+                                    <input type="text" class="form-control add_task_todo" placeholder="Thêm Checklist" name="task-insert">
+                                    <button type=button id="add-btn" class="btn btn-primary input-group-addon">Thêm</button>
+                                </div>
+                                <div class="new-task" id="ListCheckList">
+                                    @if (Model != null && Model.CheckListItemList != null)
+                                    {
+                                        foreach (TaskList.Models.CheckListItem item in Model.CheckListItemList)
+                                        {
+                                            <div class="to-do-list">
+                                                <div class="checkbox-fade fade-in-primary">
+                                                    <label class="check-task @(item.IsCheck ? "done-task" : "")">
+                                                        <input id="CheckList_@item.CheckListID" type="checkbox" value="" @(item.IsCheck ? "checked" : "")>
+                                                        <span class="cr">
+                                                            <i class="cr-icon fa fa-check txt-primary"></i>
+                                                        </span>
+                                                        <span>@item.CheckListTitle</span>
+                                                    </label>
+                                                </div>
+                                                <div class="f-right">
+                                                    <a href="javascript:void(0);" class="delete_todolist">
+                                                        <i class="fa fa-times-circle"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <h5 class="card-title mb-2">Người thực hiện</h5>
+                            </div>
+                            <div class="form-group row m-1">
+                                <label for="txtTitle" class="col-sm-3 col-form-label">Đối tượng thực hiện(*)</label>
+                                <div class="col-sm-9 d-flex p-0">
+                                    <select class="js-example-basic-single col-sm-12" id="ObjectInChargeType" name="ObjectInChargeType">
+                                        <option value="">- Chọn đối tượng thực hiện -</option>
+                                        @if (Model != null && Model.ObjectInChargeTypeList.Count() > 0)
+                                        {
+                                            foreach (BussinessObjects.SelectList gT in Model.ObjectInChargeTypeList)
+                                            {
+                                                <option @(Model.ObjectInChargeType == gT.Code ? "selected" : "") value="@gT.Code">@gT.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" id="inputObjectInCharge" name="ObjectInCharge" value="@Model.ObjectInCharge" />
+                            <div class="form-group row m-1">
+                                <label for="txtTitle" class="col-sm-3 col-form-label">Danh sách thực hiện(*)</label>
+                                <div class="col-sm-9 p-0">
+                                    <div id="divObjectInCharge">
+                                        <select class="js-example-basic-single col-sm-12" id="ObjectInCharge">
+                                            <option value="0">- Chọn người thực hiện -</option>
+                                        </select>
+                                    </div>
+                                    <div id="divObjectInChargePerson" class="mt-1 d-none">
+                                        <select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargePerson"></select>
+                                    </div>
+                                    <div class="form-group row mt-2 mx-0">
+                                        <div class="col-sm-12">
+                                            <span class="merge-now" data-toggle="modal" data-target="#mergeModal"></span>
+                                            <div class="row" id="boxObjectInChargeList">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <h5 class="card-title mb-2 mt-2">Chịu trách nhiệm theo dõi</h5>
+                            </div>
+                            <input type="hidden" id="inputPersonsControl" name="PersonsControl" value="@Model.PersonsControl" />
+                            <div class="form-group row m-1">
+                                <label for="txtTitle" class="col-sm-3 col-form-label">Người chịu trách nhiệm</label>
+                                <div class="col-sm-9 p-0">
+                                    <div id="divObjectInChargeFollow" class="">
+                                        <select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow"></select>
+                                    </div>
+                                    <div class="form-group row mt-2 mx-0">
+                                        <div class="col-sm-12">
+                                            <span class="merge-now" data-toggle="modal" data-target="#mergeModal"></span>
+                                            <div class="row" id="boxObjectInChargeFollowList">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="OptionString" name="OptionString" value="@Model.OptionString" />
+                            <div id="divOptionList">
+                                @if (Model != null && Model.OptionListView.Count() > 0)
+                                {
+                                    foreach (TaskList.Models.OptionListModel gT in Model.OptionListView)
+                                    {
+                                        <div class="row">
+                                            <div class="col-12 mt-1">
+                                                <div class="checkbox-fade fade-in-primary">
+                                                    <label>
+                                                        <input id="Option_@gT.Code" type="checkbox" value="@gT.Code" @(@gT.Val ? "checked" : "")>
+                                                        <span class="cr">
+                                                            <i class="cr-icon fa fa-check txt-primary"></i>
+                                                        </span>
+                                                        <span>@gT.Name</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-4 f-s-13">
+                            @if (Model.TaskID > 0)
+                            {
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <i class="icon-user-following text-info mr-1"></i>
+                                        Người tạo
+                                    </div>
+                                    <input type="hidden" name="UserCreated" value="UserCreated" />
+                                    <div class="col-6 text-right" id="UserCreated">
+                                        @Model.UserCreatedName
+                                    </div>
+                                </div>
+                            }
+                            <div class="row">
+                                <div class="col-6 mt-1" style="padding-left: 9px">
+                                    <span class="icon--priority text-info" data-letter="M" style="margin-right: 4px">
+                                        <span class="svg-icon svg-fill-info" style="top: 4px;">
+                                            <svg id="svgicon--big-sector-62_5" viewBox="0 0 20 20" width="20px" height="20px"><path d="M10 0c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.969 9.969 0 0 1-7.071-2.929l1.414-1.414A8 8 0 1 0 10 2V0z" fill-rule="evenodd"></path></svg>
+                                        </span>
+                                    </span>
+                                    Độ ưu tiên
+                                </div>
+                                <div class="col-6 text-right mt-2">
+                                    <input type="hidden" id="PriorityLevel" name="PriorityLevel" value="@Model.PriorityLevel" />
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-info btn-info btn-sm dropdown-toggle ml-2" type="button" id="DropdownPriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="@Model.PriorityLevel">@(Model.PriorityName != null ? Model.PriorityName : "Không chọn")</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownPriority" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            @if (Model.PriorityList != null)
+                                            {
+                                                foreach (BussinessObjects.SelectList item in Model.PriorityList)
+                                                {
+                                                    <a class="dropdown-item pointer" onclick="setValueInputByID('StatusType','@item.Code')" data-value="@item.Code">@item.Name</a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mt-1" style="padding-left: 9px">
+                                    <span class="icon--priority text-info" data-letter="M" style="margin-right: 4px">
+                                        <span class="svg-icon svg-fill-info" style="top: 4px;">
+                                            <svg id="svgicon--big-sector-62_5" viewBox="0 0 20 20" width="20px" height="20px"><path d="M10 0c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.969 9.969 0 0 1-7.071-2.929l1.414-1.414A8 8 0 1 0 10 2V0z" fill-rule="evenodd"></path></svg>
+                                        </span>
+                                    </span>
+                                    Trạng thái
+                                </div>
+                                <div class="col-6 text-right mt-2">
+                                    <input type="hidden" id="StatusType" name="StatusType" value="@Model.StatusType" />
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-info btn-info btn-sm dropdown-toggle ml-2" type="button" id="DropdownStatusType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="@Model.StatusType">@(Model.StatusName != null ? Model.StatusName : "Không chọn")</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownStatus" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            @if (lstStatus != null)
+                                            {
+                                                foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                                                {
+                                                    <a class="dropdown-item pointer" onclick="setValueInputByID('StatusType','@status.Code')" data-value="@status.Code">@status.Name</a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-2" />
+                            <div class="row mt-2">
+                                <div class="col-5 col-lg-6 mt-1">
+                                    <i class="icon-calendar text-info mr-1"></i>
+                                    Ngày tạo
+                                </div>
+                                <div class="col-7 col-lg-6 d-flex">
+                                    <div class="form-group mb-0 w-100">
+                                        <div class='input-group date mb-0' id='datetimepicker1'>
+                                            <input id="DateCreated" name="DateCreated" class="form-control text-right datepicker" type="text" value="@(Model.TaskID > 0 ? Model.DateCreated.ToString("HH:ss dd/MM/yyyy") : DateTime.Now.ToString("HH:mm dd/MM/yyyy"))" placeholder="Giờ" disabled="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-5 col-lg-6 mt-1">
+                                    <i class="icon-calendar text-info mr-1"></i>
+                                    Ngày bắt đầu
+                                </div>
+                                <div class="col-7 col-lg-6 d-flex">
+                                    <div class="form-group mb-0 w-100">
+                                        <div class='input-group date mb-0'>
+                                            <input id="FromDateTime" name="FromDateTime" class="form-control text-right datepicker" type="text" placeholder="Giờ" value="@(Model.TaskID > 0 ? Model.FromDateTime.ToString("HH:ss dd/MM/yyyy") : DateTime.Now.ToString("HH:mm dd/MM/yyyy"))">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-5 col-lg-6 mt-1">
+                                    <i class="icon-calendar text-info mr-1"></i>
+                                    Ngày kết thúc
+                                </div>
+                                <div class="col-7 col-lg-6 d-flex">
+                                    <div class="form-group mb-0 w-100">
+                                        <div class='input-group date mb-0' id='datetimepicker3'>
+                                            <input id="ToDateTime" name="ToDateTime" class="form-control text-right datepicker" type="text" value="@(Model.TaskID > 0 ? Model.ToDateTime.ToString("HH:ss dd/MM/yyyy") : DateTime.Now.ToString("HH:mm dd/MM/yyyy"))" placeholder="Giờ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-5 col-lg-6 mt-1">
+                                    <i class="icon-calendar text-info mr-1"></i>
+                                    Ngày hoàn thành
+                                </div>
+                                <div class="col-7 col-lg-6 d-flex">
+                                    <div class="form-group mb-0 w-100">
+                                        <div class='input-group date mb-0' id='datetimepicker4'>
+                                            <input id="CompletedDatetime" name="CompletedDatetime" class="form-control text-right datepicker" value="@(Model.TaskID > 0 ? Model.CompletedDatetime.ToString("HH:ss dd/MM/yyyy") : DateTime.Now.ToString("HH:mm dd/MM/yyyy"))" type="text" placeholder="Giờ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="accordion simple-accordion" id="accordion" role="tablist">
+                                        <div class="">
+                                            <input type="hidden" id="IsRepeated" name="IsRepeated" value="@Model.IsRepeated" />
+                                            <div class="d-flex justify-content-between align-items-center" role="tab" id="heading-1">
+                                                <div class="f-s-13 mb-0 flex-1">
+                                                    <div class="form-check collapsed card-title mb-0">
+                                                        <div class="checkbox-fade fade-in-info">
+                                                            <label for="repeatCheckbox">
+                                                                <input id="repeatCheckbox" type="checkbox" @(Model.IsRepeated ? "checked" : "")>
+                                                                <span class="cr">
+                                                                    <i class="cr-icon fa fa-check txt-info"></i>
+                                                                </span>
+                                                                <span>Lặp lại</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="RepeatType" name="RepeatType" value="@Model.RepeatType" />
+                                            <div id="collapse-1" class="collapse" role="tabpanel" aria-labelledby="heading-1" data-parent="#accordion">
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <div class="template-demo d-flex">
+                                                            <ul class="active-li-safe-color nav" id="pills-tab" role="tablist">
+                                                                <li class="">
+                                                                    <a class="@(Model.RepeatType == "BYDAY" ? "active show" : "") @(Model.TaskID <= 0 ? "active show" : "")" id="day-tab" data-toggle="pill" href="#pills-day" role="tab" aria-controls="pills-day" aria-selected="true" data-type="BYDAY">
+                                                                        <button type="button" class="f-s-12 btn btn-outline-info btn-info btn-icon-text btn-sm">
+                                                                            Theo ngày
+                                                                        </button>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="">
+                                                                    <a class="@(Model.RepeatType == "BYWEEK" ? "active show" : "")" id="week-tab" data-toggle="pill" href="#pills-week" role="tab" aria-controls="pills-week" aria-selected="false" data-type="BYWEEK">
+                                                                        <button type="button" class="f-s-12 btn btn-outline-info btn-info btn-icon-text btn-sm">
+                                                                            Theo tuần
+                                                                        </button>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="">
+                                                                    <a class="@(Model.RepeatType == "BYMONTH" ? "active show" : "")" id="month-tab" data-toggle="pill" href="#pills-month" role="tab" aria-controls="pills-month" aria-selected="false" data-type="BYMONTH">
+                                                                        <button type="button" class="f-s-12 btn btn-outline-info btn-info btn-icon-text btn-sm">
+                                                                            Theo tháng
+                                                                        </button>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="row mt-2">
+                                                            <div class="col-12 mt-1">
+                                                                <i class="icon-calendar text-info mr-1"></i>
+                                                                Giờ bắt đầu
+                                                            </div>
+                                                            <input type="hidden" id="InTimeString" name="InTimeString" value="@Model.InTimeString" />
+                                                            <div id="list-hours">
+                                                                <div class="col-12 mt-2">
+                                                                    <div class="form-group mb-0">
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label class="form-check-label-js">
+                                                                                <input id="InTimeString_8" type="checkbox" value="8">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                </span>
+                                                                                <span>08h</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label class="form-check-label-js">
+                                                                                <input id="InTimeString_10" type="checkbox" value="10">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                </span>
+                                                                                <span>10h</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label class="form-check-label-js">
+                                                                                <input id="InTimeString_12" type="checkbox" value="12">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                </span>
+                                                                                <span>12h</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label class="form-check-label-js">
+                                                                                <input id="InTimeString_14" type="checkbox" value="14">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                </span>
+                                                                                <span>14h</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label class="form-check-label-js">
+                                                                                <input id="InTimeString_16" type="checkbox" value="16">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                </span>
+                                                                                <span>16h</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label class="form-check-label-js">
+                                                                                <input id="InTimeString_18" type="checkbox" value="18">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                </span>
+                                                                                <span>18h</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label class="form-check-label-js">
+                                                                                <input id="InTimeString_20" type="checkbox" value="20">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                </span>
+                                                                                <span>20h</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label class="form-check-label-js">
+                                                                                <input id="InTimeString_22" type="checkbox" value="22">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                </span>
+                                                                                <span>22h</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-5 col-lg-6 mt-1">
+                                                                <i class="icon-calendar text-info mr-1"></i>
+                                                                Ngày bắt đầu lặp
+                                                            </div>
+                                                            <div class="col-7 col-lg-6">
+                                                                <div class="form-group mb-0 w-100">
+                                                                    <div class="form-group mb-0 w-100">
+                                                                        <div class='input-group date mb-0'>
+                                                                            <input id="FromDateRepeat" name="FromDateRepeat" class="form-control text-right datepicker2" value="@(Model.TaskID > 0 ? Model.FromDateRepeat.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))" type="text" placeholder="Giờ">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-5 col-lg-6 mt-1">
+                                                                <i class="icon-calendar text-info mr-1"></i>
+                                                                Ngày kết thúc lặp
+                                                            </div>
+                                                            <div class="col-7 col-lg-6">
+                                                                <div class="form-group mb-0 w-100">
+                                                                    <div class="form-group mb-0 w-100">
+                                                                        <div class='input-group date mb-0'>
+                                                                            <input id="ToDateRepeat" name="ToDateRepeat" class="form-control text-right datepicker2" value="@(Model.TaskID > 0 ? Model.ToDateRepeat.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))" type="text" placeholder="Giờ">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @*<div class="form-group mb-0 w-100">
+                                                                        <div class='input-group date mb-0' id='datetimepicker7'>
+                                                                            <input id="ToDateRepeat" name="ToDateRepeat" class="form-control text-right" type="text" placeholder="Ngày">
+                                                                            <span class="input-group-addon ">
+                                                                                <span class="fa fa-calendar"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>*@
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-content mt-2" id="pills-tabContent">
+                                                            <div class="tab-pane fade @(Model.RepeatType == "BYDAY" ? "active show" : "") @(Model.TaskID <= 0 ? "active show" : "")" id="pills-day" role="tabpanel" aria-labelledby="day-tab">
+                                                                Thiết lập sẽ được lặp lại mỗi ngày bắt đầu từ ngày
+                                                                <span class="text-test start-date-title">
+                                                                </span> vào lúc
+                                                                <span class="text-test start-time-title">
+                                                                </span>
+                                                            </div>
+                                                            <div class="tab-pane fade @(Model.RepeatType == "BYWEEK" ? "active show" : "")" id="pills-week" role="tabpanel" aria-labelledby="week-tab">
+                                                                <input type="hidden" id="InWeekdayString" name="InWeekdayString" value="@Model.InWeekdayString" />
+                                                                <div class="row" id="list-days">
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <div class="checkbox-fade fade-in-primary">
+                                                                                <label class="form-check-label-js">
+                                                                                    <input id="InWeekdayString_1" type="checkbox" value="1">
+                                                                                    <span class="cr">
+                                                                                        <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                    </span>
+                                                                                    <span>Thứ 2</span>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="checkbox-fade fade-in-primary">
+                                                                                <label class="form-check-label-js">
+                                                                                    <input id="InWeekdayString_2" type="checkbox" value="2">
+                                                                                    <span class="cr">
+                                                                                        <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                    </span>
+                                                                                    <span>Thứ 3</span>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="checkbox-fade fade-in-primary">
+                                                                                <label class="form-check-label-js">
+                                                                                    <input id="InWeekdayString_3" type="checkbox" value="3">
+                                                                                    <span class="cr">
+                                                                                        <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                    </span>
+                                                                                    <span>Thứ 4</span>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="checkbox-fade fade-in-primary">
+                                                                                <label class="form-check-label-js">
+                                                                                    <input id="InWeekdayString_4" type="checkbox" value="4">
+                                                                                    <span class="cr">
+                                                                                        <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                    </span>
+                                                                                    <span>Thứ 5</span>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="checkbox-fade fade-in-primary">
+                                                                                <label class="form-check-label-js">
+                                                                                    <input id="InWeekdayString_5" type="checkbox" value="5">
+                                                                                    <span class="cr">
+                                                                                        <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                    </span>
+                                                                                    <span>Thứ 6</span>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="checkbox-fade fade-in-primary">
+                                                                                <label class="form-check-label-js">
+                                                                                    <input id="InWeekdayString_6" type="checkbox" value="6">
+                                                                                    <span class="cr">
+                                                                                        <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                    </span>
+                                                                                    <span>Thứ 7</span>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="checkbox-fade fade-in-primary">
+                                                                                <label class="form-check-label-js">
+                                                                                    <input id="InWeekdayString_7" type="checkbox" value="7">
+                                                                                    <span class="cr">
+                                                                                        <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                    </span>
+                                                                                    <span>Chủ nhật</span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12" id="title-tab-week">
+                                                                        Thiết lập sẽ được lặp lại vào
+                                                                        <span class="text-test" id="textDays">
+                                                                        </span> bắt đầu từ ngày <span class="text-test start-date-title"></span> vào lúc
+                                                                        <span class="text-test start-time-title">
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane fade @(Model.RepeatType == "BYMONTH" ? "active show" : "")" id="pills-month" role="tabpanel" aria-labelledby="month-tab">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        Lặp lại vào ngày
+                                                                    </div>
+                                                                    <input type="hidden" id="InMonthdayString" name="InMonthdayString" value="@Model.InMonthdayString">
+                                                                    <div id="list-days-on-month">
+                                                                        <div class="col-12 mt-2">
+                                                                            <div class="form-group mb-0">
+                                                                                @for (var i = 1; i <= 31; i++)
+                                                                                {
+                                                                                    <div class="checkbox-fade fade-in-primary">
+                                                                                        <label class="form-check-label-js">
+                                                                                            <input id="InMonthdayString_@i" type="checkbox" value="@i">
+                                                                                            <span class="cr">
+                                                                                                <i class="cr-icon fa fa-check txt-primary"></i>
+                                                                                            </span>
+                                                                                            @if (i < 10)
+                                                                                            {
+                                                                                                <span>@i.ToString() &nbsp; </span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span>@i.ToString() </span>
+                                                                                            }
+
+                                                                                        </label>
+                                                                                    </div>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12 mt-1">
+                                                                        Thiết lập sẽ được lặp lại vào ngày
+                                                                        <span class="text-test" id="day-repeat-title">
+                                                                        </span> hàng tháng, bắt đầu từ ngày <span class="text-test start-date-title"></span> vào lúc
+                                                                        <span class="text-test start-time-title">
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-2" />
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <!-- <i class="fa fa-file text-info mr-1 mt-1"></i> -->
+                                    <h5 class="card-title mb-2">Đính kèm</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="AttachFile">
+                                        <p class="text-danger">Lưu ý : chỉ được chọn các dạng file (png, jpg, jpeg, bmp, word, excel, pdf, ppt...)</p>
+                                        <input type="file" name="AttachFile" id="AttachFile" multiple="multiple">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mt-2" id="ListFile">
+                                    <input type="hidden" id="FileString" name="FileString" value="@Model.FileString" />
+                                    @if (Model.FileStringItemList != null)
+                                    {
+                                        foreach (TaskList.Models.FileStringItem item in Model.FileStringItemList)
+                                        {
+                                            <div class="to-do-list file-download-list position-relative">
+                                                <a href="@item.FilePath" target="_blank" class="download">
+                                                    <i class="fa fa-file text-info mr-1 ml-2"></i>
+                                                    @item.FileName
+                                                </a>
+                                                <div class="i-delete-file">
+                                                    <a href="javascript:void(0);" class="delete_todolist" onclick="deletefile('@item.FilePath')">
+                                                        <i class="fa fa-times-circle"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-1">
+                    <div class="text-left">
+                        <input type="submit" onclick="return submit_validate();" class="btn btn-primary btn-sm btn-save" value="Lưu">
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-md" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Thêm nhóm công việc mới</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body pt-0 pb-0">
+                                <div class="row mt-2">
+                                    <div class="col-md-12 mb-2">
+                                        <div class="form-group row m-1">
+                                            <label for="txtCusForm" class="col-sm-3 col-form-label">Tên nhóm</label>
+                                            <div class="col-sm-9 d-flex p-0">
+                                                <input type="text" class="form-control max-length-title" id="TitleTaskType" name="Title" maxlength="250" value="" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button onclick="addTaskType()" type="button" class="btn btn-primary btn-sm">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    tr:first-child td {
+        border-top: none;
+    }
+
+    .ajax-file-upload-container {
+        min-height: 0px;
+    }
+
+    @@media(max-width: 767px) {
+        .datepicker.datepicker-dropdown {
+            left: 15px !important;
+        }
+    }
+
+    .bootstrap-datetimepicker-widget {
+        width: 260px !important;
+        display: block !important;
+    }
+
+    .icon-time {
+        background-position: -48px -24px;
+    }
+
+    .icon-time {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin-top: 1px;
+        line-height: 14px;
+        vertical-align: text-top;
+        background-image: url(https://tarruda.github.io/bootstrap-datetimepicker/assets/img/glyphicons-halflings.png);
+        /*background-position: 14px 14px;*/
+        background-repeat: no-repeat;
+    }
+
+    .jFiler-theme-default .jFiler-input-button {
+        background-color: #4680ff;
+        background-image: none;
+        color: #fff;
+    }
+
+    .jFiler-theme-default .jFiler-input {
+        width: 100%;
+    }
+
+    .to-do-list:last-child {
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 15px;
+    }
+    
+</style>
+@section scripts {
+    <!-- Todo js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/todo/todo.js"></script>
+    <script src="/Content/Templates/Plugin/summernote/summernote-bs4.min.js"></script>
+    <!-- Select 2 js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/select2/js/select2.full.min.js"></script>
+    <!-- Multiselect js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js">
+
+
+    </script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/multiselect/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/select2-custom.js"></script>
+
+    <!-- Bootstrap date-time-picker js -->
+    @**@
+    <!-- jquery file upload js -->
+    <script src="/Content/Templates/GuruTemplate/assets/pages/jquery.filer/js/jquery.filer.min.js"></script>
+    @*<script src="/Content/Templates/GuruTemplate/assets/js/form-action.js"></script>*@
+
+    <script type="text/javascript">
+
+
+
+        $("#heading-1 input[type=checkbox]").on("click", function (e) {
+            if ($("#heading-1 input:checked").length) {
+                $("#collapse-1").toggle();
+            }
+            if (!$("#heading-1 input:checked").length) {
+                $("#collapse-1").toggle();
+            }
+        });
+        if ('@Model.IsRepeated'.toString() != 'False') {
+            $("#collapse-1").toggle();
+        }
+        if ($("#Description").length) {
+            $('#Description').summernote({
+                toolbar: [
+                    ['style', ['style']],
+                    ['fontsize', ['fontsize']],
+                    ['font', ['bold', 'italic', 'underline']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert', ['picture', 'video', 'link']],//'hr'
+                    ['table', ['table']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                ],
+                height: 300,
+                tabsize: 2
+            });
+        }
+        (function ($) {
+            'use strict';
+
+            // if ($("#datetimepicker5").length) {
+            //     $('#datetimepicker5').datetimepicker({
+            //         format:'HH:mm',
+            //         defaultDate:dateNow,
+            //         locale:'vi',
+            //         icons: {
+            //             time: "icon-clock",
+            //             date: "icon-calendar"
+            //         },
+            //     }).on("dp.change", function (e) {
+            //         $('.start-time-title').html($("#" + 'TimeStartRepeat').val())
+            //     });
+            // }
+
+            $('#filer_input').filer({
+                limit: 3,
+                maxSize: 3,
+                // extensions: ['jpg', 'jpeg', 'png', 'gif', 'psd'],
+                changeInput: true,
+                showThumbs: true,
+                addMore: true
+            });
+            // if ($("#fileuploader").length) {
+            //     $("#fileuploader").uploadFile({
+            //       url: "",
+            //       fileName: "myfile"
+            //     });
+            // }
+        })(jQuery);
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        var hhmm = today.toLocaleTimeString().substr(0, 5);
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = dd + '/' + mm;
+        $('.start-date-title').html(today)
+        // $('.start-time-title').html(hhmm)
+        $("#list-days-on-month .form-check-label-js input[type=checkbox]").on("click", function (e) {
+            var arrDaysMonth = [];
+            var arrDaysMonthCode = [];
+            $("#list-days-on-month input:checked").each(function () {
+                arrDaysMonth.push($(this).parent().text().trim())
+                arrDaysMonthCode.push($(this).val())
+                var text = arrDaysMonth.join(', ');
+                var text2 = arrDaysMonthCode.join(',');
+                $("#day-repeat-title").html(text)
+                $("#InMonthdayString").val(text2)
+            })
+            if (!$("#list-days-on-month input:checked").length) {
+                $("#day-repeat-title").html('')
+            }
+        });
+        $("#list-hours .form-check-label-js input[type=checkbox]").on("click", function (e) {
+            var arrhours = [];
+            var arrhoursCode = [];
+            $("#list-hours input:checked").each(function () {
+                arrhours.push($(this).parent().text().trim())
+                arrhoursCode.push($(this).val())
+                var text = arrhours.join(', ');
+                var text2 = arrhoursCode.join(',');
+                $(".start-time-title").html(text)
+                $("#InTimeString").val(text2)
+            })
+            if (!$("#list-hours input:checked").length) {
+                $(".start-time-title").html('')
+            }
+        });
+        $("#list-days .form-check-label-js input[type=checkbox]").on("click", function (e) {
+            var arrDays = [];
+            var arrDaysCode = [];
+            $("#list-days input:checked").each(function () {
+                arrDays.push($(this).parent().text().trim())
+                arrDaysCode.push($(this).val())
+                var text = arrDays.join(', ');
+                var text2 = arrDaysCode.join(',');
+                $("#textDays").html(text)
+                $("#InWeekdayString").val(text2)
+            })
+            if (!$("#list-days input:checked").length) {
+                $("#textDays").html('')
+            }
+        });
+        $("#day-repeat").on('change', function (e) {
+            $("#day-repeat-title").html(e.target.value)
+        })
+        $(".dropdown-menu a").click(function () {
+            $(this).parents(".dropdown").find('.btn').html($(this).text());
+            $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+        });
+        var listTempPerson = [];
+        var listTempFollow = [];
+        function LoadDynamicSelectList(targetId, sourceId, requestUrlParam, seletedAttr, dataArrayAdd) {
+            var selected = $('#' + sourceId).attr(seletedAttr);
+            $.ajax({
+                type: "POST",
+                url: requestUrlParam,
+                success: function (response) {
+                    var html = '';
+                    if (typeof response != 'undefined') {
+                        $.map(response, function (item) {
+                            html += '<option value="' + item.Code + '">' + item.Name + '</option>';
+                        });
+                    }
+                    $('#' + targetId).html(html);
+                    $('#' + targetId).val(selected).trigger('change');
+                    // danh cho multi
+                    //if (dataArrayAdd != null && dataArrayAdd.length > 0) {
+                    //    var dataarray = data.split(",");
+                    //    $("#" + targetId).val(dataarray).select2();
+                    //}
+                    // add Div list user
+                    if (typeof dataArrayAdd !== 'undefined' && dataArrayAdd !== null) {
+                        var arr = [];
+                        for (var i = 0; i < dataArrayAdd.length; i++) {
+                            pos = response.map(function (e) { return e.Code; }).indexOf(dataArrayAdd[i].toString());
+                            arr.push(response[pos]);
+                        }
+                        listTempPerson = arr;
+                        mapListPerson('boxObjectInChargeList', listTempPerson);
+                    }
+                }
+            });
+        }
+        // add Html list person
+        function LoadDynamicPersonList(requestUrlParam) {
+            $.ajax({
+                type: "POST",
+                url: requestUrlParam,
+                success: function (response) {
+                    if (typeof response != 'undefined') {
+                        listTempPerson = response;
+                        mapListPerson('boxObjectInChargeList', listTempPerson);
+                    }
+                }
+            });
+        }
+        // add Html list follow
+        function LoadDynamicFollowList(requestUrlParam) {
+            $.ajax({
+                type: "POST",
+                url: requestUrlParam,
+                success: function (response) {
+                    if (typeof response != 'undefined') {
+                        listTempFollow = response;
+                        mapListPerson('boxObjectInChargeFollowList', listTempFollow);
+                    }
+                }
+            });
+        }
+        function DelPerson(code, typeList) {
+            if (typeList == 'boxObjectInChargeList') {
+                // xóa người thực hiện
+                pos = listTempPerson.map(function (e) { return e.Code; }).indexOf(code.toString());
+                if (pos >= 0) {
+                    listTempPerson.splice(pos, 1);
+                }
+                mapListPerson('boxObjectInChargeList', listTempPerson);
+            } else if (typeList == 'boxObjectInChargeFollowList') {
+                // xóa người theo dõi
+                pos = listTempFollow.map(function (e) { return e.Code; }).indexOf(code.toString());
+                if (pos >= 0) {
+                    listTempFollow.splice(pos, 1);
+                }
+                mapListPerson('boxObjectInChargeFollowList', listTempFollow);
+            }
+
+        }
+        function mapListPerson(targetView, list) {
+            if (list) {
+                var strTag = ''
+                $.map(list, function (field) {
+                    if (field) {
+                        //var guid = '\'' + field.Guid + '\'';
+                        //var fieldCode = '\'' + field.Code + '\'';
+                        //var index = '\'' + field.Index + '\'';
+                        //var fieldName = '\'' + field.Name + '\'';
+                        strTag += '<div class="col-form-label m-r-10 hashTagBox">';
+                        strTag += '<span onclick="DelPerson(\'' + field.Code + '\',' + '\'' + targetView + '\');">×</span>';
+                        strTag += '<span class="temp-field-' + field.Code + '" title="">' + field.Name + '</span></div>';
+                    }
+                });
+                $('#' + targetView).html(strTag);
+            }
+        }
+        $('#ObjectInChargeTypeList').val('@Model.ObjectInChargeType').trigger('change');
+        // nếu sửa có Đối tượng thực hiện
+        if ('@Model.ObjectInChargeType' != '') {
+            var data = '@Model.ObjectInCharge';
+            var dataarray = data.split(",");
+            if ('@Model.ObjectInChargeType' != 'PERSON') {
+                // ObjectInChargeType là group, title, bo, rsm thì sẽ load hết list
+                var requestUrlParam = '/TaskList/Home/LoadObjectInChargeType?itemCode=' + '@Model.ObjectInChargeType';
+                LoadDynamicSelectList('ObjectInCharge', 'ObjectInChargeType', requestUrlParam, 'data-type', dataarray);
+            } else {
+                $('#divObjectInChargePerson').removeClass('d-none');
+                $('#divObjectInCharge').addClass('d-none');
+                // get name split
+                var data2 = '@Model.ObjectInChargeName';
+                var dataarray2 = data2.split(",");
+                var arr = [];
+                for (var i = 0; i < dataarray.length; i++) {
+                    arr.push({
+                        Code: dataarray[i],
+                        Name: dataarray2[i],
+                    })
+                }
+                listTempPerson = arr;
+                mapListPerson('boxObjectInChargeList', listTempPerson);
+                // var requestUrlParam2 = '/TaskList/Home/LoadObjectInChargeTypeByUser?ItemType=' + '@Model.ObjectInChargeType' + '&lstItemCode=' + '@Model.ObjectInCharge';
+                // LoadDynamicPersonList(requestUrlParam2);
+            }
+        }
+        // nếu sửa có Người chịu trách nhiệm
+        if ('@Model.PersonsControl' != '') {
+            // var requestUrlParam3 = '/TaskList/Home/LoadObjectInChargeTypeByUser?ItemType=PERSON&lstItemCode=' + '@Model.PersonsControl';
+            // LoadDynamicFollowList(requestUrlParam3);
+            // get name split
+            var data = '@Model.PersonsControl';
+            var dataarray = data.split(",");
+            var data2 = '@Model.PersonsControlName';
+            var dataarray2 = data2.split(",");
+            var arr = [];
+            for (var i = 0; i < dataarray.length; i++) {
+                arr.push({
+                    Code: dataarray[i],
+                    Name: dataarray2[i],
+                })
+            }
+            listTempFollow = arr;
+            mapListPerson('boxObjectInChargeFollowList', listTempFollow);
+        }
+        $('#ObjectInChargeType').change(function () {
+            $('#boxObjectInChargeList').html('');
+            if ($(this).val() != 'PERSON') {
+                listTempPerson = [];
+                $('#divObjectInChargePerson').addClass('d-none');
+                $('#divObjectInCharge').removeClass('d-none');
+                var requestUrlParam = '/TaskList/Home/LoadObjectInChargeType?itemCode=' + $(this).val();
+                LoadDynamicSelectList('ObjectInCharge', 'ObjectInChargeType', requestUrlParam, 'data-type');
+            } else {
+                $('#divObjectInChargePerson').removeClass('d-none');
+                $('#divObjectInCharge').addClass('d-none');
+                listTempPerson = [];
+            }
+        });
+        // Nếu có người tạo
+        @*if ('@Model.UserCreated' != '') {
+            $('#UserCreated').html(response[0].Name);
+            $.ajax({
+                type: "POST",
+                url: '/TaskList/Home/LoadObjectInChargeTypeByUser?ItemType=PERSON&lstItemCode=' + '@Model.UserCreated',
+                success: function (response) {
+                    if (typeof response != 'undefined' && response.length) {
+                        $('#UserCreated').html(response[0].Name);
+                    }
+                }
+            });
+        }*@
+        $('#ObjectInCharge').change(function () {
+            if ($(this).val() != null) {
+                var obj = {
+                    Name: $('#ObjectInCharge option:selected').text(),
+                    Code: $(this).val()
+                }
+                listTempPerson.push(obj);
+                mapListPerson('boxObjectInChargeList', listTempPerson);
+            }
+        });
+        $('#ObjectInChargePerson').change(function () {
+            if ($(this).val() != null) {
+                var obj = {
+                    Name: $('#ObjectInChargePerson option:selected').text(),
+                    Code: $(this).val()
+                }
+                listTempPerson.push(obj);
+                mapListPerson('boxObjectInChargeList', listTempPerson);
+            }
+        });
+        $('#ObjectInChargeFollow').change(function () {
+            if ($(this).val() != null) {
+                var obj = {
+                    Name: $('#ObjectInChargeFollow option:selected').text(),
+                    Code: $(this).val()
+                }
+                listTempFollow.push(obj);
+                mapListPerson('boxObjectInChargeFollowList', listTempFollow);
+            }
+        });
+        $(".js-data-example-ajax-1").select2({
+            ajax: {
+                url: "/TaskList/Home/LoadObjectInChargeType",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        ItemCode_KeySeach: params.term, // search term
+                        itemCode: 'PERSON'
+                    };
+                },
+                processResults: function (data, params) {
+                    var formatData = $.map(data, function (obj) {
+                        obj.id = obj.Code;
+                        obj.text = obj.Name;
+                        return obj;
+                    });
+                    return {
+                        results: formatData,
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 2,
+        });
+        $(".js-data-example-ajax-2").select2({
+            ajax: {
+                url: "/TaskList/Home/SearchTaskParent",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        TaskTitle: params.term, // search term
+                    };
+                },
+                processResults: function (data, params) {
+                    data.push({
+                        Code: 0,
+                        Name: 'không chọn'
+                    })
+                    var formatData = $.map(data, function (obj) {
+                        obj.id = obj.Code;
+                        obj.text = obj.Name;
+                        return obj;
+                    });
+                    return {
+                        results: formatData,
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 2,
+        });
+
+        if ('@Model.InTimeString' != null) {
+            var dataarray = '@Model.InTimeString'.split(",");
+            dataarray.map(function (e) {
+                $('#InTimeString_' + e).attr('checked', 'checked')
+            })
+            var arrhours = [];
+            $("#list-hours input:checked").each(function () {
+                arrhours.push($(this).parent().text().trim())
+                var text = arrhours.join(', ');
+                $(".start-time-title").html(text)
+            })
+        }
+        if ('@Model.InWeekdayString' != null) {
+            var dataarray = '@Model.InWeekdayString'.split(",");
+            dataarray.map(function (e) {
+                $('#InWeekdayString_' + e).attr('checked', 'checked')
+            })
+            var arrDays = [];
+            $("#list-days input:checked").each(function () {
+                arrDays.push($(this).parent().text().trim())
+                var text = arrDays.join(', ');
+                $("#textDays").html(text)
+            })
+        }
+        if ('@Model.InMonthdayString' != null) {
+            var dataarray = '@Model.InMonthdayString'.split(",");
+            dataarray.map(function (e) {
+                $('#InMonthdayString_' + e).attr('checked', 'checked')
+            })
+            var arrhours = [];
+            $("#list-days-on-month input:checked").each(function () {
+                arrhours.push($(this).parent().text().trim())
+                var text = arrhours.join(', ');
+                $("#day-repeat-title").html(text)
+            })
+        }
+        function addTaskType() {
+            if (!$('#TitleTaskType').val()) {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng nhập tên nhóm');
+                return false;
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: '/TaskList/Home/AddTaskType?ItemName=' + $('#TitleTaskType').val(),
+                    success: function (response) {
+                        if (typeof response != 'undefined' && response.length) {
+                            var formatData = $.map(response, function (obj) {
+                                obj.id = obj.Code;
+                                obj.text = obj.Name;
+                                return obj;
+                            });
+                            $('#TaskType').empty().select2({
+                                data: formatData
+                            });
+                            $('#exampleModal').modal('toggle');
+                        }
+                    }
+                });
+            }
+        }
+        function submit_validate() {
+            if (!$('#TaskType').val()) {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng chọn loại công việc');
+                return false;
+            }
+            if (!$('#TaskTitle').val()) {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng nhập tên công việc');
+                return false;
+            }
+            //Map checklist
+            var arrCheckList = [], arrOptionList = [], arrFile = [];
+            var i = 0;
+            $("#ListCheckList input").each(function () {
+                i++;
+                arrCheckList.push(
+                    {
+                        CheckListID: i,
+                        CheckListTitle: $(this).parent().text().trim(),
+                        IsCheck: $(this).is(":checked") ? 1 : 0
+                    }
+                )
+            })
+            i = 0;
+            $('#CheckList').val(JSON.stringify(arrCheckList));
+            //Map file
+            $("#ListFile .download").each(function () {
+                i++;
+                arrFile.push(
+                    {
+                        FileID: 0,
+                        FileName: $(this).text().trim(),
+                        FilePath: $(this).attr('href')
+                    }
+                )
+            })
+            i = 0;
+            $('#FileString').val(JSON.stringify(arrFile));
+            //Map optionlist
+            $("#divOptionList input").each(function () {
+                i++;
+                arrOptionList.push(
+                    {
+                        KeyID: i,
+                        KeyName: $(this).val(),
+                        KeyVal: $(this).is(":checked") ? 1 : 0
+                    }
+                )
+            })
+            i = 0;
+            $('#OptionString').val(JSON.stringify(arrOptionList));
+            //Người thực hiện
+            if (!$('#ObjectInChargeType').val()) {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng chọn đối tượng thực hiện');
+                return false;
+            }
+            var ObjectInCharge = '', PersonsControl = '';
+            if (listTempPerson.length <= 0) {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng chọn danh sách thực hiện');
+                return false;
+            } else {
+                for (var j = 0; j < listTempPerson.length; j++) {
+                    ObjectInCharge += listTempPerson[j].Code;
+                    ObjectInCharge += ',';
+                }
+                ObjectInCharge = ObjectInCharge.substr(0, ObjectInCharge.length - 1);
+                $('#inputObjectInCharge').val(ObjectInCharge);
+            }
+            if (listTempFollow.length > 0) {
+                for (var j = 0; j < listTempFollow.length; j++) {
+                    PersonsControl += listTempFollow[j].Code;
+                    PersonsControl += ',';
+                }
+                PersonsControl = PersonsControl.substr(0, PersonsControl.length - 1);
+                $('#inputPersonsControl').val(PersonsControl);
+            }
+            if (!$('#DropdownPriority').val()) {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng chọn độ ưu tiên');
+                return false;
+            } else {
+                $('#PriorityLevel').val($('#DropdownPriority').val());
+            }
+            if (!$('#DropdownStatusType').val()) {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng chọn trạng thái');
+                return false;
+            } else {
+                $('#StatusType').val($('#DropdownStatusType').val());
+            }
+            if ($("#FromDateTime").val() == "" || $("#ToDateTime").val() == "") {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Bạn chưa chọn ngày');
+                return false;
+            }
+            else {
+                var tmp1 = $("#FromDateTime").val().split(" ");
+                var tmp2 = $("#ToDateTime").val().split(" ");
+                if (tmp1 && tmp1.length > 1) {
+                    // 28/05/2019
+                    var tmp1 = tmp1[1].split("/");
+                    var tmp2 = tmp2[1].split("/");
+                    var fromDate1 = new Date(tmp1[2], tmp1[1] - 1, tmp1[0]);
+                    var toDate1 = new Date(tmp2[2], tmp2[1] - 1, tmp2[0]);
+                    if (Date.parse(fromDate1) > Date.parse(toDate1)) {
+                        notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Ngày bắt đầu phải nhỏ hơn ngày kết thúc');
+                        return false;
+                    }
+                } else {
+                    notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Bạn chưa chọn ngày');
+                    return false;
+                }
+            }
+            if ($("#FromDateRepeat").val() == "" || $("#ToDateRepeat").val() == "") {
+                notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Bạn chưa chọn ngày lặp');
+                return false;
+            }
+            else {
+                var tmp1 = $("#FromDateRepeat").val().split("/");
+                var tmp2 = $("#ToDateRepeat").val().split("/");
+                var fromDate1 = new Date(tmp1[2], tmp1[1] - 1, tmp1[0]);
+                var toDate1 = new Date(tmp2[2], tmp2[1] - 1, tmp2[0]);
+                if (Date.parse(fromDate1) > Date.parse(toDate1)) {
+                    notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Ngày bắt đầu lặp phải nhỏ hơn ngày kết thúc lặp');
+                    return false;
+                }
+            }
+            //BYWEEK, BYDAY, BYMONTH
+            $('#RepeatType').val($("ul#pills-tab a.active").attr("data-type"));
+            $('#IsRepeated').val($('#repeatCheckbox').is(":checked"))
+            return true;
+        }
+        function setValueInputByID(inputID, value) {
+            $('#' + inputID).val(value);
+        }
+        @*var array = @Html.Raw(Json.Encode(@Model));
+        console.log(321, array);*@
+    </script>
+}

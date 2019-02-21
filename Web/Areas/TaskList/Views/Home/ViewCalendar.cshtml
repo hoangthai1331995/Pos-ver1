@@ -1,0 +1,218 @@
+﻿@model List<TaskList.Models.TasklistModel>
+@{
+    Layout = "";
+    List<TaskList.Models.ListTasklistStatusModel>
+        lstStatus = ViewBag.ListStatus;
+    var StatusColor = "";
+    var PriorityColor = "";
+}
+<!-- Calender css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/fullcalendar/css/fullcalendar.css">
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/fullcalendar/css/fullcalendar.print.css" media='print'>
+<!-- Style.css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/style.css">
+<!-- custom style -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/custom-style.css">
+<div class="row">
+    <div class="col-md-4 col-lg-4 mb-2">
+        <div class="table-responsive table-qlcv">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="p-2">
+                            <i class="icon-note text-doing mr-1 ml-0"></i>
+                            Công việc
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (TaskList.Models.TasklistModel item in Model)
+                        {
+                            if (item.StatusType == "TO-DO")
+                            {
+                                StatusColor = "text-danger";
+                            }
+                            else if (item.StatusType == "IN-PROGRESS")
+                            {
+                                StatusColor = "text-info";
+                            }
+                            else if (item.StatusType == "CHECK")
+                            {
+                                StatusColor = "text-test";
+                            }
+                            else if (item.StatusType == "DONE")
+                            {
+                                StatusColor = "text-success";
+                            }
+                            if (item.PriorityLevel == "L")
+                            {
+                                PriorityColor = "text-success";
+                            }
+                            else if (item.PriorityLevel == "M")
+                            {
+                                PriorityColor = "text-info";
+                            }
+                            else if (item.PriorityLevel == "H")
+                            {
+                                PriorityColor = "text-test";
+                            }
+                            else if (item.PriorityLevel == "C")
+                            {
+                                PriorityColor = "text-danger";
+                            }
+                            <tr id="taskID_@item.TaskID">
+                                <td class="p-2 task-des">
+                                    <div class="task-des-title" onclick="viewTaskListDetail('@item.TaskID')">
+                                        @item.TaskTitle
+                                        @*<span class="task-des-des ml-1">
+                                            @{
+                                                if (@item.ItemsDesc != null)
+                                                {
+                                                    HtmlString htmlString = new HtmlString(@item.ItemsDesc.Replace("<b>", "").Replace("<b/>", "").Replace("<u>", "").Replace("<u/>", "").Replace("<i>", "").Replace("<i/>", "").Replace("<p>", "").Replace("</p>", ""));
+                                                    @htmlString
+                                                }
+                                            }
+                                        </span>*@
+                                        <div class="des-shadow">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex f-wrap">
+                                        <!-- <div class="mr-2 hidden-xs">
+                                            <i class="far fa-comments text-success mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tin nhắn"></i>
+                                            3
+                                        </div> -->
+                                        <div class="dropdown mr-2">
+                                            <i class="fa fa-list-ol text-test mr-1 mt-2 pointer" id="more-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>@item.CheckListItemList.Count
+                                            <div class="dropdown-menu" aria-labelledby="more-menu">
+                                                <a class="dropdown-item" href="/TaskList/Home/AddUpdate">
+                                                    <i class="icon-plus text-doing pointer"></i>
+                                                    Tạo công việc con
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="mr-2">
+                                            <i class="fa fa-clock-o text-danger mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày kết thúc"></i>
+                                            @item.ToDateTime.ToString("dd-MM-yyyy HH:ss")
+                                        </div>
+                                    </div>
+                                    <div class="mr-2">
+                                        <div class="d-flex flex-wrap">
+                                            <div class="mr-2 mt-1">
+                                                Mức độ: <span class="@PriorityColor">@item.PriorityName</span>
+                                            </div>
+                                            <div class="dropdown mr-2 pointer mt-1">
+                                                <div id="more-menu-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trạng thái: <span id="taskStatusMobile_@item.TaskID" class="@StatusColor like-btn">@item.StatusName</span></div>
+                                                <div class="dropdown-menu" aria-labelledby="more-menu-2">
+                                                    @if (lstStatus != null)
+                                                    {
+                                                        foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                                                        {
+                                                            <a onclick="ChangeStatus('@item.TaskID','@status.Code')" class="dropdown-item pointer" data-value="@status.Code">@status.Name</a>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-8 col-lg-8 mb-2">
+        <div id="calendar" class="full-calendar"></div>
+    </div>
+</div>
+<!-- calender js -->
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/moment/js/moment.min.js"></script>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/fullcalendar/js/fullcalendar.min.js"></script>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/fullcalendar/locale/vi.js"></script>
+<script type="text/javascript">
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+        $('#calendar').fullCalendar('render');
+    });
+    // luc get data enddate + thêm 1 ngày -> ngày trên hệ thống là 13 thì trả về enddate là 14
+    // khi cập nhật dữ liệu -> kéo đến ngày 15 thì dữ liệu đã được fix thành 15
+    if ($('#calendar').length) {
+        $(document).ready(function () {
+            var array = @Html.Raw(Json.Encode(@Model));
+            var arr = [];
+            for (var i = 0; i < array.length; i++) {
+                var SttColor = "";
+                if (array[i].StatusType == "TO-DO") {
+                    SttColor = "#FC6180";
+                }
+                else if (array[i].StatusType == "IN-PROGRESS") {
+                    SttColor = "#0B94F7";
+                }
+                else if (array[i].StatusType == "CHECK") {
+                    SttColor = "#F5A623";
+                }
+                else if (array[i].StatusType == "DONE") {
+                    SttColor = "#93BE52";
+                }
+                arr.push({
+                    id: array[i].TaskID,
+                    title: array[i].TaskTitle,
+                    start: array[i].FromDateTimeCal,
+                    end: array[i].ToDateTimeCal,
+                    borderColor: SttColor,
+                    backgroundColor: SttColor,
+                    textColor: '#fff'
+                })
+            }
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay,listMonth'
+                },
+                defaultDate: moment(),
+                navLinks: true, // can click day/week names to navigate views
+                editable: false,
+                droppable: false, // this allows things to be dropped onto the calendar
+                drop: function() {
+
+                    // is the "remove after drop" checkbox checked?
+                    if ($('#checkbox2').is(':checked')) {
+                        // if so, remove the element from the "Draggable Events" list
+                        $(this).remove();
+                    }
+                },
+                events: arr,
+                eventClick: function(event, element) {
+                    window.location.href = '/TaskList/Home/Detail';
+                    $('#calendar').fullCalendar('updateEvent', event);
+
+                }
+                //   eventResize: function(event, delta, revertFunc) {
+                //       console.log(1, event.id, event.title, event.start.format(), event.end ? getEndDate(event.end.format()) : event.start.format())
+                //   },
+                //   eventDrop: function(event, delta, revertFunc) {
+                //       console.log(2, event.id, event.title, event.start.format(), event.end ? getEndDate(event.end.format()) : event.start.format())
+                //   },
+                //   eventClick: function(event, element) {
+                //       // console.log(3, event.id, event.title, event.start.format(), event.end ? getEndDate(event.end.format()) : event.start.format())
+                //       window.location.href = '/TaskList/Home/Detail';
+                //   $('#calendar').fullCalendar('updateEvent', event);
+            });
+        });
+    }
+    //function getEndDate(day) {
+    //    var daySet = new Date(day);
+    //    var b = daySet.getDate() - 1;
+    //    daySet.setDate(b);
+    //    var dd = daySet.getDate() <10 ? ('0'+ daySet.getDate()) : daySet.getDate();
+    //    var mm = (daySet.getMonth() + 1) <10 ? ('0'+ (daySet.getMonth() + 1)) : (daySet.getMonth() + 1);; //January is 0!
+    //    var yyyy = daySet.getFullYear();
+    //    var daySet = yyyy + '-' + mm + '-' + dd;
+    //    return daySet;
+    //}
+    // var array = @Html.Raw(Json.Encode(@ViewBag.lstStatus));
+    // console.log(111111, array);
+</script>

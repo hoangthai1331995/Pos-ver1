@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ServiceMethods>
+  <Methods>
+    <ServiceMethod>
+      <index>0</index>
+      <key>RPT1902-00001</key>
+      <datasource>[dbo].[ReportDemo]</datasource>
+    </ServiceMethod>
+    <ServiceMethod>
+      <index>1</index>
+      <key>RPT1902-00002</key>
+      <datasource>[dbo].[ReportDemo1]</datasource>
+    </ServiceMethod>
+    <ServiceMethod>
+      <index>2</index>
+      <key>RPT1902-00003</key>
+      <datasource>[dbo].[ReportDemo2]</datasource>
+    </ServiceMethod>
+  </Methods>
+</ServiceMethods>

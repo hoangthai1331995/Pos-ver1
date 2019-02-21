@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "";
+    eTraining.BussinessModels.FormControl control = (eTraining.BussinessModels.FormControl)ViewData["FormControl"];
+    var _enumNname = (Type)ViewData["EnumName"];
+}
+
+@if (control != null)
+{
+    <div class="form-group">
+        <label for="">@control.Display</label>
+        @*@Html.DropDownList("FormatType",
+                           EnumHelper.GetSelectList(typeof(_enumNname)) ,
+                           " - Format - ",
+                           new { @class = "form-control", Name = , id= colName + "-FormatType" })*@
+    </div>
+    <script>
+            $('#' + '@control.Key').val('@control.Value');
+    </script>
+}
+

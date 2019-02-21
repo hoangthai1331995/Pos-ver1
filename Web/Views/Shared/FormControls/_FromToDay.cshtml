@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "";
+    eTraining.BussinessModels.FormControl control = (eTraining.BussinessModels.FormControl)ViewData["FormControl"];
+    string formGroup = ViewData["FormGroup"].ToString();
+}
+<!-- Date-time picker css -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+    <!-- Date-range picker css  -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/bootstrap-daterangepicker/css/daterangepicker.css" />
+    <!-- Date-Dropper css -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/datedropper/css/datedropper.min.css" />
+
+@if (control != null)
+{
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group row">
+            <label class="col-12 txt-left col-form-label">@control.Display</label>
+            <div class="col-12 input-daterange input-group" id="@(formGroup + control.Key)">
+                <input type="text" class="input-sm form-control" name="start" id="@(formGroup + control.Key)_start" />
+                <span class="input-group-addon">Đến</span>
+                <input type="text" class="input-sm form-control" name="end" id="@(formGroup + control.Key)_end" />
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(function() {
+        
+
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+
+
+        $('.input-daterange input').each(function() {
+            $(this).datepicker();
+        });
+    });
+</script>
+<!-- Bootstrap date-time-picker js -->
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/moment-with-locales.min.js"></script>
+<!--<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/bootstrap-daterangepicker/js/daterangepicker.js"></script>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/datedropper/js/datedropper.min.js"></script> -->

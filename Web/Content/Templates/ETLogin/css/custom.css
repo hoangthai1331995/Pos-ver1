@@ -1,0 +1,29 @@
+﻿.user-pro-social{
+    float:left;
+    width:100%;
+    padding:10px;
+}
+
+.cp-profile-field-h5 {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    float: left;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.bg-white
+{
+    background-color:#fff;
+}
+
+.padding-top-10
+{
+    padding-top:10px;
+}
+
+.cus-text-info
+{
+    color:#000;
+}

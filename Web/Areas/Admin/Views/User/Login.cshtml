@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>e-Training @DateTime.Now.Year</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/css/line-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/css/line-awesome-font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/lib/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/lib/slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETLogin/css/responsive.css">
+</head>
+<body class="sign-in">
+    <div class="wrapper">
+        <div class="sign-in-page">
+            <div class="signin-popup">
+                <div class="signin-pop">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="cmp-info">
+                                @*<img src="~/Content/Templates/ETLogin/images/banner_login.png" alt="" style="width:70%; margin-left:15%;">*@
+                            </div><!--cmp-info end-->
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="login-sec">
+                                <div class="sign_in_sec current" id="tab-1">
+                                    <h3>Đăng nhập</h3>
+                                    <form method="post">
+                                        <input type="hidden" name="ReturnUrl" id="ReturnUrl" value="@ViewBag.ReturnUrl" />
+                                        <div class="row">
+                                            <div class="col-lg-12 no-pdd">
+                                                <div class="sn-field">
+                                                    <input type="text" name="LoginName" id="LoginName" placeholder="Tên đăng nhập" required="" oninvalid="this.setCustomValidity('Bạn chưa nhập tên đăng nhập')" oninput="this.setCustomValidity('')">
+                                                    <i class="la la-user"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 no-pdd">
+                                                <div class="sn-field">
+                                                    <input type="password" name="PassWord" id="PassWord" placeholder="Mật khẩu" required="" oninvalid="this.setCustomValidity('Bạn chưa nhập mật khẩu')" oninput="this.setCustomValidity('')">
+                                                    <i class="la la-lock"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 no-pdd">
+                                                <div class="checky-sec">
+                                                    <a href="/User/Forgot" title="">Quên mật khẩu?</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 no-pdd">
+                                                <button type="submit" value="submit">Đăng nhập</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div><!--sign_in_sec end-->
+                            </div><!--login-sec end-->
+                        </div>
+                    </div>
+                </div><!--signin-pop end-->
+            </div><!--signin-popup end-->
+            <div class="footy-sec">
+                <div class="container">
+                    <p><img src="/Content/Templates/ETLogin/images/copy-icon.png" alt="">Copyright 2018</p>
+                </div>
+            </div><!--footy-sec end-->
+        </div><!--sign-in-page end-->
+    </div><!--theme-layout end-->
+    <script type="text/javascript" src="/Content/Templates/ETLogin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/ETLogin/js/popper.js"></script>
+    <script type="text/javascript" src="/Content/Templates/ETLogin/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/ETLogin/lib/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/ETLogin/js/script.js"></script>
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+    <script type="text/javascript">
+        var successMessage = '@TempData["success"]';
+        var errorMessage = '@TempData["error"]';
+        if (successMessage != '') {
+            ShowMessage('success', 'Thành công!', successMessage, 1000, '');
+        }
+        if (errorMessage != '') {
+            ShowMessage('danger', 'Thông báo!', errorMessage, 500, '');
+        }
+    </script>
+    @*<script type="text/javascript" src="/Content/Templates/ETLogin/js/disabled.js"></script>*@
+</body>
+</html>

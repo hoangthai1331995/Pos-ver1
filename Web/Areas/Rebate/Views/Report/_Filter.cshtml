@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "";
+    List<BussinessModels.fitem> items = (List<BussinessModels.fitem>)ViewData["Filter"];
+}
+
+
+<div class="row">
+    <div class="col-md-12 panels-wells">
+        <div class="panel panel-archon">
+            <div class="panel-heading">
+                <h5 class="panel-title">
+                    Tra cứu
+                    <span class="pull-right">
+                        <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
+                    </span>
+                </h5>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline" action="" method="post" role="form">
+                    <div class="container-fluid p-0">
+                        <div class="row">
+                            @if (items != null && items.Count() > 0)
+                            {
+                                foreach (BussinessModels.fitem item in items)
+                                {
+                                    switch (item.type)
+                                    {
+                                        case "Textbox":
+                                            @Html.Partial("~/Views/Shared/FormControls/Xml/_SingleTextbox.cshtml", new ViewDataDictionary { { "FormControl", item } })
+                                            break;
+                                        case "Datetime":
+                                            @Html.Partial("~/Views/Shared/FormControls/Xml/_DateTime.cshtml", new ViewDataDictionary { { "FormControl", item } })
+                                            break;
+                                        case "Commbobox":
+                                            @Html.Partial("~/Views/Shared/FormControls/Xml/_ComboboxByDataSource.cshtml", new ViewDataDictionary { { "FormControl", item } })
+                                            break;
+                                        case "Checkbox":
+                                            @Html.Partial("~/Views/Shared/FormControls/Xml/_CheckBox.cshtml", new ViewDataDictionary { { "FormControl", item } })
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                            <div class="form-group col-lg-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-sm mt-3"><i class="fa fa-search"></i> Tìm kiếm</button>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

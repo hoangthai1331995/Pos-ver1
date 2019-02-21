@@ -1,0 +1,117 @@
+﻿@model System.Data.DataTable
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-archon">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Danh sách bảng chưa tạo code
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Schema</th>
+                            <th>Bảng</th>
+                            <th style="text-align:right;"><span class="btn btn-success" style="padding-left:20px; padding-right:20px;"><i class="fa fa-angle-double-right"></i></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < Model.Rows.Count; i++)
+                            {
+                                <tr>
+                                    <td>[@Model.Rows[i]["TABLE_SCHEMA"]]</td>
+                                    <td>[@Model.Rows[i]["TABLE_NAME"]]</td>
+                                    <td style="text-align:right;"><span class="btn btn-success" style="padding-left:20px; padding-right:20px;" onclick="Add(this, '@Model.Rows[i]["TABLE_SCHEMA"]', '@Model.Rows[i]["TABLE_NAME"]');"> <i class="fa fa-angle-right"></i> </span></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div> <!-- /panel body -->
+        </div>
+    </div> <!-- /col-md-6 -->
+    <div class="col-md-6">
+        <div class="panel panel-archon">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Danh sách bảng
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table tb-destination">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;"><span class="btn btn-success" style="padding-left:20px; padding-right:20px;"><i class="fa fa-angle-double-left"></i></span></th>
+                            <th>Bảng</th>
+                            <th>Schema</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div> <!-- /panel body -->
+        </div>
+    </div> <!-- /col-md-6 -->
+
+  
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <button onclick="Create();" class="btn btn-info">Tạo code</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var selectTable = [];
+    function Add(mythis, tableSchema, tableName) {
+        var currentTable = {
+            'TableName': tableName,
+            'TableSchema': tableSchema
+        }
+        selectTable.push(currentTable);
+        $(mythis).parents('tr').html('');
+        reDrawDestinationTable();
+    }
+
+    function Remove(tableSchema, tableName) {
+        if (selectTable.length > 0) {
+            for (var i = 0; i < selectTable.length; i++) {
+                if (selectTable[i].TableName == tableName && selectTable[i].TableSchema == tableSchema) {
+                    selectTable.slice(i, 1);
+                }
+            }
+        }
+        reDrawDestinationTable();
+    }
+
+    function reDrawDestinationTable() {
+        $('.tb-destination tbody').html('');
+        var htmlTr = '';
+        if (selectTable.length > 0) {
+            for (var i = 0; i < selectTable.length; i++) {
+                htmlTr += '<tr><td>[' + selectTable[i].TableSchema + ']</td><td>[' + selectTable[i].TableName + ']</td><td style="text-align:right;"><span class="btn btn-success" style="padding-left:20px; padding-right:20px;" onclick="Add(this, ' + selectTable[i].TableSchema + ', ' + selectTable[i].TableName + ');"> <i class="fa fa-angle-right"></i> </span></td></tr>';
+            }
+        }
+        $('.tb-destination tbody').html(htmlTr);
+    }
+
+    function Create() {
+        var jsonTable = JSON.stringify(selectTable);
+        $.ajax({
+            type: "POST",
+            url: '/Configulation/Generate',
+            data: "jsonTable= " + jsonTable,
+            success: function (response) {
+                if (response > 0) {
+                    alert('Tạo code thành công');
+                }
+                else {
+                    alert('Tạo code thất bại');
+                }
+            }
+        });
+    }
+</script>

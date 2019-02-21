@@ -1,0 +1,48 @@
+﻿@model BussinessObjects.NI10_Employee
+@{
+    Layout = "";
+    string insideUrl = System.Configuration.ConfigurationManager.AppSettings["InsideUrl"];
+}
+
+@if (Model != null)
+{
+    <li class="user-profile header-notification">
+        <a href="#!">
+            @if (!String.IsNullOrEmpty(Model.Avatar))
+            {
+
+                <img src="@(insideUrl + Model.Avatar)" class="" alt="User-Profile-Image">
+            }
+            else
+            {
+                <img src="/Content/Templates/GuruTemplate/assets/images/faces/avatarnull.png" class="" alt="User-Profile-Image">
+            }
+        </a>
+        <ul class="show-notification profile-notification">
+            <li>
+                <div class="dw-user-box text-center">
+                    <div class="u-img">
+                        @if (!String.IsNullOrEmpty(Model.Avatar))
+                        {
+                            <img src="@(insideUrl + Model.Avatar)" alt="user">
+                        }
+                        else
+                        {
+                            <img src="/Content/Templates/GuruTemplate/assets/images/faces/avatarnull.png" alt="user">
+                        }
+                    </div>
+                    <div class="u-text">
+                        <h5>@Model.FullName</h5>
+                        <p class="text-muted">@Model.JobTitle</p><a href="/User/Profile" class="btn btn-rounded btn-danger btn-sm">Thông tin cá nhân</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="/User/Logout">
+                    <i class="ti-layout-sidebar-left"></i> Đăng xuất
+                </a>
+            </li>
+        </ul>
+    </li>
+}
+

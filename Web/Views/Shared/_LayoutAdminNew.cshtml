@@ -1,0 +1,489 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <title>FRT - TaskList</title>
+    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 10]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="#">
+    <meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="#">
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="/Content/Templates/GuruTemplate/assets/icon/fpt.png">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/bootstrap/css/bootstrap.min.css">
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/icon/themify-icons/themify-icons.css">
+    <!-- ico font -->
+    <!-- <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/icon/icofont/css/icofont.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/icon/font-awesome/css/font-awesome.min.css"> -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/icon/font-awesome/css/font-awesome.min.css">
+    <!-- simple line icon -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/icon/simple-line-icons/css/simple-line-icons.css">
+    <!-- Menu-Search css -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/pages/menu-search/css/component.css">
+    <!-- Notification.css -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/pages/notification/notification.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/animate.css/css/animate.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/style.css">
+    <!-- custom style -->
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/custom-style.css">
+
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/linearicons.css">
+
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/jquery.mCustomScrollbar.css">
+
+    <link rel="stylesheet" href="/Content/Templates/GuruTemplate/assets/css/workflow.css" />
+
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/pages/advance-elements/css/bootstrap-datetimepicker.min.css">
+
+
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/jquery/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+
+    <style>
+        /*.menu-icon-10 {
+            font-size: 6pt !important;
+        }*/
+    </style>
+</head>
+@{
+    List<TaskList.Models.TasklistModel>
+    lstTasklist = ViewBag.ListTasklist;
+    var StatusColor = "";
+    var PriorityColor = "";
+}
+<body>
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div class='contain'>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+            </div>
+        </div>
+    </div>
+    <!-- Pre-loader end -->
+
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper">
+
+                    <div class="navbar-logo">
+                        <a class="mobile-menu" id="mobile-collapse" href="#!">
+                            <i class="ti-menu"></i>
+                        </a>
+                        <!-- <a class="mobile-search morphsearch-search" href="#">
+                            <i class="ti-search"></i>
+                        </a> -->
+                        <a href="/Admin/User">
+                            <img src="/Content/Templates/GuruTemplate/assets/images/fpt.png" alt="Theme-Logo" />
+                        </a>
+                    </div>
+
+                    <div class="navbar-container container-fluid px-0 px-lg-2">
+                        <ul class="nav-right">
+                            <li class="header-notification">
+                                <a href="#!" class="a-badge">
+                                    <i class="fa fa-table"></i>
+                                    <span id="dot" class="">
+                                        <span class="ping"></span>
+                                    </span>
+                                </a>
+                                <!-- <a href="#!" class="a-badge">
+
+                                    <label class="label label-danger"><a href="/viewall" class="text-white">Xem tất cả</a></label>
+
+                                    <i class="fa fa-table"></i>
+                                    <span id="dot" class="">
+                                        <span class="ping"></span>
+                                    </span>
+                                </a> -->
+                                <ul class="show-notification no-hover-notification">
+                                    <li>
+                                        <h6>Chấm công trong ngày theo ca</h6>
+                                    </li>
+                                    <li class="p-0">
+                                        <div class="table-responsive" id="tableInOut">
+                                            <div class="">
+                                                <div class="px-2 pt-1">
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Ca từ 8:30  đến 18:0 giờ</td>
+                                                                <td>
+                                                                    <img id="imgcheckin" src="/Content/Templates/GuruTemplate/assets/images/inout/in1.png" style="height:32px;border-width:0px;" class="ml-auto" onclick="InsertCheckIn()">
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="p-0">
+                                        <div class="m-2">
+                                            <div class="table-responsive table-qlcv">
+                                                <table class="table table-hover" style="margin-left: -5px;">
+                                                    <tbody>
+                                                        @if (lstTasklist != null)
+                                                        {
+                                                            foreach (TaskList.Models.TasklistModel item in lstTasklist)
+                                                            {
+                                                                if (item.StatusType == "TO-DO")
+                                                                {
+                                                                    StatusColor = "danger";
+                                                                }
+                                                                else if (item.StatusType == "IN-PROGRESS")
+                                                                {
+                                                                    StatusColor = "info";
+                                                                }
+                                                                else if (item.StatusType == "CHECK")
+                                                                {
+                                                                    StatusColor = "test";
+                                                                }
+                                                                else if (item.StatusType == "DONE")
+                                                                {
+                                                                    StatusColor = "success";
+                                                                }
+                                                                <tr class="wf-border-left-@StatusColor">
+                                                                    <td class="p-2 task-des" onclick="viewTaskList(@item.TaskID)">
+                                                                        <div class="task-des-title">
+                                                                            @item.TaskTitle
+                                                                            @*<span class="task-des-des ml-1">
+                                                                                @{
+                                                                                    if (@item.ItemsDesc != null)
+                                                                                    {
+                                                                                        HtmlString htmlString = new HtmlString(@item.ItemsDesc.Replace("<b>", "").Replace("<b/>", "").Replace("<u>", "").Replace("<u/>", "").Replace("<i>", "").Replace("<i/>", "").Replace("<p>", "").Replace("</p>", ""));
+                                                                                        @htmlString
+                                                                                    }
+                                                                                }
+                                                                            </span>*@
+                                                                            <div class="des-shadow">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="d-flex f-wrap">
+                                                                            <div class="mr-2 mt-2">
+                                                                                <i class="fa fa-list-ol text-test mr-1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Checklist"></i>
+                                                                                @item.CheckListItemList.Count
+                                                                            </div>
+                                                                            <div class="mr-2 mt-2">
+                                                                                <i class="fa fa-clock-o text-danger mr-1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Thời gian kết thúc"></i>
+                                                                                @item.DownTime để hoàn thành
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="p-0">
+                                                                        <div class="checkbox-fade fade-in-danger ml-2 mt-2">
+                                                                            <label>
+                                                                                <input type="checkbox" name="Task_@item.TaskID" onclick="doneTaskList(@item.TaskID, '@item.StatusType')">
+                                                                                <span class="cr">
+                                                                                    <i class="cr-icon fa fa-check txt-danger"></i>
+                                                                                </span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            @Html.Action("LoginInfo", "User", new { area = "" })
+                        </ul>
+                        <ul class="nav-left">
+                            <li class="ml-2 flex-1">
+                                <div class="position-relative w-100 f-16">
+                                    <input type="text" class="nav-search form-control-sm w-100" placeholder="Tìm kiếm nhanh">
+                                    <i class="ti-search nav-search-i"></i>
+                                </div>
+                            </li>
+                            <li class="hidden-xs">
+                                <a href="#!" onclick="javascript:toggleFullScreen()">
+                                    <i class="ti-fullscreen"></i>
+                                </a>
+                            </li>
+                            <li class="mega-menu-top">
+                                <a href="#">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </a>
+                                <ul class="show-notification row">
+                                    <li class="col-sm-4">
+                                        <h6 class="mega-menu-title">Các trang khác</h6>
+                                        <ul class="mega-menu-links">
+                                            <li><a href="https://inside.fptshop.com.vn">Inside</a></li>
+                                            <li><a href="https://insidenew.fptshop.com.vn">Inside new</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="col-sm-8">
+                                        <h6 class="mega-menu-title">Liên hệ</h6>
+                                        <div class="mega-menu-contact">
+                                            <div class="form-group row">
+                                                <label for="example-text-input" class="col-3 col-form-label">Họ và tên</label>
+                                                <div class="col-9">
+                                                    <input class="form-control" type="text" placeholder="Nhập họ và tên" id="example-text-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-search-input" class="col-3 col-form-label">Email</label>
+                                                <div class="col-9">
+                                                    <input class="form-control" type="email" placeholder="Nhập địa chỉ email" id="example-search-input1">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-search-input" class="col-3 col-form-label">Số điện thoại</label>
+                                                <div class="col-9">
+                                                    <input class="form-control" type="number" placeholder="Nhập số điện thoại" id="example-search-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="exampleTextarea" class="col-3 col-form-label">
+                                                    Nội dung
+                                                </label>
+                                                <div class="col-9">
+                                                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-12 text-right">
+                                                    <button class="btn btn-primary">Gởi</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- main-body -->
+            <div class="pcoded-main-container">
+                <div class="pcoded-wrapper">
+
+                    <nav class="pcoded-navbar">
+                        <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                        <div class="pcoded-inner-navbar main-menu">
+                            @Html.Action("MenuInfo", "User", new { area = "" })
+                        </div>
+                    </nav>
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+
+                            <!-- Main-body start -->
+                            <div id="main-content">
+                                @RenderBody()
+                            </div>
+                            <!-- Main-body end -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row footer-new">
+                    <div class="col-md-12 text-center">
+                        © @DateTime.Now.Year <a href="/" style="font-weight:bold;">FRT Team</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Jquery -->
+
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/popper.js/js/popper.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/bootstrap/js/bootstrap.min.js"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+    <!-- modernizr js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/modernizr/js/modernizr.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/modernizr/js/css-scrollbars.js"></script>
+    <!-- i18next.min.js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/i18next/js/i18next.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/jquery-i18next/js/jquery-i18next.min.js"></script>
+    <!-- notification js -->
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/js/bootstrap-growl.min.js"></script>
+    <!-- Custom js -->
+
+    <script src="/Content/Templates/GuruTemplate/assets/js/pcoded.min.js"></script>
+    <script src="/Content/Templates/GuruTemplate/assets/js/demo-image.js"></script>
+    <script src="/Content/Templates/GuruTemplate/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/js/script.js"></script>
+
+    
+    <!-- data-table js -->
+    <script src="/Content/Templates/GuruTemplate/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/Content/Templates/GuruTemplate/assets/pages/data-table/extensions/responsive/js/dataTables.responsive.min.js"></script>
+
+    <script src="/Scripts/bootstrap-notify.min.js"></script>
+    <script src="/Scripts/custom.js"></script>
+
+    <script>
+        var errorMessage = '@(TempData["error"] != null ? TempData["error"] : "")';
+        if (errorMessage != '') {
+            ShowMessage('danger', 'Thông báo', errorMessage, 500, '');
+        }
+        var successMessage = '@(TempData["success"] != null ? TempData["success"] : "")';
+        if (errorMessage != '') {
+            ShowMessage('success', 'Thông báo', successMessage, 500, '');
+        }
+    </script>
+
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+
+        $('.datepicker').datetimepicker({
+            format: 'HH:mm DD/MM/YYYY',
+            locale: 'vi',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+            }
+        });
+        $('.datepicker2').datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'vi',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+            }
+        });
+        function notify(from, align, icon, type, animIn, animOut, title, message) {
+            $.growl({
+                icon: icon,
+                title: title + ': ',
+                message,
+                url: ''
+            }, {
+                    element: 'body',
+                    type: type,
+                    allow_dismiss: true,
+                    placement: {
+                        from: from,
+                        align: align
+                    },
+                    offset: {
+                        x: 30,
+                        y: 30
+                    },
+                    spacing: 10,
+                    z_index: 999999,
+                    delay: 2500,
+                    timer: 1000,
+                    url_target: '_blank',
+                    mouse_over: false,
+                    animate: {
+                        enter: animIn,
+                        exit: animOut
+                    },
+                    icon_type: 'class',
+                    template: '<div data-growl="container" class="alert" role="alert">' +
+                        '<button type="button" class="close" data-growl="dismiss">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                        '<span class="sr-only">Close</span>' +
+                        '</button>' +
+                        '<span data-growl="icon"></span>' +
+                        '<span data-growl="title"></span>' +
+                        '<span data-growl="message"></span>' +
+                        '<a href="#" data-growl="url"></a>' +
+                        '</div>'
+                });
+        };
+        function doneTaskList(TaskID, status) {
+            var statusActive = '';
+            if ($('input[name=Task_' + TaskID + ']:checked').val() === 'on') {
+                $('input[name=Task_' + TaskID + ']').closest('tr').addClass('wf-border-left-silver');
+                $('input[name=Task_' + TaskID + ']').closest('tr').removeClass('wf-border-left-' + status);
+                statusActive = 'DONE';
+            } else {
+                $('input[name=Task_' + TaskID + ']').closest('tr').addClass('wf-border-left-' + status);
+                $('input[name=Task_' + TaskID + ']').closest('tr').removeClass('wf-border-left-silver');
+                statusActive = status;
+            }
+            $.ajax({
+                type: "GET",
+                url: "/TaskList/Home/ChangeStatus",
+                data: "TaskID=" + TaskID + "&StatusType=" + statusActive,
+                success: function (response) {
+                    if (response.StatusCode === "DONE") {
+                        notify('top', 'right', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', response.StatusMess);
+                    } else {
+                        notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', response.StatusMess);
+                    }
+                    // viewRender("", "", "");
+
+                },
+                error: function (response) {
+                    notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Thất bại');
+                }
+
+            });
+        }
+        function viewTaskList(id) {
+            console.log('viewTaskList')
+            window.location.href = '/TaskList/Home';
+        }
+        if (typeof window !== 'undefined' && window.innerWidth <= 992) { // nhỏ hơn 992px mới xét click navbar còn lại là hover
+            $(".header-navbar .navbar-wrapper .navbar-container .header-notification, .header-navbar .navbar-wrapper .navbar-container .mega-menu-top").on('click', function (e) {
+                if ($(this).find(".add-hover").hasClass("add-hover")) { // this cua no la body
+                    if ($(".show-notification", this).has(e.target).length == 0) {
+                        $(".show-notification", this).addClass("clear-hover");
+                        $(".show-notification").removeClass("add-hover");
+                    }
+                } else {
+                    $(".show-notification").removeClass("add-hover");
+                    $(".show-notification").removeClass("clear-hover");
+                    $(".show-notification", this).addClass("add-hover");
+                }
+            });
+            $('body').on('click', function (e) {
+                if ($(".header-navbar .navbar-wrapper .navbar-container .header-notification, .header-navbar .navbar-wrapper .navbar-container .mega-menu-top").has(e.target).length === 0) {
+                    if ($(".show-notification").hasClass("add-hover")) {
+                        $(".show-notification").removeClass("add-hover");
+                    }
+                }
+
+            });
+        }
+    </script>
+</body>
+
+</html>

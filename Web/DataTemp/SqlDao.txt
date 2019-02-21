@@ -1,0 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using eTraining.BussinessObjects;
+
+namespace eTraining.DataObjects
+{
+    public class Sql#ClassName#Dao : SqlDaoBase<#ClassName#>
+    {
+        public Sql#ClassName#Dao()
+        {
+            TableName = "#TableName#";
+            EntityIDName = "#ClassName#Id";
+            StoreProcedurePrefix = "sp#ClassName#_";
+        }
+        public Sql#ClassName#Dao(string tableName, string entityIDName, string storeProcedurePrefix) : base(tableName, entityIDName, storeProcedurePrefix) { }
+    }
+}

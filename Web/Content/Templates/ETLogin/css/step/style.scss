@@ -1,0 +1,170 @@
+/** home secial color themes **/
+/** new PC mall UI guideline **/
+/** BACC **/
+/** typography related **/
+/** z-index related **/
+/** button related **/
+/** input related **/
+/** badge related **/
+/** dropdown related **/
+/** accordion related **/
+/** checkbox related **/
+/** radio button related **/
+/** motion curve */
+/** box shadow related **/
+/** display card related **/
+/** section header **/
+/** new PC mall guideline **/
+/** path **/
+/* Typography */
+/** to make the background image fill the container with a center-crop non-repeat fashion **/
+/** ratio box's parent must have position relative **/
+/**
+* Make height of a div relative to its width, in a constant ratio.
+* $ratio: ratio of height to with, e.g. 3/4 to get something like 300px height and 400px width
+*/
+/** shapes **/
+/* stylelint-disable selector-no-vendor-prefix */
+/* stylelint-enable */
+/**
+ * displays a circular stamped border
+ * https://codesandbox.io/s/pyw3zzx54m
+ */
+/** home secial color themes **/
+/** new PC mall UI guideline **/
+/** BACC **/
+/** typography related **/
+/** z-index related **/
+/** button related **/
+/** input related **/
+/** badge related **/
+/** dropdown related **/
+/** accordion related **/
+/** checkbox related **/
+/** radio button related **/
+/** motion curve */
+/** box shadow related **/
+/** display card related **/
+/** section header **/
+/** new PC mall guideline **/
+/** path **/
+.stepper {
+  position: relative;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex; }
+  .stepper--1 .stepper__line-background,
+  .stepper--1 .stepper__line-foreground {
+    width: 100%;
+    margin: 0; }
+  .stepper--1 .stepper__step {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+       -moz-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1; }
+  .stepper__step {
+    width: 140px;
+    text-align: center;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    cursor: default;
+    z-index: 1; }
+    .stepper__step-icon {
+      -moz-box-sizing: border-box;
+           box-sizing: border-box;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+         -moz-box-orient: vertical;
+         -moz-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+         -moz-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+         -moz-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      position: relative;
+      margin: auto;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 3rem;
+      border: 4px solid #e0e0e0;
+      color: #e0e0e0;
+      background-color: white;
+      -webkit-transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s, border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s, color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s;
+      transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s, border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s, color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s; }
+      .stepper__step-icon--pending {
+        background-color: #2dc258;
+        color: white;
+        strike: white;
+        fill: #2dc258;
+        border-color: #2dc258; }
+      .stepper__step-icon--finish {
+        border-color: #2dc258;
+        color: #2dc258; }
+    .stepper__step-text {
+      text-transform: capitalize;
+      font-size: 1.4rem;
+      color: rgba(0, 0, 0, .8);
+      line-height: 2rem;
+      margin: 2rem 0 0.4rem; }
+    .stepper__step-date {
+      font-size: 1.2rem;
+      color: rgba(0, 0, 0, .26);
+      height: 1.4rem; }
+    .stepper__step-error-icon {
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat no-repeat;
+      position: absolute;
+      background-image: url("../../../../assets/images/exclamation_ point.png");
+      width: 3rem;
+      height: 3rem;
+      right: -1.5rem;
+      top: -1rem; }
+  .stepper__line {
+    position: absolute;
+    top: 29px;
+    height: 4px;
+    width: 100%; }
+  .stepper__line-background, .stepper__line-foreground {
+    position: absolute;
+    width: -webkit-calc(100% - 140px);
+    width: calc(100% - 140px);
+    margin: 0 70px;
+    height: 100%;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box; }
+  .stepper__line-background {
+    background: #e0e0e0; }
+  .stepper__line-foreground {
+    background: #2dc258;
+    -webkit-transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }

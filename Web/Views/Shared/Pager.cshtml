@@ -1,0 +1,50 @@
+﻿@model eTraining.Helpers.Paging.Paging
+@{
+    HttpRequestBase request = Html.ViewContext.HttpContext.Request;
+    System.Collections.Specialized.NameValueCollection decodeParameters = HttpUtility.ParseQueryString(request.Url.Query); // HttpUtility.ParseQueryString(QueryStringModule.ExtractQuery(decodeUrl));
+    if (request.Form.AllKeys.Count() > 0)
+    {
+        decodeParameters.Add(request.Form);
+    }
+
+    string decodePath = request.Path;// QueryStringModule.GetVirtualPath(decodeUrl);
+}
+
+<style type="text/css">
+    .pagination .active {
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 12pt;
+    }
+
+    .page-href {
+        color: #000000 !important;
+        font-size: 11pt;
+    }
+</style>
+
+@if (Model.ListPagers.Count > 5)
+{
+    <div class="col-md-4">
+        <div class="dataTables_info">Trang @Model.CurrentPage/@(Model.TotalPages)</div>
+    </div>
+    <ul class="pagination pagination-sm no-margin pull-right">
+        @foreach (eTraining.Helpers.Paging.Pager pager in Model.ListPagers)
+        {
+            var titlePage = new System.Web.HtmlString(pager.Title);
+            decodeParameters.Set("CurrentPage", pager.PageNum.ToString());
+            string encodeUrl = decodePath + "/?" + decodeParameters.ToString();
+            if (Convert.ToInt32(pager.PageNum) == Model.CurrentPage)
+            {
+                <li class="active"><span style="cursor:pointer;">@titlePage</span></li>
+            }
+            else
+            {
+                <li>
+                    <a href="@encodeUrl"><span class="page-href">@titlePage</span></a>
+                    
+                </li>
+            }
+        }
+    </ul>
+}

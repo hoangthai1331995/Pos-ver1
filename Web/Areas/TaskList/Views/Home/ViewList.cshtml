@@ -1,0 +1,216 @@
+﻿@model List<TaskList.Models.TasklistModel>
+@{
+    Layout = "";
+    List<TaskList.Models.ListTasklistStatusModel>
+        lstStatus = ViewBag.ListStatus;
+    var StatusColor = "";
+    var PriorityColor = "";
+}
+<div class="table-responsive table-qlcv parent">
+    <table class="table table-hover box-col">
+        <thead>
+            <tr>
+                <th class="p-2" style="min-width: 225px">
+                    <i class="icon-note text-doing mr-1 ml-0"></i>
+                    Công việc
+                </th>
+                <th class="p-2 hidden-xs m-w-1xx">
+                    <i class="icon-social-dropbox text-doing mr-1 ml-0"></i>
+                    <span>Nhóm</span>
+                </th>
+                <th class="p-2 hidden-xs m-w-1xx">
+                    <span class="icon--priority text-info" data-letter="M">
+                        <span class="svg-icon svg-fill-info" style="top: 3px;">
+                            <svg id="svgicon--big-sector-62_5" viewBox="0 0 20 20" width="20px" height="20px"><path d="M10 0c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.969 9.969 0 0 1-7.071-2.929l1.414-1.414A8 8 0 1 0 10 2V0z" fill-rule="evenodd"></path></svg>
+                        </span>
+                    </span>
+                    <span>Độ ưu tiên</span>
+                </th>
+                <th class="p-2 hidden-xs m-w-1xx">
+                    <i class="icon-emotsmile text-doing mr-1 ml-0"></i>
+                    <span class="">Trạng thái</span>
+                </th>
+                <th class="p-2 hidden-xs m-w-1xx">
+                    <i class="icon-user-following text-doing mr-1 ml-0"></i>
+                    <span>Người tạo</span>
+                </th>
+                <th class="p-2 m-w-1xx hidden-xs m-w-1xx">
+                    <i class="icon-user text-doing mr-1 ml-0"></i>
+                    <span class="">Thực hiện</span>
+                </th>
+                <th class="p-2 hidden-xs m-w-1xx">
+                    <i class="icon-calendar text-doing mr-1 ml-0"></i>
+                    <span>Ngày</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (TaskList.Models.TasklistModel item in Model)
+                {
+                    if (item.StatusType == "TO-DO")
+                    {
+                        StatusColor = "text-danger";
+                    }
+                    else if (item.StatusType == "IN-PROGRESS")
+                    {
+                        StatusColor = "text-info";
+                    }
+                    else if (item.StatusType == "CHECK")
+                    {
+                        StatusColor = "text-test";
+                    }
+                    else if (item.StatusType == "DONE")
+                    {
+                        StatusColor = "text-success";
+                    }
+                    if (item.PriorityLevel == "L")
+                    {
+                        PriorityColor = "text-success";
+                    }
+                    else if (item.PriorityLevel == "M")
+                    {
+                        PriorityColor = "text-info";
+                    }
+                    else if (item.PriorityLevel == "H")
+                    {
+                        PriorityColor = "text-test";
+                    }
+                    else if (item.PriorityLevel == "C")
+                    {
+                        PriorityColor = "text-danger";
+                    }
+                    <tr id="taskID_@item.TaskID">
+                        <td class="p-2 task-des">
+                            <div class="task-des-title" onclick="viewTaskListDetail('@item.TaskID')">
+                                @item.TaskTitle
+                                @*<span class="task-des-des ml-1">
+                                    @{
+                                        if (@item.ItemsDesc != null)
+                                        {
+                                            HtmlString htmlString = new HtmlString(@item.ItemsDesc.Replace("<b>","").Replace("<b/>", "").Replace("<u>", "").Replace("<u/>", "").Replace("<i>", "").Replace("<i/>", "").Replace("<p>", "").Replace("</p>", ""));
+                                            @htmlString
+                                        }
+                                    }
+                                    
+                                </span>*@
+                                <div class="des-shadow">
+                                </div>
+                            </div>
+                            <div class="d-flex f-wrap">
+                                <!-- <div class="mr-2 hidden-xs">
+                                    <i class="far fa-comments text-success mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tin nhắn"></i>
+                                    3
+                                </div> -->
+                                <div class="dropdown mr-2">
+                                    <i class="fa fa-list-ol text-test mr-1 mt-2 pointer" id="more-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>@item.CheckListItemList.Count
+                                    <div class="dropdown-menu" aria-labelledby="more-menu">
+                                        <a class="dropdown-item" href="/TaskList/Home/AddUpdate">
+                                            <i class="icon-plus text-doing pointer"></i>
+                                            Tạo công việc con
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="visible-xs mr-2">
+                                    <i class="fa fa-clock-o text-danger mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày kết thúc"></i>
+                                    @item.ToDateTime
+                                </div>
+                            </div>
+                            <div class="mr-2 visible-xs">
+                                <div class="d-flex flex-wrap">
+                                    <div class="mr-2 mt-1">
+                                        Mức độ: <span class="@PriorityColor">@item.PriorityName</span>
+                                    </div>
+                                    <div class="dropdown mr-2 pointer mt-1">
+                                        <div id="more-menu-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trạng thái: <span id="taskStatusMobile_@item.TaskID" class="@StatusColor like-btn">@item.StatusName</span></div>
+                                        <div class="dropdown-menu" aria-labelledby="more-menu-2">
+                                            @if (lstStatus != null)
+                                            {
+                                                foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                                                {
+                                                    <a onclick="ChangeStatus('@item.TaskID','@status.Code')" class="dropdown-item pointer" data-value="@status.Code">@status.Name</a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-2 hidden-xs">
+                            @item.TaskTypeName
+                        </td>
+                        <td class="p-2 hidden-xs text-center @PriorityColor">
+                            @item.PriorityName
+                        </td>
+                        <td class="p-2 hidden-xs text-center">
+                            <div class="dropdown mr-2 pointer">
+                                <div id="more-menu-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span id="taskStatus_@item.TaskID" class="@StatusColor like-btn">@item.StatusName</span>
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="more-menu-2">
+                                    @if (lstStatus != null)
+                                    {
+                                        foreach (TaskList.Models.ListTasklistStatusModel status in lstStatus)
+                                        {
+                                            <a onclick="ChangeStatus('@item.TaskID','@status.Code')" class="dropdown-item pointer" data-value="@status.Code">@status.Name</a>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-2 hidden-xs">
+                            @item.UserCreatedName
+                        </td>
+                        <td class="p-2 hidden-xs">
+                            @item.ObjectInChargeName
+                        </td>
+                        <td class="p-2 hidden-xs">
+                            <div class="">
+                                <i class="fa fa-clock-o text-info mr-1" a fa-clock text-danger mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày bắt đầu"></i>
+                                @item.FromDateTime.ToString("dd-MM-yyyy HH:ss")
+                            </div>
+                            <div class="">
+                                <i class="fa fa-clock-o text-danger mr-1 mt-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ngày kết thúc"></i>
+                                @item.ToDateTime.ToString("dd-MM-yyyy HH:ss")
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    .parent {
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer */
+        -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+        -webkit-user-select: none; /* Chrome, Safari, and Opera */
+        -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+    }
+</style>
+<script type="text/javascript">
+    var clicked = false, onDragula = false, clickX;
+    $('.box-col').on({
+        'mousemove': function (e) {
+            if (!onDragula) {
+                clicked && updateScrollPos(e);
+            }
+        },
+        'mousedown': function (e) {
+            clicked = true;
+            clickX = e.pageX;
+        },
+        'mouseup': function () {
+            clicked = false;
+            $('.parent').css('cursor', 'auto');
+        }
+    });
+    var updateScrollPos = function (e) {
+        $('.parent').css('cursor', 'grabbing');
+        $('.parent').scrollLeft($('.parent').scrollLeft() + window.Math.ceil((clickX - e.pageX) / 5));
+    }
+    // var array = @Html.Raw(Json.Encode(@Model));
+    // console.log(321, array);
+</script>

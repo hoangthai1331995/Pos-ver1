@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "";
+    BussinessModels.fitem control = (BussinessModels.fitem)ViewData["FormControl"];
+}
+
+@if (control != null)
+{
+	<div class="col-lg-4 col-md-6 col-sm-12">
+		<div class="form-group row">
+		    <label class="col-12 txt-left col-form-label">@control.display</label>
+		    <div class="col-12">
+		        <input type="text" class="form-control w-100" name="@control.key" id="@control.key" value="@control.value" placeholder="@control.holder">
+		        <span class="messages popover-valid"></span>
+		    </div>
+		</div>
+	</div>
+}
+

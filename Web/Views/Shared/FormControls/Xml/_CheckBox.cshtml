@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "";
+    BussinessModels.fitem control = (BussinessModels.fitem)ViewData["FormControl"];
+}
+
+@if (control != null)
+{
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="border-checkbox-section">
+            <div class="checkbox-fade fade-in-primary">
+                <label for="@control.key">
+                    <input type="checkbox" name="@control.key" id="@control.key" value="@control.value">
+                    <span class="cr">
+                        <i class="cr-icon fa fa-check txt-primary"></i>
+                    </span>
+                    <span>@control.display</span>
+                </label>
+            </div>
+        </div>
+    </div>
+}
+

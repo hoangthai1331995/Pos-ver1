@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "";
+    string area = ViewData["area"] != null ? ViewData["area"].ToString() : "";
+    string control = ViewData["control"] != null ? ViewData["control"].ToString() : "";
+    long id = ViewData["id"] != null ? Convert.ToInt64(ViewData["id"].ToString()) : 0;
+    string requestLink = "/" + area + "/" + control + "/GetSingle";
+}
+
+<script>
+    function loadInfo(id) {
+        $('#AUID').val(id);
+        console.log(id);
+        $.ajax({
+            type: "POST",
+            url: '@requestLink',
+            data: 'id=' + id,
+            success: function (response) {
+                console.log(response)
+                if (typeof response != 'undefined') {
+                    $.map(response, function (item) {
+                        $('#AU' + item.FieldName).val(item.FieldValue);
+                    });
+                }
+            }
+        });
+    }
+</script>

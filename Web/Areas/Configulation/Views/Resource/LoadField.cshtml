@@ -1,0 +1,82 @@
+﻿@model System.Data.DataTable
+@{
+    Layout = "";
+    string strField = "";
+    List<eTraining.BussinessObjects.ResourceListAuto> resources = ViewBag.Resources;
+}
+
+<table class="table table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>Từ khóa</th>
+            <th>Hiển thị</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Columns.Count > 0)
+        {
+            for (int i = 0; i < Model.Columns.Count; i++)
+            {
+                if (Model.Columns[i].ToString() != "TotalRec" && Model.Columns[i].ToString() != "RowNum")
+                {
+                    strField += strField == "" ? Model.Columns[i].ToString() : ";" + Model.Columns[i].ToString();
+                    <tr>
+                        <td>@Model.Columns[i]</td>
+                        <td>
+                            @if (resources != null)
+                            {
+                                eTraining.BussinessObjects.ResourceListAuto resource = resources.Where(m => m.ResKey == Model.Columns[i].ToString()).FirstOrDefault();
+                                if (resource != null)
+                                {
+                                    <input type="text" name="@Model.Columns[i]" id="@Model.Columns[i]" value="@resource.ResDisplay" class="form-control" />
+                                }
+                                else
+                                {
+                                    <input type="text" name="@Model.Columns[i]" id="@Model.Columns[i]" class="form-control" />
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<script>
+    var resourceArr = [];
+    $('.act-save').click(function () {
+        var fields = '@strField'.split(';');
+        
+        for (var i = 0; i < fields.length; i++) {
+            saveField(fields[i]);
+        }
+        var jData = JSON.stringify(resourceArr);
+        $.ajax({
+            type: "POST",
+            url: '/Configulation/Resource/AddUpdate',
+            data: "jData=" + jData + '&dataSource=' + '@ViewBag.DataSource',
+            success: function (response) {
+                if (response !== '') {
+                    alert('Cập nhật thành công');
+                }
+                else {
+                    alert('Cập nhật thất bại');
+                }
+                location.href = response;
+            }
+        });
+    });
+
+    function saveField(resKey) {
+        var tableRender = '@ViewBag.TableRender';
+        var resource = {
+            TableRender: tableRender,
+            ResKey: resKey,
+            ResDisplay: $('#' + resKey).val(),
+            LangCode: 'VI'
+        };
+        resourceArr.push(resource);
+    }
+</script>
+

@@ -1,0 +1,97 @@
+﻿@{ 
+    Layout = "";
+    List<BussinessModels.litem> items = (List<BussinessModels.litem>)ViewData["Display"];
+    System.Data.DataTable data = (System.Data.DataTable)ViewData["Data"];
+}
+
+<div class="row">
+    <div class="col-md-12 panels-wells">
+        <div class="panel panel-archon">
+            <div class="panel-heading" style="padding:20px 25px;">
+                <h3 class="panel-title">
+                    Dữ liệu báo cáo
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div class="dt-responsive table-responsive">
+                        <table id="res-config" class="table table-striped table-bordered nowrap">
+                            <thead>
+                                <tr>
+                                    @if (data.Columns != null && data.Columns.Count > 0)
+                                    {
+                                        for (int c = 0; c < data.Columns.Count; c++)
+                                        {
+                                            if (data.Columns[c].ToString() != "TotalRec" && data.Columns[c].ToString() != "RowNum" && data.Columns[c].ToString() != "ID" && data.Columns[c].ToString() != "Status")
+                                            {
+                                                <th>
+                                                    @if (items != null && items.Count() > 0)
+                                                    {
+                                                        string columnName = data.Columns[c].ToString();
+                                                        if (columnName == "StatusDisplay")
+                                                        {
+                                                            columnName = "Status";
+                                                        }
+                                                        BussinessModels.litem display = items.Where(m => m.key == columnName).FirstOrDefault();
+                                                        if (display != null)
+                                                        {
+                                                            @display.display
+                                                        }
+                                                        else
+                                                        {
+                                                            @data.Columns[c]
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        @data.Columns[c]
+                                                    }
+                                                </th>
+                                            }
+                                        }
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (data != null && data.Rows.Count > 0)
+                                {
+                                    foreach (System.Data.DataRow row in data.Rows)
+                                    {
+                                        long id = 0;
+                                        <tr>
+                                            @for (int c = 0; c < data.Columns.Count; c++)
+                                            {
+                                                if (data.Columns[c].ToString() != "TotalRec" && data.Columns[c].ToString() != "RowNum" && data.Columns[c].ToString() != "ID" && data.Columns[c].ToString() != "Status")
+                                                {
+                                                    <td>
+                                                        @if (data.Columns[c].DataType == typeof(System.DateTime))
+                                                        {
+                                                            if (row[c] != null && row[c].ToString() != "")
+                                                            {
+                                                                @Convert.ToDateTime(row[c]).ToString("dd/MM/yyyy HH:mm")
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            HtmlString colData = new HtmlString(row[c].ToString());
+                                                            @colData
+                                                        }
+                                                    </td>
+                                                }
+                                                if (data.Columns[c].ToString() == "ID")
+                                                {
+                                                    id = Convert.ToInt64(row[c].ToString());
+                                                }
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*@Html.Partial("~/Views/Shared/Pager.cshtml", Model.PagingInfo)*@
+            </div>
+        </div>
+    </div>
+</div>

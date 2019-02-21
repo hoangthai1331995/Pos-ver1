@@ -1,0 +1,81 @@
+﻿@{
+    List<eTraining.BussinessObjects.SelectList> tables = ViewBag.Tables;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-archon">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Tra cứu
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form method="post" role="form">
+                    <div class="form-group field-auto-resize">
+                        <label for="">Table - Form</label>
+                        <select name="TableName" id="TableName" class="select2 form-control" style="width:100%;">
+                            <option value=""> - Chọn - </option>
+                            @if (tables != null && tables.Count() > 0)
+                            {
+                                foreach (eTraining.BussinessObjects.SelectList table in tables)
+                                {
+                                    <option @(ViewBag.TableName == table.Code ? "selected" : "") value="@table.Code" data-source="@table.ExtentionProperty["DataSource"]">@table.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-archon">
+            <div class="panel-heading" style="padding:20px 25px;">
+                <h3 class="panel-title">
+                    Cấu hình hiển thị cho danh sách
+                </h3>
+            </div>
+            <div class="panel-body data-resource">
+                
+            </div>
+            <div class="panel-footer">
+                <div class="form-group text-right">
+                   <button class="btn btn-primary act-save">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var tableName = '@ViewBag.TableName';
+        var dataSource = '@ViewBag.DataSource';
+        if (tableName != '') {
+            console.log(tableName);
+            console.log(dataSource);
+            loadResource(tableName, dataSource);
+        }
+        $('#TableName').change(function () {
+            var dataSource = $('option:selected', this).attr('data-source');
+            var tableName = $(this).val();
+            loadResource(tableName, dataSource);
+        });
+
+        function loadResource(tableName, dataSource) {
+            $.ajax({
+                type: "POST",
+                url: '/Configulation/Resource/LoadField',
+                data: "dataSource=" + dataSource + '&tableName=' + tableName,
+                success: function (response) {
+                    console.log(response);
+                    $('.data-resource').html(response);
+                }
+            });
+        }
+    })
+</script>

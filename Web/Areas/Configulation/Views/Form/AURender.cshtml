@@ -1,0 +1,47 @@
+﻿@model  eTraining.BussinessModels.FormInfo
+@{
+    Layout = "";
+}
+
+<div class="modal fade" id="modalAddUpdate" tabindex="-1" role="dialog" aria-labelledby="modalAddUpdateLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:80%;">
+        <form action="@(!String.IsNullOrEmpty(Model.Action) ? Model.Action : "")" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@(!String.IsNullOrEmpty(Model.Title) ? Model.Title : "")</h5>
+                </div>
+                <div class="modal-body">
+                    @if (Model.Controls != null && Model.Controls.Count() > 0)
+                    {
+                        foreach (eTraining.BussinessModels.FormControl control in Model.Controls)
+                        {
+                            switch (control.Type)
+                            {
+                                case (int)eTraining.Helpers.Defines.FieldType.Textbox:
+                                    @Html.Partial("~/Views/Shared/FormControls/_SingleTextbox.cshtml", new ViewDataDictionary { { "FormControl", control }, { "FormGroup", "AU" } })
+                                    break;
+                                case (int)eTraining.Helpers.Defines.FieldType.DateTime:
+                                    @Html.Partial("~/Views/Shared/FormControls/_DateTime.cshtml", new ViewDataDictionary { { "FormControl", control }, { "FormGroup", "AU" } })
+                                    break;
+                                case (int)eTraining.Helpers.Defines.FieldType.Commbobox:
+                                    @Html.Partial("~/Views/Shared/FormControls/_ComboboxByDataSource.cshtml", new ViewDataDictionary { { "FormControl", control }, { "FormGroup", "AU" } })
+                                    break;
+                                case (int)eTraining.Helpers.Defines.FieldType.Checkbox:
+                                    @Html.Partial("~/Views/Shared/FormControls/_CheckBox.cshtml", new ViewDataDictionary { { "FormControl", control }, { "FormGroup", "AU" } })
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    <input type="hidden" name="ID" id="AUID" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Thực hiện</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

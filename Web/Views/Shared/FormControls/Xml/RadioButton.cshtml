@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "";
+    BussinessModels.fitem control = (BussinessModels.fitem)ViewData["FormControl"];
+}
+
+@if (control != null)
+{
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="" id="@control.key" name="@control.key">@control.display</div>
+        <div class="form-radio">
+            <form>
+                @* map value *@
+                <div class="radio radio-inline">
+                    <label>
+                        <input type="radio" name="radio" checked="checked">
+                        <i class="helper"></i>Radio 1
+                    </label>
+                </div>
+                <div class="radio radio-inline">
+                    <label>
+                        <input type="radio" name="radio">
+                        <i class="helper"></i>Radio 2
+                    </label>
+                </div>
+                <div class="radio radio-inline radio-disable">
+                    <label>
+                        <input type="radio" disabled="" name="radio">
+                        <i class="helper"></i>Radio Disable
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+

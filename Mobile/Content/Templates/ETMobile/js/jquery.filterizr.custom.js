@@ -1,0 +1,1 @@
+$(function(){'use strict';$('.filtr-container').imagesLoaded(function(){var filterizr=$('.filtr-container').filterizr();});$('.portfolio-menu li').on('click',function(){$('.portfolio-menu li').removeClass('active');$(this).addClass('active');});});

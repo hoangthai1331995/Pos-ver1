@@ -1,0 +1,44 @@
+﻿@{
+    /**/
+
+    Layout = "";
+    BussinessModels.fitem control = (BussinessModels.fitem)ViewData["FormControl"];
+}
+
+<link rel="stylesheet" href="/Content/Templates/Plugin/summernote/summernote-bs4.css">
+@if (control != null)
+{
+<div class="col-lg-4 col-md-6 col-sm-12">
+    <textarea class="input-block-level" id="@control.key" name="@control.key" rows="6">
+        @{
+            if(control.value != null)
+            {
+            HtmlString htmlString = new HtmlString(control.value);
+            @htmlString
+            }
+        }    
+    </textarea>
+</div>
+}
+<script src="/Content/Templates/Plugin/summernote/summernote-bs4.min.js"></script>
+
+<script>
+    if (@control && $("#" + @control.key).length) {
+         $("#" + @control.key).summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                //['fontsize', ['fontsize']],
+                //['fontname', ['fontname']],
+                //['color', ['color']],
+                //['height', ['height']],
+                //['insert', ['picture', 'video', 'link']],//'hr'
+                //['table', ['table']],
+                //['view', ['fullscreen', 'codeview', 'help']],
+            ],
+            height: 300,
+            tabsize: 2
+        });
+    }
+</script>

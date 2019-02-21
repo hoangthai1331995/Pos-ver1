@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = "";
+    List<eTraining.BussinessObjects.SelectList> groups = ViewBag.Groups;
+}
+
+<div class="modal fade" id="modalChangeGroup" tabindex="-1" role="dialog" aria-labelledby="modalChangeGroupLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="/Admin/User/ChangeGroup" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đổi nhóm thành viên</h5>
+                </div>
+                <div class="modal-body">
+                    <select id="Group" name="Group" class="form-control">
+                        <option value="0">- Chọn nhóm -</option>
+                        @if (groups != null && groups.Count() > 0)
+                        {
+                            foreach (eTraining.BussinessObjects.SelectList g in groups)
+                            {
+                                <option value="@g.Code">@g.Name</option>
+                            }
+                        }
+                    </select>
+                    <input type="hidden" name="ID" id="ID" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-primary">Thực hiện</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('.change-group').click(function () {
+        var id = $(this).attr('data-id');
+        $('#ID').val(id);
+        $.ajax({
+            type: "POST",
+            url: '/Admin/User/GetGroup',
+            data: "id=" + id,
+            success: function (response) {
+                $('#Group').val(response);
+            }
+        });
+    });
+</script>
+

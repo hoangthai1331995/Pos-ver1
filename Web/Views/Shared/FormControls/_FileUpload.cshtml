@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "";
+    eTraining.BussinessModels.FormControl control = (eTraining.BussinessModels.FormControl)ViewData["FormControl"];
+    string formGroup = ViewData["FormGroup"].ToString();
+}
+<!-- jquery file upload Frame work -->
+<link href="/Content/Templates/GuruTemplate/assets/pages/jquery.filer/css/jquery.filer.css" type="text/css" rel="stylesheet" />
+<link href="/Content/Templates/GuruTemplate/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
+<style>
+.jFiler-theme-default .jFiler-input-button {
+    background-color: #4680ff;
+    background-image: none;
+    color: #fff;
+}
+</style>
+@if (control != null)
+{
+	<div class="col-lg-4 col-md-6 col-sm-12">
+		<div class="form-group row">
+		    <label class="col-12 txt-left col-form-label">@control.Display</label>
+		    <div class="col-12">
+		    	<!-- Nếu k chọn multi -->
+		    	<!-- <input type="file" class="form-control w-100"> -->
+		        <input type="file" name="files[]" id="filer_input" multiple="multiple">
+		    </div>
+		</div>
+	</div>
+}
+
+<!-- jquery file upload js -->
+<script src="/Content/Templates/GuruTemplate/assets/pages/jquery.filer/js/jquery.filer.min.js"></script>
+<!-- <script src="/Content/Templates/GuruTemplate/assets/pages/filer/custom-filer.js" type="text/javascript"></script>
+<script src="/Content/Templates/GuruTemplate/assets/pages/filer/jquery.fileuploads.init.js" type="text/javascript"></script> -->
+<script>
+	$('#filer_input').filer({
+        limit: 3,
+        maxSize: 3,
+        // extensions: ['jpg', 'jpeg', 'png', 'gif', 'psd'],
+        changeInput: true,
+        showThumbs: true,
+        addMore: true
+    });
+</script>

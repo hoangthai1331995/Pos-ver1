@@ -1,0 +1,76 @@
+﻿@{ 
+    BussinessObjects.NI10_Employee info = (BussinessObjects.NI10_Employee)ViewData["Info"];
+}
+<div id="MainContent_ctl00_UpAvatar">
+    @* <input type="submit" name="ctl00$MainContent$ctl00$btnSaveAvatar" value="Lưu Avatar" id="MainContent_ctl00_btnSaveAvatar" class="btn btn-outline-danger btn-rounded btn-fw" style="float: right;">*@
+    <div class="dropify-wrapper has-preview" style="text-align:center;">
+        <form id="formImport">
+            <div class="dropify-preview" style="display: block;margin-bottom:10px;">
+                <span class="dropify-render">
+                    <img class="pre-img" src="@(!String.IsNullOrEmpty(info.Avatar) ? "/Files/Avatar/" + info.Avatar : "/Content/template/images/faces/avatarnull.png")" style="max-height: 300px;">
+                </span>
+            </div>
+            <input name="fileImport" type="file" id="fileImport" data-height="300" data-default-file="@(!String.IsNullOrEmpty(info.Avatar) ? "/Files/Avatar/" + info.Avatar : "/Content/template/images/faces/avatarnull.png")" onchange="preview_upload();">
+        </form>
+    </div>
+</div>
+<div class="card-body">
+    <div class="form-group row">
+        <label for="txtEmployeeCode" class="col-4 col-lg-3 col-form-label">Mã nhân viên</label>
+        <div class="col-8 col-lg-9 d-flex">
+            <input name="EmployeeCode" type="text" id="EmployeeCode" class="form-control" placeholder="Mã nhân viên" disabled="disabled" value="@(!String.IsNullOrEmpty(info.EmployeeCode) ? info.EmployeeCode : "")">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="txtUserName" class="col-4 col-lg-3 col-form-label">Tên nhân viên</label>
+        <div class="col-8 col-lg-9 d-flex">
+            <input name="EmployeeName" type="text" id="EmployeeName" class="form-control" placeholder="Tên nhân viên" disabled="disabled" value="@(!String.IsNullOrEmpty(info.FullName) ? info.FullName : "")">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="txtEmail" class="col-4 col-lg-3 col-form-label">Email</label>
+        <div class="col-8 col-lg-9 d-flex">
+            <input name="Email" type="text" id="Email" class="form-control" placeholder="Email" disabled="disabled" value="@(!String.IsNullOrEmpty(info.EmailAddress) ? info.EmailAddress : "")">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="txtJobtitleName" class="col-4 col-lg-3 col-form-label">Chức danh</label>
+        <div class="col-8 col-lg-9 d-flex">
+            <input name="JobtitleName" type="text" id="JobtitleName" class="form-control" placeholder="Chức danh" disabled="disabled" value="@(!String.IsNullOrEmpty(info.JobTitle) ? info.JobTitle : "")">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="txtShop" class="col-4 col-lg-3 col-form-label">Shop/Phòng ban</label>
+        <div class="col-8 col-lg-9 d-flex">
+            <input name="OrganizationHierachyName" type="text" id="OrganizationHierachyName" class="form-control" placeholder="Shop/Phòng ban" disabled="disabled" value="@(!String.IsNullOrEmpty(info.OrganizationHierachyName) ? info.OrganizationHierachyName : "")">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function preview_upload() {
+        var formData = new FormData(document.getElementById("formImport"));
+        formData.append('fileImport', $('#fileImport')[0].files[0]);
+        $.ajax({
+            url: '/User/UploadAvatar',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (rep) {
+                if (rep != '0' && rep != '-1') {
+                    ShowMessage('success', 'Thông báo', 'Cập nhật avatar thành công. Hãy chờ phê duyệt trước khi avatar của bạn được phép hiển thị', 500, '');
+                    $('#fileImport').attr('data-default-file', rep);
+                    $('.pre-img').attr('src', rep);
+                }
+                else {
+                    if (rep == '0') {
+                        ShowMessage('danger', 'Thông báo', 'File không đúng định dạng, avatar phải là file ảnh', 500, '');
+                    }
+                    else {
+                        ShowMessage('danger', 'Thông báo', 'Có lỗi xảy ra trong quá trình xử lý dữ liệu', 500, '');
+                    }
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "";
+    BussinessModels.fitem control = (BussinessModels.fitem)ViewData["FormControl"];
+}
+<link rel="stylesheet" href="/Content/Templates/GuruTemplate/bower_components/select2/css/select2.min.css"/>
+<!-- Multi Select css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css"/>
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/multiselect/css/multi-select.css"/>
+<!-- Style.css -->
+<link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/custom-select.css">
+@if (control != null)
+{
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group row">
+            <label class="col-12 txt-left col-form-label">@control.display</label>
+            <div class="col-12">
+                <select class="js-example-basic-single col-sm-12">
+                    <optgroup label="Developer">
+                        <option value="AL">Alabama</option>
+                        <option value="WY">Wyoming</option>
+                    </optgroup>
+                    <optgroup label="Designer">
+                        <option value="WY">Peter</option>
+                        <option value="WY">Hanry Die</option>
+                        <option value="WY">John Doe</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+    </div>
+}
+<!-- Select 2 js -->
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/select2/js/select2.full.min.js"></script>
+<!-- Multiselect js -->
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js">
+
+
+</script>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/multiselect/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/select2-custom.js"></script>
+

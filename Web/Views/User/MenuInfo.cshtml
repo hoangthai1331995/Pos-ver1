@@ -1,0 +1,38 @@
+﻿@model List<BussinessObjects.NI10_Menu>
+@{
+    Layout = "";
+    List<BussinessObjects.NI10_Menu> menuParents = Model.Where(m => m.ParentID == 0).ToList();
+}
+
+<ul class="pcoded-item pcoded-left-item">
+    @if (menuParents != null && menuParents.Count() > 0)
+    {
+        foreach (BussinessObjects.NI10_Menu menu in menuParents)
+        {
+            List<BussinessObjects.NI10_Menu> menuChilds = Model.Where(m => m.ParentID == menu.MenuId).ToList();
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="@menu.Icon"></i><b>D</b></span>
+                    <span class="pcoded-mtext" data-i18n="nav.user.main">@menu.MenuName</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+                @if (menuChilds != null && menuChilds.Count() > 0)
+                {
+                    <ul class="pcoded-submenu">
+                        @foreach (BussinessObjects.NI10_Menu child in menuChilds)
+                        {
+                            <li class="">
+                                <a href="@child.Link">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.user.listUser">@child.MenuName</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    }
+</ul>
+

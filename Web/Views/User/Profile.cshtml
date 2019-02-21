@@ -1,0 +1,39 @@
+﻿@{ 
+    BussinessObjects.NI10_Employee Info = ViewBag.UserInfo;
+}
+<div class="page-header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"> </i> Trang chủ</a></li>
+            <li class="breadcrumb-item">Trang cá nhân</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="nav nav-tabs tab-solid tab-solid-danger" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active show" id="tab-3-1" data-toggle="tab" href="#home-3-1" role="tab" aria-controls="home-3-1" aria-selected="false"><i class="mdi mdi-information-outline"></i> <span class="hidden-md">Thông tin</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-3-3" data-toggle="tab" href="#profile-3-3" role="tab" aria-controls="profile-3-3" aria-selected="false"><i class="mdi mdi-lock"></i> <span class="hidden-md">Đổi mật khẩu </span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content tab-content-basic p-0">
+                            @Html.Partial("_Info", new ViewDataDictionary { { "Info", Info } })
+                           @* @Html.Partial("_RegisterDevice")*@
+                            @Html.Partial("_ChangePassword")
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.Partial("_BasicInfo", new ViewDataDictionary { { "Info", Info } })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+﻿@model eTraining.Mobile.Models.LoginModel
+@{ 
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="zxx">
+<!-- Mirrored from astylers.com/bootstrap-eleco/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 07 Jan 2019 09:56:39 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.png">
+    <title>Mobile Template</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/Templates/ETMobile/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Content/Templates/ETMobile/css/lightbox.css">
+    <link rel="stylesheet" href="/Content/Templates/ETMobile/css/line-awesome.css">
+    <link rel="stylesheet" href="/Content/Templates/ETMobile/css/line-awesome-font-awesome.css">
+    <link rel="stylesheet" href="/Content/Templates/ETMobile/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/Content/Templates/ETMobile/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/Content/Templates/ETMobile/css/animsition.css">
+    <link rel="alternate stylesheet" type="text/css" href="colors/material-color/style-blue.css" title="material-style-blue" />
+    <link rel="stylesheet" type="text/css" href="/Content/Templates/ETMobile/css/style.css" title="default" />
+</head>
+<body class="animsition">
+    <div class="navbar navbar-pages">
+        <div class="container">
+            <div class="content">
+                <h4><a href="#" class="link-back"><i class="fa fa-arrow-left "></i></a> Đăng nhập</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="sign-in segments-page">
+        <div class="container" style="padding-left: 0px; padding-right: 0px;">
+            <div class="content b-shadow">
+                <form method="post">
+                    @Html.TextBoxFor(model => model.UserName, new { @placeholder = "Tên đăng nhập" })
+                    @Html.PasswordFor(model => model.PassWord, new { @placeholder = "Mật khẩu" })
+                    <div class="infor">
+                        <ul>
+                            <li>
+                                <a href="/User/Forgot">Bạn quên mật khẩu?</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="button ">Đăng nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/Content/Templates/ETMobile/js/jquery.min.js"></script>
+    <script src="/Content/Templates/ETMobile/js/bootstrap.min.js"></script>
+    <script src="/Content/Templates/ETMobile/js/lightbox.js"></script>
+    <script src="/Content/Templates/ETMobile/js/animsition.min.js"></script>
+    <script src="/Content/Templates/ETMobile/js/animsition-custom.js"></script>
+    <script src="/Content/Templates/ETMobile/js/jquery.filterizr.js"></script>
+    <script src="/Content/Templates/ETMobile/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/Content/Templates/ETMobile/js/owl.carousel.min.js"></script>
+    @*<script src="/Content/Templates/ETMobile/js/styleswitcher.js"></script>*@
+    <script src="/Content/Templates/ETMobile/js/main.js"></script>
+</body>
+<!-- Mirrored from astylers.com/bootstrap-eleco/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 07 Jan 2019 09:56:39 GMT -->
+</html>
