@@ -1,3 +1,15 @@
 .header-navbar .navbar-wrapper .navbar-logo {
-	width: 100px;
+	width: 150px;
+}
+.box-pos {
+    margin: -10px;
+}
+.box-pos-left {
+    box-shadow: 1px 0 3px rgba(0,0,0,.24);
+    background: #fff;
+    min-height: calc(100vh - 120px);
+}
+.box-pos-right {
+    background-color: #fafafa;
+    min-height: calc(100vh - 120px);
 }
