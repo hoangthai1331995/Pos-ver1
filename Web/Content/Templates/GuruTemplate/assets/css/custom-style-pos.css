@@ -7,9 +7,91 @@
 .box-pos-left {
     box-shadow: 1px 0 3px rgba(0,0,0,.24);
     background: #fff;
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
 }
 .box-pos-right {
     background-color: #fafafa;
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 80px);
+    display: flex;
+}
+@media(max-width: 992px) {
+	.box-pos-left, .box-pos-right {
+	    min-height: calc(100vh - 100px);
+	}
+}
+.pos-order-nav-container {
+	display: block;
+    /*height: 53px;*/
+}
+.pos-order-nav-content {
+	display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+.pos-order-nav-list {
+	flex: 1;
+	flex-wrap: wrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    display: flex;
+}
+.pos-order-nav-list .active {
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
+    font-weight: 700;
+}
+.pos-order-nav-item {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 72px;
+    flex: 0 1 72px;
+    text-align: center;
+    line-height: 52px;
+    cursor: pointer;
+}
+.pos-order-nav-item a {
+	padding: 18px 20px;
+}
+.pos-order-nav-size-tab {
+	margin: 5px 0px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.f-direction-row {
+	flex-direction: row;
+}
+.pos-order-info-container {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    z-index: 2;
+}
+.pos-search-box {
+	border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+	display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    /*height: 40px;*/
+}
+.rounded-0 {
+    border-radius: 0;
+}
+.large {
+    font-size: 150%;
 }
