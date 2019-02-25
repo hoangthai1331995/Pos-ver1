@@ -7,7 +7,7 @@
 <div class="row box-pos">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="row">
-            <div class="col-md-6 col-lg-4 col-sm-12 pr-md-0 px-0">
+            <div class="col-md-7 col-lg-6 col-sm-12 pr-md-0 px-0">
                 <div class="box-pos-left">
                     <div class="pos-order-nav-container">
                         <div class="pos-order-nav-content">
@@ -57,7 +57,60 @@
                         <div class="col-md-12">
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-order-1" role="tabpanel" aria-labelledby="tab-order-1">
-                                    1
+                                    <div class="accordion pos-order-list-wrapper" id="accordion" role="tablist">
+                                        <div class="box-pos-order-detail">
+                                            <div class="pos-order-list-item" role="tab" id="heading-1">
+                                                <div class="d-flex mb-0 w-100 align-items-center">
+                                                    <div class="quantity">
+                                                        1
+                                                    </div>
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapse-1" aria-expanded="false" aria-controls="collapse-1">
+                                                        <div class="productname">
+                                                            <span class="primary-text">SAMSUNG GALAXY S9 PLUS 128GB ĐEN Xanh </span>
+                                                            <span class="second-text hidden-xs">SP000053</span>
+                                                            <span class="second-text visible-xs">× 10,990,000</span>
+                                                            <!-- <div style="flex-direction: row; box-sizing: border-box; display: flex;">
+                                                                <span>x 10,990,000</span>
+                                                            </div> -->
+                                                        </div>
+                                                        <div class="price hidden-xs">
+                                                            <span>10,990,000</span>
+                                                        </div>
+                                                        <div class="subtotal">
+                                                            <span class="second-text visible-xs">SP000053</span>
+                                                            <span class="font-weight-bold">13,490,000</span>
+                                                        </div>
+                                                    </a>
+                                                    <div class="">
+                                                        <button type="button" class="btn btn-link p-3">
+                                                            <span class="fa fa-times" style=""></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="collapse-1" class="collapse" role="tabpanel" aria-labelledby="heading-1" data-parent="#accordion">
+                                                <div class="pos-order-item-container">
+                                                    <div class="pos-order-item-content">
+                                                        dsa
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="">
+                                            <div class="" role="tab" id="heading-2">
+                                                <div class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+                                                        Làm thế nào để đưa tài liệu lên hệ thống?
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div id="collapse-2" class="collapse" role="tabpanel" aria-labelledby="heading-2" data-parent="#accordion">
+                                                <div class="">
+                                                    Tài liệu hệ thống được phân mục theo loại và phòng ban của tài liêu, bạn thực hiện đưa tài liệu theo hướng dẫn <a href="/FRTNotification/Notification/Detail?encryptId=3GXSqgbbEwOhlE/OIq3+IQ==">Tại đây</a>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-order-2" role="tabpanel" aria-labelledby="tab-order-2">
                                     2
@@ -103,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-8 hidden-xs pl-md-0 px-0">
+            <div class="col-md-5 col-lg-6 hidden-xs pl-md-0 px-0">
                 <div class="box-pos-right">
                     search
                 </div>
@@ -112,11 +165,11 @@
     </div>
 </div>
 <style>
-.select2-container--default .select2-selection--single {
-    /*border-top: none;
+    .select2-container--default .select2-selection--single {
+        /*border-top: none;
     border-bottom: none;*/
-    border: none;
-}
+        border: none;
+    }
 </style>
 <!-- slick js -->
 <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/slick-carousel/js/slick.min.js"></script>
@@ -132,14 +185,14 @@
 <!-- product detail js -->
 <!-- <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/product-detail/product-detail.js"></script> -->
 <script>
-    $( document ).ready(function() {
+    $(document).ready(function () {
         // remove child
-        Element.prototype.remove = function() {
+        Element.prototype.remove = function () {
             this.parentElement.removeChild(this);
         }
-        NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-            for(var i = this.length - 1; i >= 0; i--) {
-                if(this[i] && this[i].parentElement) {
+        NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
+            for (var i = this.length - 1; i >= 0; i--) {
+                if (this[i] && this[i].parentElement) {
                     this[i].parentElement.removeChild(this[i]);
                 }
             }
@@ -148,19 +201,19 @@
         if (i > 1) {
             $(".btn-number[data-type='minus'][data-field='quant[1]']").removeAttr('disabled')
         }
-        $('.btn-number').on('click',function(e){
+        $('.btn-number').on('click', function (e) {
             e.preventDefault();
             var fieldName = $(this).attr('data-field');
-            var type      = $(this).attr('data-type');
+            var type = $(this).attr('data-type');
             var lengthTab = $(".list-size-order li").length;
             // tab-order-1
             var currentNameTab = $("#pills-tab li .active").attr('id');
             var currentIdTab = currentNameTab.substr(10, currentNameTab.length);
             var lastNameTab = $("#pills-tab li:last-child a").attr('id')
             var lastIdTab = lastNameTab.substr(10, currentNameTab.length);
-            if(type == 'minus') {
+            if (type == 'minus') {
                 var minValue = 1;
-                if(lengthTab > minValue) {
+                if (lengthTab > minValue) {
                     // check div has bookmark
                     if ($('#' + $(".list-size-order li .active").attr('id') + ' i').length == 0) {
                         $("#tab-order-" + currentIdTab).parent().remove();
@@ -171,29 +224,29 @@
                         notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng xóa hết danh sách hàng trước khi xóa đơn hàng');
                     }
                 }
-                if(lengthTab == minValue) {
+                if ($(".list-size-order li").length == minValue) {
                     $(this).attr('disabled', true);
                 }
 
-            } else if(type == 'plus') {
+            } else if (type == 'plus') {
                 var maxValue = 9999999999999;
-                if(lengthTab < maxValue) {
+                if (lengthTab < maxValue) {
                     var add_size_order_tab = $('<li class="pos-order-nav-item"><a class="" id="tab-order-' + i + '" data-toggle="pill" href="#pills-order-' + i + '" role="tab" aria-controls="pills-order-' + i + '" aria-selected="false">#' + (lengthTab + 1) + '</a></li>');
                     $(add_size_order_tab).appendTo(".list-size-order").hide().fadeIn(300);
 
                     var add_size_order_tab_content = $('<div class="tab-pane fade" id="pills-order-' + i + '" role="tabpanel" aria-labelledby="tab-order-' + i + '"">' + (lengthTab + 1) + '</div>');
                     $(add_size_order_tab_content).appendTo(".tab-content");
-                    $(".btn-number[data-type='minus'][data-field='"+ fieldName +"']").removeAttr('disabled')
+                    $(".btn-number[data-type='minus'][data-field='" + fieldName + "']").removeAttr('disabled')
                     i++;
                 }
-                if(lengthTab == maxValue) {
+                if ($(".list-size-order li").length == maxValue) {
                     $(this).attr('disabled', true);
                 }
             }
             // change text div
             var j = 1;
             var add = '';
-            $("#pills-tab li a").each(function() {
+            $("#pills-tab li a").each(function () {
                 if ($('#' + $(this).attr('id') + ' i')) {
                     add = $('#' + $(this).attr('id') + ' i');
                 }

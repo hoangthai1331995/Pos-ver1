@@ -23,7 +23,7 @@ $(document).ready(function () {
         freamtype: "theme1",
         layouttype:'light', // Value should be light / dark
         FixedNavbarPosition: true,  // Value should be true / false  header postion
-        FixedHeaderPosition: true,  // Value should be true / false  sidebar menu postion
+        FixedHeaderPosition: false,  // Value should be true / false  sidebar menu postion
         collapseVerticalLeftHeader: true,
         VerticalSubMenuItemIconStyle: 'style6', // value should be style1, style2, style3, style4, style5, style6
         VerticalNavigationView: 'view1',

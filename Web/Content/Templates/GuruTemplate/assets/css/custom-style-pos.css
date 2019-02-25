@@ -95,3 +95,102 @@
 .large {
     font-size: 150%;
 }
+.pos-order-list-wrapper {
+	display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /*display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;*/
+}
+.pos-order-list-wrapper .box-pos-order-detail {
+	border-bottom: 1px solid rgba(0,0,0,.12);
+}
+/*.pos-order-list-wrapper .box-pos-order-detail:last-child {
+	border-bottom: none;
+}*/
+.pos-order-list-item {
+	flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 72px;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+}
+.pos-order-list-item a {
+	color: inherit;
+	flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    font-size: 14px;
+    flex: 1;
+    align-items: center;
+}
+.pos-order-list-item a {
+	width: calc(100% - 110px);
+}
+.pos-order-list-wrapper:focus .pos-order-list-item, .pos-order-list-wrapper:hover .pos-order-list-item {
+	background: #e1f5fe;
+}
+.pos-order-list-item .quantity {
+    width: 50px;
+    min-width: 50px;
+    text-align: center;
+    font-size: 180%;
+    cursor: pointer;
+}
+.pos-order-list-item .productname {
+    /*max-width: 150px;*/
+    width: 100%;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+}
+.primary-text {
+    font-size: 16px;
+}
+.pos-order-list-item .productname .primary-text {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+@media(max-width: 767px) {
+	/*.pos-order-list-item .quantity {
+		width: 40px;
+	    min-width: 40px;
+	}*/
+}
+.pos-order-list-item .price {
+    text-align: right;
+    padding-left: 10px;
+}
+.pos-order-list-item .subtotal {
+    text-align: right;
+    padding-left: 10px;
+}
+.box-pos-order-detail .pos-order-item-container {
+	display: block;
+    background-color: #ededed;
+    padding: 8px;
+}
+.pos-order-item-content {
+	background-color: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    border-radius: 2px;
+    padding: 16px;
+}
