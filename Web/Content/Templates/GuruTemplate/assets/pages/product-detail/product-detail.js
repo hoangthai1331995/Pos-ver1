@@ -82,13 +82,13 @@ $(document).ready(function() {
             if(valueCurrent >= minValue) {
                 $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
             } else {
-                alert('Sorry, the minimum value was reached');
+                alert('Xin lỗi, cần phải mua số lượng ít nhất là 1');
                 $(this).val($(this).data('oldValue'));
             }
             if(valueCurrent <= maxValue) {
                 $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
             } else {
-                alert('Sorry, the maximum value was reached');
+                alert('Xin lỗi, quá số lượng bạn có thể mua');
                 $(this).val($(this).data('oldValue'));
             }
 

@@ -38,12 +38,12 @@
                                     <div class="p-l-0">
                                         <div class="input-group mb-0">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                                <button type="button" class="btn btn-link btn-number-tab shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="quant[1]">
                                                     <span class="fa fa-minus m-0"></span>
                                                 </button>
                                             </span>
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" data-type="plus" data-field="quant[1]">
+                                                <button type="button" class="btn btn-link btn-number-tab shadow-none btn-lg" data-type="plus" data-field="quant[1]">
                                                     <span class="fa fa-plus m-0"></span>
                                                 </button>
                                             </span>
@@ -91,7 +91,19 @@
                                             <div id="collapse-1" class="collapse" role="tabpanel" aria-labelledby="heading-1" data-parent="#accordion">
                                                 <div class="pos-order-item-container">
                                                     <div class="pos-order-item-content">
-                                                        dsa
+                                                        <div class="input-group mb-0">
+                                                            <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="quant-tab-1-item-1">
+                                                                    <span class="fa fa-minus m-0"></span>
+                                                                </button>
+                                                            </span>
+                                                            <input type="text" name="quant-tab-1-item-1" class="form-control input-number text-center" value="1">
+                                                            <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" data-type="plus" data-field="quant-tab-1-item-1">
+                                                                    <span class="fa fa-plus m-0"></span>
+                                                                </button>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,7 +195,7 @@
 <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/multiselect/js/jquery.multi-select.js"></script>
 <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/select2-custom.js"></script>
 <!-- product detail js -->
-<!-- <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/product-detail/product-detail.js"></script> -->
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/product-detail/product-detail.js"></script>
 <script>
     $(document).ready(function () {
         // remove child
@@ -199,9 +211,9 @@
         }
         var i = $(".list-size-order li").length + 1;
         if (i > 1) {
-            $(".btn-number[data-type='minus'][data-field='quant[1]']").removeAttr('disabled')
+            $(".btn-number-tab[data-type='minus'][data-field='quant[1]']").removeAttr('disabled')
         }
-        $('.btn-number').on('click', function (e) {
+        $('.btn-number-tab').on('click', function (e) {
             e.preventDefault();
             var fieldName = $(this).attr('data-field');
             var type = $(this).attr('data-type');
@@ -236,7 +248,7 @@
 
                     var add_size_order_tab_content = $('<div class="tab-pane fade" id="pills-order-' + i + '" role="tabpanel" aria-labelledby="tab-order-' + i + '"">' + (lengthTab + 1) + '</div>');
                     $(add_size_order_tab_content).appendTo(".tab-content");
-                    $(".btn-number[data-type='minus'][data-field='" + fieldName + "']").removeAttr('disabled')
+                    $(".btn-number-tab[data-type='minus'][data-field='" + fieldName + "']").removeAttr('disabled')
                     i++;
                 }
                 if ($(".list-size-order li").length == maxValue) {
