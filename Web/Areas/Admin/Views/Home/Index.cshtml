@@ -38,12 +38,12 @@
                                     <div class="p-l-0">
                                         <div class="input-group mb-0">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-link btn-number-tab shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                                <button type="button" class="btn btn-link btn-number-tab shadow-none btn-lg" data-type="minus" data-field="tab-pos">
                                                     <span class="fa fa-minus m-0"></span>
                                                 </button>
                                             </span>
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-link btn-number-tab shadow-none btn-lg" data-type="plus" data-field="quant[1]">
+                                                <button type="button" class="btn btn-link btn-number-tab shadow-none btn-lg" data-type="plus" data-field="tab-pos">
                                                     <span class="fa fa-plus m-0"></span>
                                                 </button>
                                             </span>
@@ -53,32 +53,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pos-order-info-list flex-1">
+                    <div class="row flex-1">
                         <div class="col-md-12">
-                            <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-content d-flex height-100" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-order-1" role="tabpanel" aria-labelledby="tab-order-1">
-                                    <div class="accordion pos-order-list-wrapper" id="accordion" role="tablist">
+                                    <div class="accordion pos-order-list-wrapper flex-1" id="accordion" role="tablist">
                                         <div class="box-pos-order-detail">
                                             <div class="pos-order-list-item" role="tab" id="heading-1">
                                                 <div class="d-flex mb-0 w-100 align-items-center">
-                                                    <div class="quantity">
+                                                    <div class="quantity display-input-quant" id="display-input-quant-tab-1-item-1" data-field="tab-1-item-1" name="display-input-quant-tab-1-item-1">
                                                         1
                                                     </div>
                                                     <a class="collapsed" data-toggle="collapse" href="#collapse-1" aria-expanded="false" aria-controls="collapse-1">
                                                         <div class="productname">
                                                             <span class="primary-text">SAMSUNG GALAXY S9 PLUS 128GB ĐEN Xanh </span>
-                                                            <span class="second-text hidden-xs">SP000053</span>
-                                                            <span class="second-text visible-xs">× 10,990,000</span>
-                                                            <!-- <div style="flex-direction: row; box-sizing: border-box; display: flex;">
-                                                                <span>x 10,990,000</span>
-                                                            </div> -->
+                                                            <!-- <span class="second-text hidden-xs">SP000053</span> -->
+                                                            <span id="price-tab-1-item-1" data-field="1000000" class="second-text">× 1000000
+                                                                <span id="display-input-discount-tab-1-item-1"></span>
+                                                            </span>
                                                         </div>
-                                                        <div class="price hidden-xs">
+                                                        <!-- <div class="price hidden-xs">
                                                             <span>10,990,000</span>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="subtotal">
-                                                            <span class="second-text visible-xs">SP000053</span>
-                                                            <span class="font-weight-bold">13,490,000</span>
+                                                            <span class="second-text">SP000053</span>
+                                                            <span id="sum-price-tab-1-item-1" class="sum-price-tab font-weight-bold">1000000</span>
                                                         </div>
                                                     </a>
                                                     <div class="">
@@ -88,40 +87,92 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="collapse-1" class="collapse" role="tabpanel" aria-labelledby="heading-1" data-parent="#accordion">
+                                            <div id="collapse-1" class="collapse show" role="tabpanel" aria-labelledby="heading-1" data-parent="#accordion">
                                                 <div class="pos-order-item-container">
                                                     <div class="pos-order-item-content">
-                                                        <div class="input-group mb-0">
+                                                        <h5 class="text-center text-uppercase">Số lượng</h5>
+                                                        <div class="input-group mb-2">
                                                             <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="quant-tab-1-item-1">
+                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="tab-1-item-1">
                                                                     <span class="fa fa-minus m-0"></span>
                                                                 </button>
                                                             </span>
-                                                            <input type="text" name="quant-tab-1-item-1" class="form-control input-number text-center" value="1">
+                                                            <input type="text" name="tab-1-item-1" class="form-control form-control input-number text-center" value="1">
                                                             <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" data-type="plus" data-field="quant-tab-1-item-1">
+                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" data-type="plus" data-field="tab-1-item-1">
                                                                     <span class="fa fa-plus m-0"></span>
                                                                 </button>
                                                             </span>
+                                                        </div>
+                                                        <div class="d-flex mb-2">
+                                                            <div class="d-flex align-items-center justify-content-start">
+                                                                <div class="font-weight-bold">Giảm giá</div>
+                                                            </div>
+                                                            <div class="col d-flex align-items-center justify-content-center">
+                                                                <div class="form-radio mat-button-toggle-group">
+                                                                    <form class="d-flex">
+                                                                        <div class="radio">
+                                                                            <label class="pl-0 mb-0">
+                                                                                <input type="radio" name="radio-tab-1-item-1" data-field="tab-1-item-1" checked="checked" value="vnd">
+                                                                                <div class="radio-switch-discount">đ</div>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="radio">
+                                                                            <label class="pl-0 mb-0">
+                                                                                <input type="radio" name="radio-tab-1-item-1" data-field="tab-1-item-1" value="%">
+                                                                                <div class="radio-switch-discount">%</div>
+                                                                            </label>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex align-items-center justify-content-end flex-column">
+                                                                <div id="d-block " class="f-s-11">
+                                                                    Nhập giảm giá
+                                                                </div>
+                                                                <input type="text" id="input-discount-tab-1-item-1" data-field="tab-1-item-1" class="form-control form-control-sm text-right width-10x input-discount-number" value="" min="0" max="1000000">
+                                                            </div>
+                                                        </div>
+                                                        <div class="">
+                                                            <input type="text" class="form-control form-control-md form-bg-inverse" placeholder="Ghi chú">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="">
-                                            <div class="" role="tab" id="heading-2">
-                                                <div class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
-                                                        Làm thế nào để đưa tài liệu lên hệ thống?
-                                                    </a>
+                                    </div>
+                                    <div class="row pos-order-info-container">
+                                        <div class="col-md-12">
+                                            <div class="pos-order-info-wrapper">
+                                                <div class="pos-search-box">
+                                                    <button type="button" class="btn btn-link btn-number shadow-none btn-sm">
+                                                        <span class="fa fa-search m-0"></span>
+                                                    </button>
+                                                    <div id="divObjectInChargeFollow" class="flex-1">
+                                                        <select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow" placehoder></select>
+                                                    </div>
+                                                    <button type="button" class="btn btn-link btn-number shadow-none btn-sm">
+                                                        <span class="fa fa-user-plus m-0"></span>
+                                                    </button>
                                                 </div>
                                             </div>
-                                            <div id="collapse-2" class="collapse" role="tabpanel" aria-labelledby="heading-2" data-parent="#accordion">
-                                                <div class="">
-                                                    Tài liệu hệ thống được phân mục theo loại và phòng ban của tài liêu, bạn thực hiện đưa tài liệu theo hướng dẫn <a href="/FRTNotification/Notification/Detail?encryptId=3GXSqgbbEwOhlE/OIq3+IQ==">Tại đây</a>
-                                                </div>
+                                            <div class="d-flex f-direction-row">
+                                                <button type="button" class="btn btn-primary btn-block rounded-0 p-4" id="btn_pos_create">
+                                                    <div class="row">
+                                                        <div class="col-6 bold text-left mt-1">
+                                                            Thanh toán (F9)
+                                                        </div>
+                                                        <div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;">
+                                                            <span class="total-price-tab large">1000000</span>
+                                                            <!---->
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <button type="button" class="btn btn-warning rounded-0">
+                                                    <i class="fa fa-angle-right"></i>
+                                                </button>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-order-2" role="tabpanel" aria-labelledby="tab-order-2">
@@ -130,39 +181,6 @@
                                 <div class="tab-pane fade" id="pills-order-3" role="tabpanel" aria-labelledby="tab-order-3">
                                     3
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row pos-order-info-container">
-                        <div class="col-md-12">
-                            <div class="pos-order-info-wrapper">
-                                <div class="pos-search-box">
-                                    <button type="button" class="btn btn-link btn-number shadow-none btn-sm">
-                                        <span class="fa fa-search m-0"></span>
-                                    </button>
-                                    <div id="divObjectInChargeFollow" class="flex-1">
-                                        <select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow" placehoder></select>
-                                    </div>
-                                    <button type="button" class="btn btn-link btn-number shadow-none btn-sm">
-                                        <span class="fa fa-user-plus m-0"></span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="d-flex f-direction-row">
-                                <button type="button" class="btn btn-primary btn-block rounded-0 p-4" id="btn_pos_create">
-                                    <div class="row">
-                                        <div class="col-6 bold text-left mt-1">
-                                            Thanh toán (F9)
-                                        </div>
-                                        <div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;">
-                                            <span class="large">24,480,000</span>
-                                            <!---->
-                                        </div>
-                                    </div>
-                                </button>
-                                <button type="button" class="btn btn-warning rounded-0">
-                                    <i class="fa fa-angle-right"></i>
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -195,79 +213,19 @@
 <script type="text/javascript" src="/Content/Templates/GuruTemplate/bower_components/multiselect/js/jquery.multi-select.js"></script>
 <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/advance-elements/select2-custom.js"></script>
 <!-- product detail js -->
-<script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/product-detail/product-detail.js"></script>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/pages/pos/pos.js"></script>
 <script>
-    $(document).ready(function () {
-        // remove child
-        Element.prototype.remove = function () {
-            this.parentElement.removeChild(this);
-        }
-        NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
-            for (var i = this.length - 1; i >= 0; i--) {
-                if (this[i] && this[i].parentElement) {
-                    this[i].parentElement.removeChild(this[i]);
-                }
+    // remove child
+    Element.prototype.remove = function () {
+        this.parentElement.removeChild(this);
+    }
+    NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
+        for (var i = this.length - 1; i >= 0; i--) {
+            if (this[i] && this[i].parentElement) {
+                this[i].parentElement.removeChild(this[i]);
             }
         }
-        var i = $(".list-size-order li").length + 1;
-        if (i > 1) {
-            $(".btn-number-tab[data-type='minus'][data-field='quant[1]']").removeAttr('disabled')
-        }
-        $('.btn-number-tab').on('click', function (e) {
-            e.preventDefault();
-            var fieldName = $(this).attr('data-field');
-            var type = $(this).attr('data-type');
-            var lengthTab = $(".list-size-order li").length;
-            // tab-order-1
-            var currentNameTab = $("#pills-tab li .active").attr('id');
-            var currentIdTab = currentNameTab.substr(10, currentNameTab.length);
-            var lastNameTab = $("#pills-tab li:last-child a").attr('id')
-            var lastIdTab = lastNameTab.substr(10, currentNameTab.length);
-            if (type == 'minus') {
-                var minValue = 1;
-                if (lengthTab > minValue) {
-                    // check div has bookmark
-                    if ($('#' + $(".list-size-order li .active").attr('id') + ' i').length == 0) {
-                        $("#tab-order-" + currentIdTab).parent().remove();
-                        $("#pills-order-" + currentIdTab).remove();
-                        $(".list-size-order li:last-child a").addClass('active show');
-                        $("#pills-tabContent .tab-pane:last-child").addClass('active show');
-                    } else {
-                        notify('top', 'right', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'Thông báo', 'Vui lòng xóa hết danh sách hàng trước khi xóa đơn hàng');
-                    }
-                }
-                if ($(".list-size-order li").length == minValue) {
-                    $(this).attr('disabled', true);
-                }
-
-            } else if (type == 'plus') {
-                var maxValue = 9999999999999;
-                if (lengthTab < maxValue) {
-                    var add_size_order_tab = $('<li class="pos-order-nav-item"><a class="" id="tab-order-' + i + '" data-toggle="pill" href="#pills-order-' + i + '" role="tab" aria-controls="pills-order-' + i + '" aria-selected="false">#' + (lengthTab + 1) + '</a></li>');
-                    $(add_size_order_tab).appendTo(".list-size-order").hide().fadeIn(300);
-
-                    var add_size_order_tab_content = $('<div class="tab-pane fade" id="pills-order-' + i + '" role="tabpanel" aria-labelledby="tab-order-' + i + '"">' + (lengthTab + 1) + '</div>');
-                    $(add_size_order_tab_content).appendTo(".tab-content");
-                    $(".btn-number-tab[data-type='minus'][data-field='" + fieldName + "']").removeAttr('disabled')
-                    i++;
-                }
-                if ($(".list-size-order li").length == maxValue) {
-                    $(this).attr('disabled', true);
-                }
-            }
-            // change text div
-            var j = 1;
-            var add = '';
-            $("#pills-tab li a").each(function () {
-                if ($('#' + $(this).attr('id') + ' i')) {
-                    add = $('#' + $(this).attr('id') + ' i');
-                }
-                $(this).html('#' + j + ' ' + (add.prop('outerHTML') ? add.prop('outerHTML') : ''));
-                j++;
-                add = '';
-            });
-        });
-    });
+    }
     $(".js-data-example-ajax-1").select2({
         placeholder: "Nhập tên khách hàng, Số điện thoại",
         ajax: {
