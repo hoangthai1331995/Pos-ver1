@@ -232,7 +232,6 @@ $(document).ready(function() {
         // tính thanh toán
         function sumTotalPriceTabItem() {
             var totalPrice = 0;
-            console.log(231, $('.tab-content .tab-pane.active'));
             $('.tab-content .tab-pane.active .box-pos-order-detail').each(function () {
                 totalPrice += parseInt($(this).find('.sum-price-tab').attr('data-field'));
             });
