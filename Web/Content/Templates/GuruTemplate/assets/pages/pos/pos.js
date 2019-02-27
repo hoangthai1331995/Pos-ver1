@@ -159,7 +159,7 @@ $(document).ready(function() {
                 // vnd || %
                 var radioChoose = $("input:radio[name ='radio-" + nameTab + "']:checked").val();
                 var valueDiscount = radioChoose == 'vnd' ? (parseInt($(this).val())) : ($("#price-" + nameTab).attr('data-field') * parseInt($(this).val())) / 100;
-                display = 'Giảm (' + valueDiscount + ')';
+                display = 'Giảm (' + valueDiscount.formatNumber() + ')';
             }
             $('#display-input-discount-' + nameTab).text(display)
             sumPriceItem(nameTab);
@@ -225,17 +225,22 @@ $(document).ready(function() {
             } else if (radioChoose == '%') {
                 totalPrice = parseInt(((price * (100 - discount)) / 100) * size);
             }
-            $("#sum-price-" + nameTab).text(totalPrice);
+            $("#sum-price-" + nameTab).text(totalPrice.formatNumber());
             $("#sum-price-" + nameTab).attr('data-field', totalPrice);
             sumTotalPriceTabItem();
         }
+        Number.prototype.formatNumber = function(n, x) {
+            var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+            return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+        };
         // tính thanh toán
         function sumTotalPriceTabItem() {
             var totalPrice = 0;
             $('.tab-content .tab-pane.active .box-pos-order-detail').each(function () {
                 totalPrice += parseInt($(this).find('.sum-price-tab').attr('data-field'));
             });
-            $('.tab-content .tab-pane.active').find(".total-price-tab").text(totalPrice);
+            $('.tab-content .tab-pane.active').find(".total-price-tab").text(totalPrice.formatNumber());
         }
+        sumTotalPriceTabItem();
     });
 });
