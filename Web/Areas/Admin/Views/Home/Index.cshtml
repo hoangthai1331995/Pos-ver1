@@ -16,19 +16,6 @@
                                     <li class="pos-order-nav-item">
                                         <a class="active show" id="tab-1" data-toggle="pill" href="#pills-tab-1" role="tab" aria-controls="pills-tab-1" aria-selected="true">
                                             #1
-                                            <i class="fa fa-bookmark" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Đã có sản phẩm"></i>
-                                        </a>
-                                    </li>
-                                    <li class="pos-order-nav-item">
-                                        <a class="" id="tab-2" data-toggle="pill" href="#pills-tab-2" role="tab" aria-controls="pills-tab-2" aria-selected="true">
-                                            #2
-                                            <i class="fa fa-bookmark" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Đã có sản phẩm"></i>
-                                        </a>
-                                    </li>
-                                    <li class="pos-order-nav-item">
-                                        <a class="" id="tab-3" data-toggle="pill" href="#pills-tab-3" role="tab" aria-controls="pills-tab-3" aria-selected="true">
-                                            #3
-                                            <i class="fa fa-bookmark" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Đã có sản phẩm"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -38,7 +25,7 @@
                                     <div class="p-l-0">
                                         <div class="input-group mb-0">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-link btn-number-tab shadow-none btn-lg" data-type="minus" data-field="tab-pos">
+                                                <button type="button" class="btn btn-link btn-number-tab shadow-none btn-lg" data-type="minus" disabled data-field="tab-pos">
                                                     <span class="fa fa-minus m-0"></span>
                                                 </button>
                                             </span>
@@ -57,8 +44,8 @@
                         <div class="col-md-12 h-100">
                             <div class="tab-content d-flex h-100" id="pills-tabContent">
                                 <div class="tab-pane fade show active w-100" id="pills-tab-1" role="tabpanel" aria-labelledby="tab-1">
-                                    <div class="accordion pos-order-list-wrapper flex-1" id="accordion" role="tablist">
-                                        <div class="box-pos-order-detail" id="tab-1-item-1">
+                                    <div class="accordion pos-order-list-wrapper flex-1" id="accordion-tab-1" role="tablist">
+                                        <!-- <div class="box-pos-order-detail" id="tab-1-item-1">
                                             <div class="pos-order-list-item" role="tab" id="heading-tab-1-item-1">
                                                 <div class="d-flex mb-0 w-100 align-items-center">
                                                     <div class="quantity display-input-quant" id="display-input-quant-tab-1-item-1" data-field="tab-1-item-1" name="display-input-quant-tab-1-item-1">
@@ -67,14 +54,10 @@
                                                     <a class="collapsed" data-toggle="collapse" href="#collapse-tab-1-item-1" aria-expanded="false" aria-controls="collapse-tab-1-item-1">
                                                         <div class="productname">
                                                             <span class="primary-text">SAMSUNG GALAXY S9 PLUS 128GB ĐEN Xanh </span>
-                                                            <!-- <span class="second-text hidden-xs">SP000053</span> -->
                                                             <span id="price-tab-1-item-1" data-field="1000000" class="second-text">× 1,000,000
                                                                 <span id="display-input-discount-tab-1-item-1"></span>
                                                             </span>
                                                         </div>
-                                                        <!-- <div class="price hidden-xs">
-                                                            <span>10,990,000</span>
-                                                        </div> -->
                                                         <div class="subtotal">
                                                             <span class="second-text">SP000053</span>
                                                             <span id="sum-price-tab-1-item-1" class="sum-price-tab font-weight-bold" data-field="1000000">1,000,000</span>
@@ -87,7 +70,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="collapse-tab-1-item-1" class="collapse" role="tabpanel" aria-labelledby="heading-tab-1-item-1" data-parent="#accordion">
+                                            <div id="collapse-tab-1-item-1" class="collapse" role="tabpanel" aria-labelledby="heading-tab-1-item-1" data-parent="#accordion-tab-1">
                                                 <div class="pos-order-item-container">
                                                     <div class="pos-order-item-content">
                                                         <h5 class="text-center text-uppercase">Số lượng</h5>
@@ -139,171 +122,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="box-pos-order-detail" id="tab-1-item-2">
-                                            <div class="pos-order-list-item" role="tab" id="heading-tab-1-item-2">
-                                                <div class="d-flex mb-0 w-100 align-items-center">
-                                                    <div class="quantity display-input-quant" id="display-input-quant-tab-1-item-2" data-field="tab-1-item-2" name="display-input-quant-tab-1-item-2">
-                                                        1
-                                                    </div>
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapse-tab-1-item-2" aria-expanded="false" aria-controls="collapse-tab-1-item-2">
-                                                        <div class="productname">
-                                                            <span class="primary-text">NOKIA 1 ĐEN Xám </span>
-                                                            <!-- <span class="second-text hidden-xs">SP000053</span> -->
-                                                            <span id="price-tab-1-item-2" data-field="1500000" class="second-text">× 1,500,000
-                                                                <span id="display-input-discount-tab-1-item-2"></span>
-                                                            </span>
-                                                        </div>
-                                                        <!-- <div class="price hidden-xs">
-                                                            <span>10,990,000</span>
-                                                        </div> -->
-                                                        <div class="subtotal">
-                                                            <span class="second-text">SP000013</span>
-                                                            <span id="sum-price-tab-1-item-2" class="sum-price-tab font-weight-bold" data-field="1500000">1,500,000</span>
-                                                        </div>
-                                                    </a>
-                                                    <div class="">
-                                                        <button type="button" class="btn btn-link p-3 remove-item">
-                                                            <span class="fa fa-times" style=""></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="collapse-tab-1-item-2" class="collapse" role="tabpanel" aria-labelledby="heading-tab-1-item-2" data-parent="#accordion">
-                                                <div class="pos-order-item-container">
-                                                    <div class="pos-order-item-content">
-                                                        <h5 class="text-center text-uppercase">Số lượng</h5>
-                                                        <div class="input-group mb-2">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="tab-1-item-2">
-                                                                    <span class="fa fa-minus m-0"></span>
-                                                                </button>
-                                                            </span>
-                                                            <input type="text" name="tab-1-item-2" class="form-control form-control input-number text-center" value="1">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" data-type="plus" data-field="tab-1-item-2">
-                                                                    <span class="fa fa-plus m-0"></span>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                        <div class="d-flex mb-2">
-                                                            <div class="d-flex align-items-center justify-content-start">
-                                                                <div class="font-weight-bold">Giảm giá</div>
-                                                            </div>
-                                                            <div class="col d-flex align-items-center justify-content-center">
-                                                                <div class="form-radio mat-button-toggle-group">
-                                                                    <form class="d-flex">
-                                                                        <div class="radio">
-                                                                            <label class="pl-0 mb-0">
-                                                                                <input type="radio" name="radio-tab-1-item-2" data-field="tab-1-item-2" checked="checked" value="vnd">
-                                                                                <div class="radio-switch-discount">đ</div>
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="radio">
-                                                                            <label class="pl-0 mb-0">
-                                                                                <input type="radio" name="radio-tab-1-item-2" data-field="tab-1-item-2" value="%">
-                                                                                <div class="radio-switch-discount">%</div>
-                                                                            </label>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex align-items-center justify-content-end flex-column">
-                                                                <div class="f-s-11">
-                                                                    Nhập giảm giá
-                                                                </div>
-                                                                <input type="text" id="input-discount-tab-1-item-2" data-field="tab-1-item-2" class="form-control form-control-sm text-right width-10x input-discount-number" value="" min="0" max="1500000">
-                                                            </div>
-                                                        </div>
-                                                        <div class="">
-                                                            <input type="text" class="form-control form-control-md form-bg-inverse" placeholder="Ghi chú">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="box-pos-order-detail" id="tab-1-item-3">
-                                            <div class="pos-order-list-item" role="tab" id="heading-tab-1-item-3">
-                                                <div class="d-flex mb-0 w-100 align-items-center">
-                                                    <div class="quantity display-input-quant" id="display-input-quant-tab-1-item-3" data-field="tab-1-item-3" name="display-input-quant-tab-1-item-3">
-                                                        1
-                                                    </div>
-                                                    <a class="collapsed" data-toggle="collapse" href="#collapse-tab-1-item-3" aria-expanded="false" aria-controls="collapse-tab-1-item-3">
-                                                        <div class="productname">
-                                                            <span class="primary-text">OPPO find 7 Xanh </span>
-                                                            <!-- <span class="second-text hidden-xs">SP000053</span> -->
-                                                            <span id="price-tab-1-item-3" data-field="1800000" class="second-text">× 1,800,000
-                                                                <span id="display-input-discount-tab-1-item-3"></span>
-                                                            </span>
-                                                        </div>
-                                                        <!-- <div class="price hidden-xs">
-                                                            <span>10,990,000</span>
-                                                        </div> -->
-                                                        <div class="subtotal">
-                                                            <span class="second-text">SP000042</span>
-                                                            <span id="sum-price-tab-1-item-3" class="sum-price-tab font-weight-bold" data-field="1800000">1,800,000</span>
-                                                        </div>
-                                                    </a>
-                                                    <div class="">
-                                                        <button type="button" class="btn btn-link p-3 remove-item">
-                                                            <span class="fa fa-times" style=""></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="collapse-tab-1-item-3" class="collapse" role="tabpanel" aria-labelledby="heading-tab-1-item-3" data-parent="#accordion">
-                                                <div class="pos-order-item-container">
-                                                    <div class="pos-order-item-content">
-                                                        <h5 class="text-center text-uppercase">Số lượng</h5>
-                                                        <div class="input-group mb-2">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="tab-1-item-3">
-                                                                    <span class="fa fa-minus m-0"></span>
-                                                                </button>
-                                                            </span>
-                                                            <input type="text" name="tab-1-item-3" class="form-control form-control input-number text-center" value="1">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-link btn-number shadow-none btn-lg" data-type="plus" data-field="tab-1-item-3">
-                                                                    <span class="fa fa-plus m-0"></span>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                        <div class="d-flex mb-2">
-                                                            <div class="d-flex align-items-center justify-content-start">
-                                                                <div class="font-weight-bold">Giảm giá</div>
-                                                            </div>
-                                                            <div class="col d-flex align-items-center justify-content-center">
-                                                                <div class="form-radio mat-button-toggle-group">
-                                                                    <form class="d-flex">
-                                                                        <div class="radio">
-                                                                            <label class="pl-0 mb-0">
-                                                                                <input type="radio" name="radio-tab-1-item-3" data-field="tab-1-item-3" checked="checked" value="vnd">
-                                                                                <div class="radio-switch-discount">đ</div>
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="radio">
-                                                                            <label class="pl-0 mb-0">
-                                                                                <input type="radio" name="radio-tab-1-item-3" data-field="tab-1-item-3" value="%">
-                                                                                <div class="radio-switch-discount">%</div>
-                                                                            </label>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex align-items-center justify-content-end flex-column">
-                                                                <div class="f-s-11">
-                                                                    Nhập giảm giá
-                                                                </div>
-                                                                <input type="text" id="input-discount-tab-1-item-3" data-field="tab-1-item-3" class="form-control form-control-sm text-right width-10x input-discount-number" value="" min="0" max="1800000">
-                                                            </div>
-                                                        </div>
-                                                        <div class="">
-                                                            <input type="text" class="form-control form-control-md form-bg-inverse" placeholder="Ghi chú">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <!-- box thanh toán -->
                                     <div class="row pos-order-info-container">
@@ -325,11 +144,10 @@
                                                 <button type="button" class="btn btn-primary btn-block rounded-0 p-4" id="btn_pos_create">
                                                     <div class="row">
                                                         <div class="col-6 bold text-left mt-1">
-                                                            Thanh toán (F9)
+                                                            Thanh toán
                                                         </div>
                                                         <div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;">
                                                             <span class="total-price-tab large"></span>
-                                                            <!---->
                                                         </div>
                                                     </div>
                                                 </button>
@@ -340,12 +158,6 @@
                                         </div>
                                     </div>
                                     <!-- end box thanh toán -->
-                                </div>
-                                <div class="tab-pane fade" id="pills-tab-2" role="tabpanel" aria-labelledby="tab-2">
-                                    2
-                                </div>
-                                <div class="tab-pane fade" id="pills-tab-3" role="tabpanel" aria-labelledby="tab-3">
-                                    3
                                 </div>
                             </div>
                         </div>
@@ -401,33 +213,5 @@
             }
         }
     }
-    $(".js-data-example-ajax-1").select2({
-        placeholder: "Nhập tên khách hàng, Số điện thoại",
-        ajax: {
-            url: "/TaskList/Home/LoadObjectInChargeType",
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    ItemCode_KeySeach: params.term, // search term
-                    itemCode: 'PERSON'
-                };
-            },
-            processResults: function (data, params) {
-                var formatData = $.map(data, function (obj) {
-                    obj.id = obj.Code;
-                    obj.text = obj.Name;
-                    return obj;
-                });
-                return {
-                    results: formatData,
-                };
-            },
-            cache: true
-        },
-        escapeMarkup: function (markup) {
-            return markup;
-        }, // let our custom formatter work
-        minimumInputLength: 2,
-    });
+    
 </script>
