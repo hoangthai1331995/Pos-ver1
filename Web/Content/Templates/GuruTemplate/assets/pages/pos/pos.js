@@ -102,7 +102,7 @@ if (i > 1) {
     $(".btn-number-tab[data-type='minus'][data-field='quant[1]']").removeAttr('disabled')
 }
 function htmlBoxThanhToan(idTab) {
-    var html = '<div class="row pos-order-info-container"><div class="col-md-12"><div class="pos-order-info-wrapper"><div class="pos-search-box"><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-search m-0"></span></button><div id="divObjectInChargeFollow" class="flex-1"><select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow" placehoder></select></div><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-user-plus m-0"></span></button></div></div><div class="d-flex f-direction-row"><button type="button" class="btn btn-primary btn-block rounded-0 p-4" id="btn_pos_create"><div class="row"><div class="col-6 bold text-left mt-1">Thanh toán</div><div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;"><span class="total-price-tab large"></span></div></div></button><button type="button" class="btn btn-warning rounded-0"><i class="fa fa-angle-right"></i></button></div></div></div>';
+    var html = '<div class="row pos-order-info-container"><div class="col-md-12"><div class="pos-order-info-wrapper"><div class="pos-search-box"><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-search m-0"></span></button><div id="divObjectInChargeFollow" class="flex-1"><select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow" placehoder></select></div><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-user-plus m-0"></span></button></div></div><div class="d-flex f-direction-row"><button type="button" class="btn btn-primary btn-block rounded-0 p-4 btn_pos_create" onclick="thanhtoan()"><div class="row"><div class="col-6 bold text-left mt-1">Thanh toán</div><div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;"><span class="total-price-tab large"></span></div></div></button><button type="button" class="btn btn-warning rounded-0"><i class="fa fa-angle-right"></i></button></div></div></div>';
     return html;
 }
 function renderAgainClass() {
@@ -146,10 +146,10 @@ $('.btn-number-tab').on('click', function (e) {
     // tab-1
     var currentNameTab = $("#pills-tab li .active").attr('id');
     // 1
-    var currentIdTab = currentNameTab.substr(4, currentNameTab.length);
+    var currentIdTab = currentNameTab ? currentNameTab.substr(4, currentNameTab.length) : 0;
     // tab cuối cùng vd tab-7 -> lastidtab 7
     var lastNameTab = $("#pills-tab li:last-child a").attr('id')
-    var lastIdTab = lastNameTab.substr(4, currentNameTab.length);
+    var lastIdTab = lastNameTab ? lastNameTab.substr(4, currentNameTab.length) : 0;
     if (type == 'minus') {
         var minValue = 1;
         if (lengthTab > minValue) {
@@ -171,11 +171,20 @@ $('.btn-number-tab').on('click', function (e) {
         var maxValue = 9999999999999;
         if (lengthTab < maxValue) {
             var add_size_order_tab = $('<li class="pos-order-nav-item"><a class="" id="tab-' + i + '" data-toggle="pill" href="#pills-tab-' + i + '" role="tab" aria-controls="pills-tab-' + i + '" aria-selected="false">#' + (lengthTab + 1) + '</a></li>');
+            // add tab top
             $(add_size_order_tab).appendTo(".list-size-order").hide().fadeIn(300);
 
             var add_size_order_tab_content = $('<div class="tab-pane fade w-100" id="pills-tab-' + i + '" role="tabpanel" aria-labelledby="tab-' + i + '"><div class="accordion pos-order-list-wrapper flex-1" id="accordion-tab-' + i + '" role="tablist"></div>' + htmlBoxThanhToan(i) + '</div>');
+            // add tab content
             $(add_size_order_tab_content).appendTo(".tab-content");
-            $(".btn-number-tab[data-type='minus'][data-field='" + fieldName + "']").removeAttr('disabled')
+            $(".list-size-order li a").removeClass('active show');
+            $("#pills-tabContent .tab-pane").removeClass('active show');
+            $(".list-size-order li:last-child a").addClass('active show');
+            $("#pills-tabContent .tab-pane:last-child").addClass('active show');
+            // ban đầu vào add tab mới thì vẫn disable khi có 2tab mới cho remove tab
+            if (lengthTab > 0) {
+                $(".btn-number-tab[data-type='minus'][data-field='" + fieldName + "']").removeAttr('disabled')
+            }
             // chạy lại jquery $(".js-data-example-ajax-1").select2() cho box thanh toán mới
             renderAgainClass();
             i++;
@@ -306,9 +315,10 @@ function renderAgainScript() {
             // vnd || %
             var radioChoose = $("input:radio[name ='radio-" + nameTab + "']:checked").val();
             var valueDiscount = radioChoose == 'vnd' ? (parseInt($(this).val())) : ($("#price-" + nameTab).attr('data-field') * parseInt($(this).val())) / 100;
-            display = 'Giảm (' + valueDiscount.formatNumber() + ')';
+            display = ' Giảm (' + valueDiscount.formatNumber() + ')';
         }
         $('#display-input-discount-' + nameTab).text(display)
+        $('#display-input-discount-' + nameTab).attr('data-discount', valueDiscount)
         sumPriceItem(nameTab);
     });
     $(".input-discount-number").keydown(function (e) {
@@ -376,13 +386,20 @@ function renderAgainScript() {
         }
         sumTotalPriceTabItem();
     });
+    $('.input-note-item').change(function() {
+        var nameTab = $(this).attr('data-field'); // tab-1-item-1
+        sumPriceItem(nameTab);
+    });
     sumTotalPriceTabItem();
 }
 function sumPriceItem(nameTab) { // tab-1-item-1
+    var displayInput = $("#display-input-quant-"+nameTab);
     var price = $("#price-" + nameTab).attr('data-field');
-    var size = $("input[name='"+nameTab+"']").val();
-    var discount = $("#input-discount-" + nameTab).val();
+    var size = parseInt($("input[name='"+nameTab+"']").val());
+    var discount = $("#input-discount-" + nameTab).val() || 0;
     var radioChoose = $("input:radio[name ='radio-" + nameTab + "']:checked").val();
+    var discountVND = (parseInt($("#display-input-discount-" + nameTab).attr('data-discount')) || 0) * size;
+    var note = $("#input-note-" + nameTab).val();
     var totalPrice;
     if (radioChoose == 'vnd') {
         totalPrice = parseInt((price - discount) * size);
@@ -391,6 +408,15 @@ function sumPriceItem(nameTab) { // tab-1-item-1
     }
     $("#sum-price-" + nameTab).text(totalPrice.formatNumber());
     $("#sum-price-" + nameTab).attr('data-field', totalPrice);
+    displayInput.text(size)
+    // tinh tiền cho từng sản phẩm
+    var pos = listProductChooseByTab['tab-' + nameTab.split('-')[1]].map(function (e) { return e.id; }).indexOf(parseInt(nameTab.split('-')[3]))
+    listProductChooseByTab['tab-' + nameTab.split('-')[1]][pos].size = size;
+    listProductChooseByTab['tab-' + nameTab.split('-')[1]][pos].discount = discount;
+    listProductChooseByTab['tab-' + nameTab.split('-')[1]][pos].radioChoose = radioChoose;
+    listProductChooseByTab['tab-' + nameTab.split('-')[1]][pos].totalPrice = totalPrice;
+    listProductChooseByTab['tab-' + nameTab.split('-')[1]][pos].discountVND = discountVND;
+    listProductChooseByTab['tab-' + nameTab.split('-')[1]][pos].note = note;
     sumTotalPriceTabItem();
 }
 // tính thanh toán
@@ -421,6 +447,12 @@ function LoadListItem(pageSize = 20, page) {
 }
 renderAgainScript();
 LoadListItem();
+function addNewTab() {
+    $(".btn-number-tab[data-type='plus']").click();
+    $(".list-size-order li:last-child a").addClass('active show');
+    $("#pills-tabContent .tab-pane:last-child").addClass('active show');
+}
+addNewTab();
 function addItemToTab(id) {
     // tab-1
     var currentNameTab = $("#pills-tab li .active").attr('id');
@@ -448,9 +480,80 @@ function addItemToTab(id) {
             // push html vào tab
             listProductChooseByTab[currentNameTab].push(productChoose)
             var html = '';
-            html += '<div class="box-pos-order-detail" id="tab-' + currentIdTab + '-item-' + productChoose.id +'"><div class="pos-order-list-item" role="tab" id="heading-tab-' + currentIdTab +'-item-' + productChoose.id +'"><div class="d-flex mb-0 w-100 align-items-center"><div class="quantity display-input-quant" id="display-input-quant-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" name="display-input-quant-tab-' + currentIdTab + '-item-' + productChoose.id +'">1</div><a class="collapsed" data-toggle="collapse" href="#collapse-tab-' + currentIdTab + '-item-' + productChoose.id +'" aria-expanded="false" aria-controls="collapse-tab-' + currentIdTab + '-item-' + productChoose.id +'"><div class="productname"><span class="primary-text">' + productChoose.name + '</span><span id="price-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="' + productChoose.price + '" class="second-text">× ' + productChoose.price.formatNumber() +'<span id="display-input-discount-tab-' + currentIdTab + '-item-' + productChoose.id +'"></span></span></div><div class="subtotal"><span class="second-text">' + productChoose.sku + '</span><span id="sum-price-tab-' + currentIdTab + '-item-' + productChoose.id +'" class="sum-price-tab font-weight-bold" data-field="' + productChoose.price + '">' + productChoose.price.formatNumber() + '</span></div></a><div class=""><button type="button" class="btn btn-link p-3 remove-item"><span class="fa fa-times" style=""></span></button></div></div></div><div id="collapse-tab-' + currentIdTab + '-item-' + productChoose.id +'" class="collapse" role="tabpanel" aria-labelledby="heading-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-parent="#accordion-tab-' + currentIdTab +'"><div class="pos-order-item-container"><div class="pos-order-item-content"><h5 class="text-center text-uppercase">Số lượng</h5><div class="input-group mb-2"><span class="input-group-btn"><button type="button" class="btn btn-link btn-number shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'"><span class="fa fa-minus m-0"></span></button></span><input type="text" name="tab-' + currentIdTab + '-item-' + productChoose.id +'" class="form-control form-control input-number text-center" value="1"><span class="input-group-btn"><button type="button" class="btn btn-link btn-number shadow-none btn-lg" data-type="plus" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'"><span class="fa fa-plus m-0"></span></button></span></div><div class="d-flex mb-2"><div class="d-flex align-items-center justify-content-start"><div class="font-weight-bold">Giảm giá</div></div><div class="col d-flex align-items-center justify-content-center"><div class="form-radio mat-button-toggle-group"><form class="d-flex"><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" checked="checked" value="vnd"><div class="radio-switch-discount">đ</div></label></div><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" value="%"><div class="radio-switch-discount">%</div></label></div></form></div></div><div class="d-flex align-items-center justify-content-end flex-column"><div class="f-s-11">Nhập giảm giá</div><input type="text" id="input-discount-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" class="form-control form-control-sm text-right width-10x input-discount-number" value="" min="0" max="' + productChoose.price +'"></div></div><div class=""><input type="text" class="form-control form-control-md form-bg-inverse" placeholder="Ghi chú"></div></div></div></div></div>';
+            html += '<div class="box-pos-order-detail" id="tab-' + currentIdTab + '-item-' + productChoose.id +'"><div class="pos-order-list-item" role="tab" id="heading-tab-' + currentIdTab +'-item-' + productChoose.id +'"><div class="d-flex mb-0 w-100 align-items-center"><div class="quantity display-input-quant" id="display-input-quant-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" name="display-input-quant-tab-' + currentIdTab + '-item-' + productChoose.id +'">1</div><a class="collapsed" data-toggle="collapse" href="#collapse-tab-' + currentIdTab + '-item-' + productChoose.id +'" aria-expanded="false" aria-controls="collapse-tab-' + currentIdTab + '-item-' + productChoose.id +'"><div class="productname"><span class="primary-text">' + productChoose.name + '</span><span id="price-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="' + productChoose.price + '" class="second-text">× ' + productChoose.price.formatNumber() +'<span id="display-input-discount-tab-' + currentIdTab + '-item-' + productChoose.id +'"></span></span></div><div class="subtotal"><span class="second-text">' + productChoose.sku + '</span><span id="sum-price-tab-' + currentIdTab + '-item-' + productChoose.id +'" class="sum-price-tab font-weight-bold" data-field="' + productChoose.price + '">' + productChoose.price.formatNumber() + '</span></div></a><div class=""><button type="button" class="btn btn-link p-3 remove-item"><span class="fa fa-times" style=""></span></button></div></div></div><div id="collapse-tab-' + currentIdTab + '-item-' + productChoose.id +'" class="collapse" role="tabpanel" aria-labelledby="heading-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-parent="#accordion-tab-' + currentIdTab +'"><div class="pos-order-item-container"><div class="pos-order-item-content"><h5 class="text-center text-uppercase">Số lượng</h5><div class="input-group mb-2"><span class="input-group-btn"><button type="button" class="btn btn-link btn-number shadow-none btn-lg" disabled="disabled" data-type="minus" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'"><span class="fa fa-minus m-0"></span></button></span><input type="text" name="tab-' + currentIdTab + '-item-' + productChoose.id +'" class="form-control form-control input-number text-center" value="1"><span class="input-group-btn"><button type="button" class="btn btn-link btn-number shadow-none btn-lg" data-type="plus" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'"><span class="fa fa-plus m-0"></span></button></span></div><div class="d-flex mb-2"><div class="d-flex align-items-center justify-content-start"><div class="font-weight-bold">Giảm giá</div></div><div class="col d-flex align-items-center justify-content-center"><div class="form-radio mat-button-toggle-group"><form class="d-flex"><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" checked="checked" value="vnd"><div class="radio-switch-discount">đ</div></label></div><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" value="%"><div class="radio-switch-discount">%</div></label></div></form></div></div><div class="d-flex align-items-center justify-content-end flex-column"><div class="f-s-11">Nhập giảm giá</div><input type="text" id="input-discount-tab-' + currentIdTab + '-item-' + productChoose.id +'" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" class="form-control form-control-sm text-right width-10x input-discount-number" value="" min="0" max="' + productChoose.price +'"></div></div><div class=""><input type="text" id="input-note-tab-' + currentIdTab + '-item-' + productChoose.id + '" class="form-control form-control-md form-bg-inverse input-note-item" data-field="tab-' + currentIdTab + '-item-' + productChoose.id +'" placeholder="Ghi chú"></div></div></div></div></div>';
             $('.tab-content .tab-pane.active .pos-order-list-wrapper').append(html);
+            sumPriceItem('tab-' + currentIdTab + '-item-' + productChoose.id)  // tab-1-item-1
         }
         renderAgainScript();
     }
+}
+function thanhtoan() {
+    // tab-1
+    var currentNameTab = $("#pills-tab li .active").attr('id');
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    var hhmm = today.toLocaleTimeString().substr(0, 5);
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = hhmm + ' ' + dd + '/' + mm + '/' + yyyy;
+    var obj = {};
+    // thu ngân
+    obj.cashierName = "Vũ Thanh Bình";
+    obj.currentDate = today;
+    // get data từ search ajax
+    obj.customer = {
+        address: null,
+        code: "27050",
+        contact: "",
+        customerName: "Nguyễn  Hoàng Thái",
+        email: "hoangthai1331995@gmail.com",
+        phone: "0569123448",
+        remainPoint: 0,
+        taxCode: "",
+    };
+    // obj.debt = 0; // món nợ
+    // obj.discount = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+    //     return accumulator.discountVND + currentValue.discountVND
+    // });
+    // discount này lấy theo value input của form thanh toán k liên quan đến discount từng món
+    obj.discount = 0;
+    obj.discountPencent = 0;
+    // obj.earnedPoints = 0; // điểm tích lũy
+    // obj.fee = 0;
+    // obj.initialPaid = 33213213; // trả ban đầu
+    obj.items = listProductChooseByTab[currentNameTab];
+    obj.note = [{
+        content: "ghi chú tổng",
+    }];
+    // obj.oldDebt = 0;
+    // obj.paid = 33213213;
+    // obj.residual = 0; // dư
+    obj.saleOrderCode = "PX000016"; // mã hóa đơn
+    obj.storeAddress = '325 Huỳnh Tấn Phát';
+    obj.storeName = "FPT Shop";
+    obj.storePhone = "090912345";
+    obj.subtotal = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+        return accumulator.totalPrice + currentValue.totalPrice
+    });
+    obj.total = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+        return accumulator.totalPrice + currentValue.totalPrice
+    });
+    obj.totalBeforeVat = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+        return accumulator.totalPrice + currentValue.totalPrice
+    });
+    // obj.totalDebt = 0;
+    obj.totalQuantity = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+        return accumulator.size + currentValue.size
+    });
+    obj.transactionDate = today;
+    obj.vat = 0;
+    console.log(543, obj)
 }
