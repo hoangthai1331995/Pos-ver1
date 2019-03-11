@@ -102,7 +102,12 @@ if (i > 1) {
     $(".btn-number-tab[data-type='minus'][data-field='quant[1]']").removeAttr('disabled')
 }
 function htmlBoxThanhToan(idTab) {
-    var html = '<div class="row pos-order-info-container"><div class="col-md-12"><div class="pos-order-info-wrapper"><div class="pos-search-box"><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-search m-0"></span></button><div id="divObjectInChargeFollow" class="flex-1"><select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow" placehoder></select></div><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-user-plus m-0"></span></button></div></div><div class="d-flex f-direction-row"><button type="button" class="btn btn-primary btn-block rounded-0 p-4 btn_pos_create" onclick="thanhtoan()"><div class="row"><div class="col-6 bold text-left mt-1">Thanh toán</div><div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;"><span class="total-price-tab large"></span></div></div></button><button type="button" class="btn btn-warning rounded-0"><i class="fa fa-angle-right"></i></button></div></div></div>';
+    var html = '<div class="row pos-order-info-container"><div class="col-md-12"><div class="pos-order-info-wrapper"><div class="pos-search-box"><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-search m-0"></span></button><div id="divObjectInChargeFollow" class="flex-1"><select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow" placehoder></select></div><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-user-plus m-0"></span></button></div></div><div class="d-flex f-direction-row"><button type="button" class="btn btn-primary btn-block rounded-0 p-4 btn_pos_create" onclick="thanhtoan()"><div class="row"><div class="col-6 bold text-left mt-1">Thanh toán</div><div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;"><span class="total-price-tab large"></span></div></div></button><button type="button" class="btn btn-warning rounded-0" data-toggle="modal" data-target="#exampleModal-tab-' + idTab + '"><i class="fa fa-angle-right"></i></button></div></div></div>';
+    return html;
+}
+function htmlBoxModalThanhToan(idTab) {
+    idTab = 100;
+    var html = '<div class="modal fade" id="exampleModal-tab-' + idTab + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-' + idTab + '" style="display: none;" aria-hidden="true"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel-tab-' + idTab + '">Chi tiết đơn hàng</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body pt-0 pb-0"><div class="row mt-2"><div class="col-md-12 mb-2">         </div></div></div><div class="modal-footer"><button onclick="ThanhToan(' + idTab + ')" type="button" class="btn btn-primary btn-sm">Lưu</button></div></div></div></div>';
     return html;
 }
 function renderAgainClass() {
@@ -135,6 +140,15 @@ function renderAgainClass() {
         }, // let our custom formatter work
         minimumInputLength: 2,
     });
+    $('.datepicker').datetimepicker({
+        format: 'HH:mm DD/MM/YYYY',
+        locale: 'vi',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+        }
+    });
+
 }
 // chạy $(".js-data-example-ajax-1").select2()
 renderAgainClass();
@@ -174,7 +188,7 @@ $('.btn-number-tab').on('click', function (e) {
             // add tab top
             $(add_size_order_tab).appendTo(".list-size-order").hide().fadeIn(300);
 
-            var add_size_order_tab_content = $('<div class="tab-pane fade w-100" id="pills-tab-' + i + '" role="tabpanel" aria-labelledby="tab-' + i + '"><div class="accordion pos-order-list-wrapper flex-1" id="accordion-tab-' + i + '" role="tablist"></div>' + htmlBoxThanhToan(i) + '</div>');
+            var add_size_order_tab_content = $('<div class="tab-pane fade w-100" id="pills-tab-' + i + '" role="tabpanel" aria-labelledby="tab-' + i + '"><div class="accordion pos-order-list-wrapper flex-1" id="accordion-tab-' + i + '" role="tablist"></div>' + htmlBoxThanhToan(i) + htmlBoxModalThanhToan(i) + '</div>');
             // add tab content
             $(add_size_order_tab_content).appendTo(".tab-content");
             $(".list-size-order li a").removeClass('active show');
