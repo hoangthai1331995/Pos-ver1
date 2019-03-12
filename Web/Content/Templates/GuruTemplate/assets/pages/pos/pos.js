@@ -102,7 +102,7 @@ if (i > 1) {
     $(".btn-number-tab[data-type='minus'][data-field='quant[1]']").removeAttr('disabled')
 }
 function htmlBoxThanhToan(idTab) {
-    var html = '<div class="row pos-order-info-container"><div class="col-md-12"><div class="pos-order-info-wrapper"><div class="pos-search-box"><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-search m-0"></span></button><div id="divObjectInChargeFollow" class="flex-1"><select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow" placehoder></select></div><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-user-plus m-0"></span></button></div></div><div class="d-flex f-direction-row"><button type="button" class="btn btn-primary btn-block rounded-0 p-4 btn_pos_create" onclick="thanhtoan()"><div class="row"><div class="col-6 bold text-left mt-1">Thanh toán</div><div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;"><span class="total-price-tab large"></span></div></div></button><button type="button" class="btn btn-warning rounded-0" data-toggle="modal" data-target="#exampleModal-tab-' + idTab + '"><i class="fa fa-angle-right"></i></button></div></div></div>';
+    var html = '<div class="row pos-order-info-container"><div class="col-md-12"><div class="pos-order-info-wrapper"><div class="pos-search-box"><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-search m-0"></span></button><div id="divObjectInChargeFollow" class="flex-1"><select class="js-data-example-ajax-1 col-sm-12" id="ObjectInChargeFollow" placehoder></select></div><button type="button" class="btn btn-link btn-number shadow-none btn-sm"><span class="fa fa-user-plus m-0"></span></button></div></div><div class="d-flex f-direction-row"><button type="button" class="btn btn-primary btn-block rounded-0 p-4 btn_pos_create" onclick="thanhtoanPopup(' + idTab + ')" data-toggle="modal" data-target="#exampleModal-tab-' + idTab + '"><div class="row"><div class="col-6 bold text-left mt-1">Thanh toán</div><div class="col-6 text-right" style="flex-direction: column; align-items: flex-end;"><span class="total-price-tab large"></span></div></div></button><button type="button" class="btn btn-warning rounded-0" onclick="thanhtoanPopup(' + idTab + ')" data-toggle="modal" data-target="#exampleModal-tab-' + idTab + '"><i class="fa fa-angle-right"></i></button></div></div></div>';
     return html;
 }
 function htmlBoxModalThanhToan(idTab) {
@@ -404,6 +404,21 @@ function renderAgainScript() {
         var nameTab = $(this).attr('data-field'); // tab-1-item-1
         sumPriceItem(nameTab);
     });
+    // box thanh toán popup
+    $('.mat-button-toggle-group-thanh-toan input:radio').change(function(){ 
+        var nameTab = $(this).attr('data-field'); // tab-1
+        var radioChoose = $("input:radio[name ='radio-" + nameTab + "']:checked").val();
+        if (radioChoose == 'vnd') {
+            $("#input-discount-" + nameTab).attr('min', 0)
+            $("#input-discount-" + nameTab).attr('max', $("#SumPriceItem-" + nameTab).attr('data-field')) // giá của tổng sản phẩm
+        } else {
+            $("#input-discount-" + nameTab).attr('min', 0)
+            $("#input-discount-" + nameTab).attr('max', 100)
+        }
+        $("#input-discount-" + nameTab).val('')
+        $('#display-input-discount-' + nameTab).text('')
+        sumPriceItem(nameTab);
+    });
     sumTotalPriceTabItem();
 }
 function sumPriceItem(nameTab) { // tab-1-item-1
@@ -501,9 +516,10 @@ function addItemToTab(id) {
         renderAgainScript();
     }
 }
-function thanhtoan() {
+function thanhtoanPopup(idTab) {
     // tab-1
     var currentNameTab = $("#pills-tab li .active").attr('id');
+    console.log(432, listProductChooseByTab[currentNameTab])
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
@@ -520,7 +536,10 @@ function thanhtoan() {
     today = hhmm + ' ' + dd + '/' + mm + '/' + yyyy;
     var obj = {};
     // thu ngân
-    obj.cashierName = "Vũ Thanh Bình";
+    obj.cashier = {
+        name: "Vũ Thanh Bình",
+        id: "23542",
+    };
     obj.currentDate = today;
     // get data từ search ajax
     obj.customer = {
@@ -554,20 +573,36 @@ function thanhtoan() {
     obj.storeAddress = '325 Huỳnh Tấn Phát';
     obj.storeName = "FPT Shop";
     obj.storePhone = "090912345";
-    obj.subtotal = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+    obj.subtotal = listProductChooseByTab[currentNameTab].length && (listProductChooseByTab[currentNameTab].length > 1 ? listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
         return accumulator.totalPrice + currentValue.totalPrice
-    });
-    obj.total = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+    }) : listProductChooseByTab[currentNameTab][0].totalPrice);
+    obj.total = listProductChooseByTab[currentNameTab].length && (listProductChooseByTab[currentNameTab].length > 1 ? listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
         return accumulator.totalPrice + currentValue.totalPrice
-    });
-    obj.totalBeforeVat = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+    }) : listProductChooseByTab[currentNameTab][0].totalPrice);
+    obj.totalBeforeVat = listProductChooseByTab[currentNameTab].length && (listProductChooseByTab[currentNameTab].length > 1 ? listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
         return accumulator.totalPrice + currentValue.totalPrice
-    });
+    }) : listProductChooseByTab[currentNameTab][0].totalPrice);
     // obj.totalDebt = 0;
-    obj.totalQuantity = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+    obj.totalQuantity = listProductChooseByTab[currentNameTab].length && (listProductChooseByTab[currentNameTab].length > 1 ? listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
         return accumulator.size + currentValue.size
-    });
+    }) : listProductChooseByTab[currentNameTab][0].size);
     obj.transactionDate = today;
     obj.vat = 0;
     console.log(543, obj)
+    $('#cashierName-' + currentNameTab).text(obj.cashier.name);
+    $('#SumPriceItem-' + currentNameTab).text(obj.total.formatNumber() + 'vnđ');
+    $('#SumPriceItem-' + currentNameTab).attr('data-field', obj.total);
+    $('#SumPriceAllItem-' + currentNameTab).text(obj.total.formatNumber() + 'vnđ');
+    $('#SumPriceAllItem-' + currentNameTab).attr('data-field', obj.total);
+    var radioChoose = $("input:radio[name ='radio-" + currentNameTab + "']:checked").val();
+    if (radioChoose == 'vnd') {
+        $("#input-discount-" + currentNameTab).attr('min', 0)
+        $("#input-discount-" + currentNameTab).attr('max', obj.total) // giá của tổng sản phẩm
+    } else {
+        $("#input-discount-" + currentNameTab).attr('min', 0)
+        $("#input-discount-" + currentNameTab).attr('max', 100)
+    }
+}
+function thanhtoan(idTab) {
+
 }

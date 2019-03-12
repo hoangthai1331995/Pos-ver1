@@ -198,11 +198,22 @@
     padding: 16px;
 }
 .mat-button-toggle-group {
-	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
     position: relative;
     display: inline-flex;
     flex-direction: row;
     border-radius: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.mat-button-toggle-group-thanh-toan {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    border: 1px solid #cccccc;
+    border-left: none;
     cursor: pointer;
     white-space: nowrap;
     overflow: hidden;
@@ -216,7 +227,7 @@
     align-items: center;
     justify-content: center;
     background-color: #e0e0e0;
-    color: rgba(0,0,0,.54);
+    color: rgba(0,0,0,.35);
     cursor: pointer;
 }
 .radio input:checked ~ .radio-switch-discount {
@@ -313,4 +324,7 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+.w-auto {
+    width: auto!important;
 }

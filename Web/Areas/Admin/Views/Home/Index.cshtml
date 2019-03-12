@@ -80,7 +80,7 @@
                                     </div>
                                 </div> -->
                                 <!-- <div class="modal fade" id="exampleModal-tab-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-1" style="display: none;" aria-hidden="true"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel-tab-1">Chi tiết đơn hàng</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body pt-0 pb-0"><div class="row mt-2"><div class="col-md-12 mb-2">         </div></div></div><div class="modal-footer"><button onclick="ThanhToan(1)" type="button" class="btn btn-primary btn-sm">Lưu</button></div></div></div></div> -->
-                                <div class="modal fade show" id="exampleModal-tab-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-1" style="display: block;" aria-hidden="true">
+                                <div class="modal fade" id="exampleModal-tab-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-1" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-md" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -95,8 +95,7 @@
                                                     <div class="col-md-12 mb-2">
                                                         <div class="form-group row m-1">
                                                             <label class="col-sm-5 col-form-label">Nhân viên bán hàng</label>
-                                                            <div class="col-sm-7 d-flex p-0">
-                                                                <input type="text" class="form-control text-right" id="cashierName-tab-1" name="cashierName-tab-1" value="Vũ Thanh Bình" placeholder="Nhân viên bán hàng">
+                                                            <div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right" id="cashierName-tab-1">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row m-1">
@@ -112,25 +111,39 @@
                                                         <div class="form-group row m-1">
                                                             <label class="col-sm-5 col-form-label">Ghi chú</label>
                                                             <div class="col-sm-7 d-flex p-0">
-                                                                <input type="text" class="form-control text-right" id="note-tab-1" name="note-tab-1" value="" placeholder="Ghi chú">
+                                                                <input type="text" class="form-control text-right" id="note-tab-1" name="note-thanhtoan-tab-1" value="" placeholder="Ghi chú">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row m-1">
                                                             <label class="col-sm-5 col-form-label">Tiền hàng</label>
-                                                            <div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right">
-                                                                10,000,000 vnđ
+                                                            <div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right" id="SumPriceItem-tab-1" data-field="">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row m-1">
                                                             <label class="col-sm-5 col-form-label">Giảm giá</label>
                                                             <div class="col-sm-7 d-flex p-0">
-                                                                <input type="text" class="form-control text-right" id="discount-tab-1" name="discount-tab-1" value="" placeholder="Giảm giá">
+                                                                <input type="text" class="form-control text-right w-auto rounded-0" id="input-discount-tab-1" name="discount-tab-1" value="" placeholder="Giảm giá">
+                                                                <div class="form-radio mat-button-toggle-group-thanh-toan">
+                                                                    <form class="d-flex">
+                                                                        <div class="radio">
+                                                                            <label class="pl-0 mb-0">
+                                                                                <input type="radio" name="radio-tab-1" data-field="tab-1" checked="checked" value="vnd">
+                                                                                <div class="radio-switch-discount">đ</div>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="radio">
+                                                                            <label class="pl-0 mb-0">
+                                                                                <input type="radio" name="radio-tab-1" data-field="tab-1" value="%">
+                                                                                <div class="radio-switch-discount">%</div>
+                                                                            </label>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row m-1">
                                                             <label class="col-sm-5 col-form-label">Thanh toán</label>
-                                                            <div class="col-sm-7 d-flex align-items-center justify-content-end font-weight-bold p-0 text-right">
-                                                                10,000,000 vnđ
+                                                            <div class="col-sm-7 d-flex align-items-center justify-content-end font-weight-bold p-0 text-right" id="SumPriceAllItem-tab-1" data-field="">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row m-1">
@@ -175,6 +188,9 @@
         /*border-top: none;
     border-bottom: none;*/
         border: none;
+    }
+    .form-control:disabled {
+        opacity: 0.8;
     }
 </style>
 <!-- slick js -->
