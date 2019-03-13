@@ -4,6 +4,63 @@
 <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/bower_components/multiselect/css/multi-select.css" />
 <!-- custom-select.css -->
 <link rel="stylesheet" type="text/css" href="/Content/Templates/GuruTemplate/assets/css/custom-select.css">
+<div class="pdf-print d-none">
+    <div id="print-pdf">
+        Nhân viên: <span id="pdf-cashier-name"></span>
+        <hr/>
+        <table class="table" id="pdf-table" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Đơn Giá</th>
+                    <th class="text-center" style="text-align: center;">Số Lượng</th>
+                    <th class="text-right" style="text-align: right;">Giảm Giá</th>
+                    <th class="text-right" style="text-align: right;">Thành Tiền</th>
+                </tr>
+            </thead>
+            <tbody id="pdf-table-tbody">
+                <!-- <tr>
+                    <td colspan="4" class="">
+                        <div id="pdf-item-name" class="font-weight-bold" style="font-weight: bold"></div>
+                        <div class="">(<span id="pdf-item-note"></span>)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-right" id="pdf-item-price"></div>
+                    </td>
+                    <td>
+                        <div class="text-center" id="pdf-item-size"></div>
+                    </td>
+                    <td>
+                        <div class="text-right" id="pdf-item-discount"></div>
+                    </td>
+                    <td>
+                        <div class="text-right" id="pdf-item-totalPrice"></div>
+                    </td> -->
+                </tr>
+            </tbody>
+        </table>
+        <hr/>
+        <div class="d-flex justify-content-between mt-2" style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <div>Tổng tiền hàng</div>
+            <div id="pdf-all-item-price"></div>
+        </div>
+        <div class="d-flex justify-content-between mt-2" style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <div>Giảm giá</div>
+            <div id="pdf-all-item-discount"></div>
+        </div>
+        <div class="d-flex justify-content-between mt-2 font-weight-bold" style="display: flex; justify-content: space-between; margin-top: 10px; font-weight: bold">
+            <div>Tổng thanh toán</div>
+            <div id="pdf-all-item-totalPrice"></div>
+        </div>
+        <div class="d-flex justify-content-between mt-2 font-weight-bold" style="display: flex; justify-content: space-between; margin-top: 10px; font-weight: bold">
+            <div>Đã thanh toán</div>
+            <div id="pdf-all-item-da-thanh-toan"></div>
+        </div>
+        <div class="mt-2" style="margin-top: 10px;">Ghi chú</div>
+        <div id="pdf-all-item-note"></div>
+    </div>
+</div>
 <div class="row box-pos">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="row">
@@ -80,7 +137,7 @@
                                     </div>
                                 </div> -->
                                 <!-- <div class="modal fade" id="exampleModal-tab-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-1" style="display: none;" aria-hidden="true"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel-tab-1">Chi tiết đơn hàng</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body pt-0 pb-0"><div class="row mt-2"><div class="col-md-12 mb-2">         </div></div></div><div class="modal-footer"><button onclick="ThanhToan(1)" type="button" class="btn btn-primary btn-sm">Lưu</button></div></div></div></div> -->
-                                <div class="modal fade" id="exampleModal-tab-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-1" style="display: none;" aria-hidden="true">
+                                <!-- <div class="modal fade" id="exampleModal-tab-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-1" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-md" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -103,7 +160,7 @@
                                                             <div class="col-sm-7 d-flex p-0">
                                                                 <div class="form-group mb-0 w-100">
                                                                     <div class="input-group date mb-0" id="datetimepicker">
-                                                                        <input id="daysale-tab-1" name="daysale-tab-1" class="form-control text-right datepicker" value="10:20 11/03/2019" type="text" placeholder="Giờ">
+                                                                        <input id="date-buy-tab-1" name="date-buy-tab-1" class="form-control text-right datepicker" value="10:20 11/03/2019" type="text" placeholder="Giờ">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -111,7 +168,7 @@
                                                         <div class="form-group row m-1">
                                                             <label class="col-sm-5 col-form-label">Ghi chú</label>
                                                             <div class="col-sm-7 d-flex p-0">
-                                                                <input type="text" class="form-control text-right" id="note-tab-1" name="note-thanhtoan-tab-1" value="" placeholder="Ghi chú">
+                                                                <input type="text" class="form-control text-right" id="input-note-tab-1" name="input-note-tab-1" value="" placeholder="Ghi chú">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row m-1">
@@ -122,7 +179,7 @@
                                                         <div class="form-group row m-1">
                                                             <label class="col-sm-5 col-form-label">Giảm giá</label>
                                                             <div class="col-sm-7 d-flex p-0">
-                                                                <input type="text" class="form-control text-right w-auto rounded-0" id="input-discount-tab-1" name="discount-tab-1" value="" placeholder="Giảm giá">
+                                                                <input type="text" class="form-control text-right w-auto rounded-0 input-discount-number" id="input-discount-tab-1" name="discount-tab-1" data-field="tab-1" value="" placeholder="Giảm giá">
                                                                 <div class="form-radio mat-button-toggle-group-thanh-toan">
                                                                     <form class="d-flex">
                                                                         <div class="radio">
@@ -149,18 +206,18 @@
                                                         <div class="form-group row m-1">
                                                             <label class="col-sm-5 col-form-label">Khách đưa</label>
                                                             <div class="col-sm-7 d-flex p-0">
-                                                                <input type="text" class="form-control text-right" id="user-dua-tab-1" name="user-dua-tab-1" value="" placeholder="Khách đưa">
+                                                                <input type="text" class="form-control text-right" id="user-send-tab-1" name="user-send-tab-1" value="" placeholder="Khách đưa">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button onclick="ThanhToan(1)" type="button" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Thanh Toán</button>
+                                                <button onclick="ThanhToan('tab-1')" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" aria-label="Close"><i class="fa fa-print"></i> Thanh Toán</button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -174,9 +231,9 @@
                                 
                             </div>
                         </div>
-                        <div class="justify-content-end">
+                        <!-- <div class="justify-content-end">
                             phân trang
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

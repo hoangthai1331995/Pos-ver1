@@ -106,8 +106,7 @@ function htmlBoxThanhToan(idTab) {
     return html;
 }
 function htmlBoxModalThanhToan(idTab) {
-    idTab = 100;
-    var html = '<div class="modal fade" id="exampleModal-tab-' + idTab + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-' + idTab + '" style="display: none;" aria-hidden="true"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel-tab-' + idTab + '">Chi tiết đơn hàng</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body pt-0 pb-0"><div class="row mt-2"><div class="col-md-12 mb-2">         </div></div></div><div class="modal-footer"><button onclick="ThanhToan(' + idTab + ')" type="button" class="btn btn-primary btn-sm">Lưu</button></div></div></div></div>';
+    var html = '<div class="modal fade" id="exampleModal-tab-' + idTab + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-' + idTab + '" style="display: none;" aria-hidden="true"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel-tab-' + idTab + '">Chi tiết đơn hàng</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body pt-0 pb-0"><div class="row mt-2"><div class="col-md-12 mb-2"><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Nhân viên bán hàng</label><div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right" id="cashierName-tab-' + idTab + '"></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Ngày bán</label><div class="col-sm-7 d-flex p-0"><div class="form-group mb-0 w-100"><div class="input-group date mb-0" id="datetimepicker"><input id="date-buy-tab-' + idTab + '" name="date-buy-tab-' + idTab + '" class="form-control text-right datepicker" value="10:20 11/03/2019" type="text" placeholder="Giờ"></div></div></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Ghi chú</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right" id="input-note-tab-' + idTab + '" name="input-note-tab-' + idTab + '" value="" placeholder="Ghi chú"></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Tiền hàng</label><div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right" id="SumPriceItem-tab-' + idTab + '" data-field=""></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Giảm giá</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right w-auto rounded-0 input-discount-number" id="input-discount-tab-' + idTab + '" name="discount-tab-' + idTab + '" data-field="tab-' + idTab + '" value="" placeholder="Giảm giá"><div class="form-radio mat-button-toggle-group-thanh-toan"><form class="d-flex"><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + idTab + '" data-field="tab-' + idTab + '" checked="checked" value="vnd"><div class="radio-switch-discount">đ</div></label></div><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + idTab + '" data-field="tab-' + idTab + '" value="%"><div class="radio-switch-discount">%</div></label></div></form></div></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Thanh toán</label><div class="col-sm-7 d-flex align-items-center justify-content-end font-weight-bold p-0 text-right" id="SumPriceAllItem-tab-' + idTab + '" data-field=""></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Khách đưa</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right" id="user-send-tab-' + idTab + '" name="user-send-tab-' + idTab + '" value="" placeholder="Khách đưa"></div></div></div></div></div><div class="modal-footer"><button onclick="ThanhToan()" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" aria-label="Close"><i class="fa fa-print"></i> Thanh Toán</button></div></div></div></div>';
     return html;
 }
 function renderAgainClass() {
@@ -228,6 +227,7 @@ function renderAgainScript() {
     $(".input-discount-number").off("keydown");
     $(".display-input-quant").off("click");
     $(".mat-button-toggle-group input:radio").off("change");
+    $(".mat-button-toggle-group-thanh-toan input:radio").off("change");
     $(".remove-item").off("click");
     $('.btn-number').on('click',function(e){
         e.preventDefault();
@@ -321,19 +321,29 @@ function renderAgainScript() {
             $(this).val($(this).data('oldValue'));
         }
         // lấy data-field vì name sẽ bị trùng với item size
-        var nameTab = $(this).attr('data-field');// tab-1-item-1
-        // gán giá trị để hiển thị
-        var display = '';
-        // nếu có giá trị khác 0
-        if (parseInt($(this).val())) {
-            // vnd || %
-            var radioChoose = $("input:radio[name ='radio-" + nameTab + "']:checked").val();
-            var valueDiscount = radioChoose == 'vnd' ? (parseInt($(this).val())) : ($("#price-" + nameTab).attr('data-field') * parseInt($(this).val())) / 100;
-            display = ' Giảm (' + valueDiscount.formatNumber() + ')';
+        var nameTab = $(this).attr('data-field');// tab-1-item-1 || tab-1
+        if (nameTab.split('-').length) {
+            if (nameTab.split('-').length == 4) { // tab-1-item-1
+                // gán giá trị để hiển thị
+                var display = '';
+                // nếu có giá trị khác 0
+                if (parseInt($(this).val())) {
+                    // vnd || %
+                    var radioChoose = $("input:radio[name ='radio-" + nameTab + "']:checked").val();
+                    var valueDiscount = radioChoose == 'vnd' ? (parseInt($(this).val())) : ($("#price-" + nameTab).attr('data-field') * parseInt($(this).val())) / 100;
+                    display = ' Giảm (' + valueDiscount.formatNumber() + ')';
+                }
+                $('#display-input-discount-' + nameTab).text(display)
+                $('#display-input-discount-' + nameTab).attr('data-discount', valueDiscount)
+                // tính sản phẩm
+                sumPriceItem(nameTab);
+            } else if (nameTab.split('-').length == 2) { // tab-1
+                // tính thanh toán
+                sumPriceItemThanhToan(nameTab);
+            }
+            
         }
-        $('#display-input-discount-' + nameTab).text(display)
-        $('#display-input-discount-' + nameTab).attr('data-discount', valueDiscount)
-        sumPriceItem(nameTab);
+        
     });
     $(".input-discount-number").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
@@ -417,7 +427,7 @@ function renderAgainScript() {
         }
         $("#input-discount-" + nameTab).val('')
         $('#display-input-discount-' + nameTab).text('')
-        sumPriceItem(nameTab);
+        sumPriceItemThanhToan(nameTab);
     });
     sumTotalPriceTabItem();
 }
@@ -447,6 +457,32 @@ function sumPriceItem(nameTab) { // tab-1-item-1
     listProductChooseByTab['tab-' + nameTab.split('-')[1]][pos].discountVND = discountVND;
     listProductChooseByTab['tab-' + nameTab.split('-')[1]][pos].note = note;
     sumTotalPriceTabItem();
+}
+var hoaDonTab = [];
+function sumPriceItemThanhToan(nameTab) { // tab-1
+    var price = parseInt($("#SumPriceItem-" + nameTab).attr('data-field'));
+    var discount = parseInt($("#input-discount-" + nameTab).val()) || 0;
+    var radioChoose = $("input:radio[name ='radio-" + nameTab + "']:checked").val();
+    var discountVND = radioChoose == 'vnd' ? discount : ((price * discount) / 100);
+    var note = $("#input-note-" + nameTab).val();
+    var totalPrice;
+    if (radioChoose == 'vnd') {
+        totalPrice = parseInt((price - discount));
+    } else if (radioChoose == '%') {
+        totalPrice = parseInt((price * (100 - discount)) / 100);
+    }
+    $("#SumPriceAllItem-" + nameTab).text(totalPrice.formatNumber() + 'vnđ');
+    $("#SumPriceAllItem-" + nameTab).attr('data-field', totalPrice);
+    // tinh tiền cho từng sản phẩm
+    hoaDonTab[nameTab].price = price;
+    hoaDonTab[nameTab].discount = discount;
+    hoaDonTab[nameTab].radioChoose = radioChoose;
+    hoaDonTab[nameTab].totalPrice = totalPrice;
+    hoaDonTab[nameTab].discountVND = discountVND;
+    hoaDonTab[nameTab].note = note;
+    hoaDonTab[nameTab].userSend = $("#user-send-" + nameTab).val();
+    hoaDonTab[nameTab].transactionDate = $("#date-buy-" + nameTab).val();
+    return hoaDonTab[nameTab];
 }
 // tính thanh toán
 function sumTotalPriceTabItem() {
@@ -519,7 +555,6 @@ function addItemToTab(id) {
 function thanhtoanPopup(idTab) {
     // tab-1
     var currentNameTab = $("#pills-tab li .active").attr('id');
-    console.log(432, listProductChooseByTab[currentNameTab])
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
@@ -534,15 +569,18 @@ function thanhtoanPopup(idTab) {
     }
 
     today = hhmm + ' ' + dd + '/' + mm + '/' + yyyy;
-    var obj = {};
+    if (typeof hoaDonTab[currentNameTab] == 'undefined') {
+        hoaDonTab[currentNameTab] = {};
+    }
     // thu ngân
-    obj.cashier = {
+    hoaDonTab[currentNameTab].cashier = {
         name: "Vũ Thanh Bình",
         id: "23542",
     };
-    obj.currentDate = today;
+    $('#date-buy-' + currentNameTab).val(today);
+    // hoaDonTab[currentNameTab].currentDate = today; // set date input
     // get data từ search ajax
-    obj.customer = {
+    hoaDonTab[currentNameTab].customer = {
         address: null,
         code: "27050",
         contact: "",
@@ -552,57 +590,78 @@ function thanhtoanPopup(idTab) {
         remainPoint: 0,
         taxCode: "",
     };
-    // obj.debt = 0; // món nợ
-    // obj.discount = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
+    // hoaDonTab[currentNameTab].debt = 0; // món nợ
+    // hoaDonTab[currentNameTab].discount = listProductChooseByTab[currentNameTab].length && listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
     //     return accumulator.discountVND + currentValue.discountVND
     // });
     // discount này lấy theo value input của form thanh toán k liên quan đến discount từng món
-    obj.discount = 0;
-    obj.discountPencent = 0;
-    // obj.earnedPoints = 0; // điểm tích lũy
-    // obj.fee = 0;
-    // obj.initialPaid = 33213213; // trả ban đầu
-    obj.items = listProductChooseByTab[currentNameTab];
-    obj.note = [{
-        content: "ghi chú tổng",
-    }];
-    // obj.oldDebt = 0;
-    // obj.paid = 33213213;
-    // obj.residual = 0; // dư
-    obj.saleOrderCode = "PX000016"; // mã hóa đơn
-    obj.storeAddress = '325 Huỳnh Tấn Phát';
-    obj.storeName = "FPT Shop";
-    obj.storePhone = "090912345";
-    obj.subtotal = listProductChooseByTab[currentNameTab].length && (listProductChooseByTab[currentNameTab].length > 1 ? listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
-        return accumulator.totalPrice + currentValue.totalPrice
-    }) : listProductChooseByTab[currentNameTab][0].totalPrice);
-    obj.total = listProductChooseByTab[currentNameTab].length && (listProductChooseByTab[currentNameTab].length > 1 ? listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
-        return accumulator.totalPrice + currentValue.totalPrice
-    }) : listProductChooseByTab[currentNameTab][0].totalPrice);
-    obj.totalBeforeVat = listProductChooseByTab[currentNameTab].length && (listProductChooseByTab[currentNameTab].length > 1 ? listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
-        return accumulator.totalPrice + currentValue.totalPrice
-    }) : listProductChooseByTab[currentNameTab][0].totalPrice);
-    // obj.totalDebt = 0;
-    obj.totalQuantity = listProductChooseByTab[currentNameTab].length && (listProductChooseByTab[currentNameTab].length > 1 ? listProductChooseByTab[currentNameTab].reduce(function (accumulator, currentValue) {
-        return accumulator.size + currentValue.size
-    }) : listProductChooseByTab[currentNameTab][0].size);
-    obj.transactionDate = today;
-    obj.vat = 0;
-    console.log(543, obj)
-    $('#cashierName-' + currentNameTab).text(obj.cashier.name);
-    $('#SumPriceItem-' + currentNameTab).text(obj.total.formatNumber() + 'vnđ');
-    $('#SumPriceItem-' + currentNameTab).attr('data-field', obj.total);
-    $('#SumPriceAllItem-' + currentNameTab).text(obj.total.formatNumber() + 'vnđ');
-    $('#SumPriceAllItem-' + currentNameTab).attr('data-field', obj.total);
+    hoaDonTab[currentNameTab].discount = $('#input-discount-' + currentNameTab).val();
     var radioChoose = $("input:radio[name ='radio-" + currentNameTab + "']:checked").val();
     if (radioChoose == 'vnd') {
         $("#input-discount-" + currentNameTab).attr('min', 0)
-        $("#input-discount-" + currentNameTab).attr('max', obj.total) // giá của tổng sản phẩm
+        $("#input-discount-" + currentNameTab).attr('max', hoaDonTab[currentNameTab].total) // giá của tổng sản phẩm
     } else {
         $("#input-discount-" + currentNameTab).attr('min', 0)
         $("#input-discount-" + currentNameTab).attr('max', 100)
     }
+    hoaDonTab[currentNameTab].radioChoose = radioChoose;
+    // hoaDonTab[currentNameTab].earnedPoints = 0; // điểm tích lũy
+    // hoaDonTab[currentNameTab].fee = 0;
+    // hoaDonTab[currentNameTab].initialPaid = 33213213; // trả ban đầu
+    hoaDonTab[currentNameTab].items = listProductChooseByTab[currentNameTab];
+    // hoaDonTab[currentNameTab].oldDebt = 0;
+    // hoaDonTab[currentNameTab].paid = 33213213;
+    // hoaDonTab[currentNameTab].residual = 0; // dư
+    hoaDonTab[currentNameTab].saleOrderCode = "PX000016"; // mã hóa đơn
+    hoaDonTab[currentNameTab].storeAddress = '325 Huỳnh Tấn Phát';
+    hoaDonTab[currentNameTab].storeName = "FPT Shop";
+    hoaDonTab[currentNameTab].storePhone = "090912345";
+    if (typeof listProductChooseByTab[currentNameTab] == 'undefined') {
+        listProductChooseByTab[currentNameTab] = [];
+    }
+    hoaDonTab[currentNameTab].total = listProductChooseByTab[currentNameTab].map(function(e) { return e.totalPrice }).length && listProductChooseByTab[currentNameTab].map(function(e) { return e.totalPrice }).reduce(function(accumulator, currentValue) {
+        return accumulator + currentValue;
+    })
+    // hoaDonTab[currentNameTab].subtotal = hoaDonTab[currentNameTab].total;
+    // hoaDonTab[currentNameTab].totalBeforeVat = hoaDonTab[currentNameTab].total;
+    // hoaDonTab[currentNameTab].totalDebt = 0;
+    hoaDonTab[currentNameTab].totalQuantity = listProductChooseByTab[currentNameTab].map(function(e) { return e.size }).length && listProductChooseByTab[currentNameTab].map(function(e) { return e.size }).reduce(function(accumulator, currentValue) {
+        return accumulator + currentValue;
+    })
+    hoaDonTab[currentNameTab].vat = 0;
+    $('#cashierName-' + currentNameTab).text(hoaDonTab[currentNameTab].cashier.name);
+    $('#SumPriceItem-' + currentNameTab).text(hoaDonTab[currentNameTab].total.formatNumber() + 'vnđ');
+    $('#SumPriceItem-' + currentNameTab).attr('data-field', hoaDonTab[currentNameTab].total);
+    $('#SumPriceAllItem-' + currentNameTab).text((hoaDonTab[currentNameTab].totalPrice ? hoaDonTab[currentNameTab].totalPrice.formatNumber() : hoaDonTab[currentNameTab].total.formatNumber()) + 'vnđ');
+    $('#SumPriceAllItem-' + currentNameTab).attr('data-field', hoaDonTab[currentNameTab].totalPrice ? hoaDonTab[currentNameTab].totalPrice : hoaDonTab[currentNameTab].total);
 }
-function thanhtoan(idTab) {
-
+function printData(idDiv)
+{
+   var divToPrint=document.getElementById(idDiv);
+   newWin= window.open("");
+   newWin.document.write(divToPrint.outerHTML);
+   newWin.print();
+   newWin.close();
+}
+function ThanhToan() {
+    var currentNameTab = $("#pills-tab li .active").attr('id'); // tab-1
+    var objThanhToan = sumPriceItemThanhToan(currentNameTab);
+    $('#pdf-cashier-name').text(objThanhToan.cashier.name);
+    var html = '';
+    if (objThanhToan.items && objThanhToan.items.length) {
+        for(var i = 0; i < objThanhToan.items.length; i++) {
+            html += '<tr><td colspan="4" class=""><div class="font-weight-bold" style="font-weight: bold">' + objThanhToan.items[i].name + '</div><div class="">(' + objThanhToan.items[i].note + ')</div></td></tr><tr><td><div class="text-right" style="text-align: right">' + objThanhToan.items[i].price + '</div></td><td><div class="text-center" style="text-align: center">' + objThanhToan.items[i].size + '</div></td><td><div class="text-right" style="text-align: right">' + parseInt(objThanhToan.items[i].discount).formatNumber() + objThanhToan.items[i].radioChoose + ': ' + objThanhToan.items[i].discountVND.formatNumber() + '</div></td><td><div class="text-right" style="text-align: right">' + objThanhToan.items[i].totalPrice.formatNumber() + '</div></td></tr>';
+        }
+    }
+    $('#pdf-table-tbody').html(html);
+    $('#pdf-all-item-price').text(objThanhToan.total.formatNumber());
+    $('#pdf-all-item-discount').text(objThanhToan.discountVND.formatNumber());
+    $('#pdf-all-item-totalPrice').text(objThanhToan.totalPrice.formatNumber());
+    $('#pdf-all-item-da-thanh-toan').text(objThanhToan.totalPrice.formatNumber());
+    $('#pdf-all-item-note').text(objThanhToan.note);
+    listProductChooseByTab[currentNameTab] = [];
+    hoaDonTab[currentNameTab] = {};
+    $('#accordion-' + currentNameTab + ' .remove-item').click();
+    printData('print-pdf');
+    // $('.pdf-print').removeClass('d-none');
 }
