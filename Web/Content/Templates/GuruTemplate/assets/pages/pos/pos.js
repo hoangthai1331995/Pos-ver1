@@ -106,7 +106,7 @@ function htmlBoxThanhToan(idTab) {
     return html;
 }
 function htmlBoxModalThanhToan(idTab) {
-    var html = '<div class="modal fade" id="exampleModal-tab-' + idTab + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-' + idTab + '" style="display: none;" aria-hidden="true"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel-tab-' + idTab + '">Chi tiết đơn hàng</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body pt-0 pb-0"><div class="row mt-2"><div class="col-md-12 mb-2"><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Nhân viên bán hàng</label><div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right" id="cashierName-tab-' + idTab + '"></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Ngày bán</label><div class="col-sm-7 d-flex p-0"><div class="form-group mb-0 w-100"><div class="input-group date mb-0" id="datetimepicker"><input id="date-buy-tab-' + idTab + '" name="date-buy-tab-' + idTab + '" class="form-control text-right datepicker" value="10:20 11/03/2019" type="text" placeholder="Giờ"></div></div></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Ghi chú</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right" id="input-note-tab-' + idTab + '" name="input-note-tab-' + idTab + '" value="" placeholder="Ghi chú"></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Tiền hàng</label><div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right" id="SumPriceItem-tab-' + idTab + '" data-field=""></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Giảm giá</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right w-auto rounded-0 input-discount-number" id="input-discount-tab-' + idTab + '" name="discount-tab-' + idTab + '" data-field="tab-' + idTab + '" value="" placeholder="Giảm giá"><div class="form-radio mat-button-toggle-group-thanh-toan"><form class="d-flex"><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + idTab + '" data-field="tab-' + idTab + '" checked="checked" value="vnd"><div class="radio-switch-discount">đ</div></label></div><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + idTab + '" data-field="tab-' + idTab + '" value="%"><div class="radio-switch-discount">%</div></label></div></form></div></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Thanh toán</label><div class="col-sm-7 d-flex align-items-center justify-content-end font-weight-bold p-0 text-right" id="SumPriceAllItem-tab-' + idTab + '" data-field=""></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Khách đưa</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right" id="user-send-tab-' + idTab + '" name="user-send-tab-' + idTab + '" value="" placeholder="Khách đưa"></div></div></div></div></div><div class="modal-footer"><button onclick="ThanhToan()" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" aria-label="Close"><i class="fa fa-print"></i> Thanh Toán</button></div></div></div></div>';
+    var html = '<div class="modal fade" id="exampleModal-tab-' + idTab + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-tab-' + idTab + '" style="display: none;" aria-hidden="true"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel-tab-' + idTab + '">Chi tiết đơn hàng</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body pt-0 pb-0"><div class="row mt-2"><div class="col-md-12 mb-2"><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Nhân viên bán hàng</label><div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right" id="cashierName-tab-' + idTab + '"></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Ngày bán</label><div class="col-sm-7 d-flex p-0"><div class="form-group mb-0 w-100"><div class="input-group date mb-0" id="datetimepicker"><input id="date-buy-tab-' + idTab + '" name="date-buy-tab-' + idTab + '" class="form-control text-right datepicker" value="10:20 11/03/2019" type="text" placeholder="Giờ"></div></div></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Ghi chú</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right" id="input-note-tab-' + idTab + '" name="input-note-tab-' + idTab + '" value="" placeholder="Ghi chú"></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Tiền hàng</label><div class="col-sm-7 d-flex align-items-center justify-content-end p-0 text-right" id="SumPriceItem-tab-' + idTab + '" data-field=""></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Giảm giá</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right w-auto rounded-0 input-discount-number" id="input-discount-tab-' + idTab + '" name="discount-tab-' + idTab + '" data-field="tab-' + idTab + '" value="" placeholder="Giảm giá"><div class="form-radio mat-button-toggle-group-thanh-toan"><form class="d-flex"><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + idTab + '" data-field="tab-' + idTab + '" checked="checked" value="vnd"><div class="radio-switch-discount">đ</div></label></div><div class="radio"><label class="pl-0 mb-0"><input type="radio" name="radio-tab-' + idTab + '" data-field="tab-' + idTab + '" value="%"><div class="radio-switch-discount">%</div></label></div></form></div></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Thanh toán</label><div class="col-sm-7 d-flex align-items-center justify-content-end font-weight-bold p-0 text-right" id="SumPriceAllItem-tab-' + idTab + '" data-field=""></div></div><div class="form-group row m-1"><label class="col-sm-5 col-form-label">Khách đưa</label><div class="col-sm-7 d-flex p-0"><input type="text" class="form-control text-right nocheck-input-number" id="user-send-tab-' + idTab + '" name="user-send-tab-' + idTab + '" value="" placeholder="Khách đưa"></div></div></div></div></div><div class="modal-footer"><button onclick="ThanhToan()" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" aria-label="Close"><i class="fa fa-print"></i> Thanh Toán</button></div></div></div></div>';
     return html;
 }
 function renderAgainClass() {
@@ -229,6 +229,21 @@ function renderAgainScript() {
     $(".mat-button-toggle-group input:radio").off("change");
     $(".mat-button-toggle-group-thanh-toan input:radio").off("change");
     $(".remove-item").off("click");
+    function inputNumberOnly(e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    }
     $('.btn-number').on('click',function(e){
         e.preventDefault();
 
@@ -291,19 +306,10 @@ function renderAgainScript() {
         sumPriceItem(name);
     });
     $(".input-number").keydown(function (e) {
-        // Allow: backspace, delete, tab, escape, enter and .
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
-                // Allow: Ctrl+A
-                (e.keyCode == 65 && e.ctrlKey === true) ||
-                // Allow: home, end, left, right
-                (e.keyCode >= 35 && e.keyCode <= 39)) {
-            // let it happen, don't do anything
-            return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
+        inputNumberOnly(e)
+    });
+    $(".nocheck-input-number").keydown(function (e) {
+        inputNumberOnly(e)
     });
     $('.input-discount-number').focusin(function(){
         $(this).data('oldValue', $(this).val());
@@ -346,19 +352,7 @@ function renderAgainScript() {
         
     });
     $(".input-discount-number").keydown(function (e) {
-        // Allow: backspace, delete, tab, escape, enter and .
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
-                // Allow: Ctrl+A
-                (e.keyCode == 65 && e.ctrlKey === true) ||
-                // Allow: home, end, left, right
-                (e.keyCode >= 35 && e.keyCode <= 39)) {
-            // let it happen, don't do anything
-            return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
+        inputNumberOnly(e);
     });
     $('.display-input-quant').on('click',function(e){
         var fieldName = $(this).attr('data-field'); // tab-1-item-1
@@ -595,16 +589,6 @@ function thanhtoanPopup(idTab) {
     //     return accumulator.discountVND + currentValue.discountVND
     // });
     // discount này lấy theo value input của form thanh toán k liên quan đến discount từng món
-    hoaDonTab[currentNameTab].discount = $('#input-discount-' + currentNameTab).val();
-    var radioChoose = $("input:radio[name ='radio-" + currentNameTab + "']:checked").val();
-    if (radioChoose == 'vnd') {
-        $("#input-discount-" + currentNameTab).attr('min', 0)
-        $("#input-discount-" + currentNameTab).attr('max', hoaDonTab[currentNameTab].total) // giá của tổng sản phẩm
-    } else {
-        $("#input-discount-" + currentNameTab).attr('min', 0)
-        $("#input-discount-" + currentNameTab).attr('max', 100)
-    }
-    hoaDonTab[currentNameTab].radioChoose = radioChoose;
     // hoaDonTab[currentNameTab].earnedPoints = 0; // điểm tích lũy
     // hoaDonTab[currentNameTab].fee = 0;
     // hoaDonTab[currentNameTab].initialPaid = 33213213; // trả ban đầu
@@ -622,6 +606,16 @@ function thanhtoanPopup(idTab) {
     hoaDonTab[currentNameTab].total = listProductChooseByTab[currentNameTab].map(function(e) { return e.totalPrice }).length && listProductChooseByTab[currentNameTab].map(function(e) { return e.totalPrice }).reduce(function(accumulator, currentValue) {
         return accumulator + currentValue;
     })
+    hoaDonTab[currentNameTab].discount = $('#input-discount-' + currentNameTab).val();
+    var radioChoose = $("input:radio[name ='radio-" + currentNameTab + "']:checked").val();
+    if (radioChoose == 'vnd') {
+        $("#input-discount-" + currentNameTab).attr('min', 0)
+        $("#input-discount-" + currentNameTab).attr('max', hoaDonTab[currentNameTab].total) // giá của tổng sản phẩm
+    } else {
+        $("#input-discount-" + currentNameTab).attr('min', 0)
+        $("#input-discount-" + currentNameTab).attr('max', 100)
+    }
+    hoaDonTab[currentNameTab].radioChoose = radioChoose;
     // hoaDonTab[currentNameTab].subtotal = hoaDonTab[currentNameTab].total;
     // hoaDonTab[currentNameTab].totalBeforeVat = hoaDonTab[currentNameTab].total;
     // hoaDonTab[currentNameTab].totalDebt = 0;
