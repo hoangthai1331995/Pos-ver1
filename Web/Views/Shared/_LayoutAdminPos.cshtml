@@ -117,9 +117,12 @@
                         </ul>
                         <ul class="nav-left">
                             <li class="ml-2 flex-1">
-                                <div class="position-relative w-100 f-16">
-                                    <input type="text" class="nav-search form-control-sm w-100" placeholder="Tìm kiếm nhanh">
+                                <div class="position-relative w-100 f-16" id="box-nav-search-header">
+                                    <input type="text" class="nav-search form-control-sm w-100" id="nav-search-header" placeholder="Tìm kiếm nhanh">
                                     <i class="ti-search nav-search-i"></i>
+                                    <div id="nav-item-search" class="nav-item-search d-none">
+                                        
+                                    </div>
                                 </div>
                             </li>
                             <li class="hidden-xs">
@@ -206,10 +209,10 @@
                     </div>
                 </div>
                 @*<div class="row footer-new">
-                    <div class="col-md-12 text-center">
-                        © @DateTime.Now.Year <a href="/" style="font-weight:bold;">FRT Team</a>
-                    </div>
-                </div>*@
+                        <div class="col-md-12 text-center">
+                            © @DateTime.Now.Year <a href="/" style="font-weight:bold;">FRT Team</a>
+                        </div>
+                    </div>*@
             </div>
         </div>
     </div>
@@ -238,7 +241,7 @@
     <script src="/Content/Templates/GuruTemplate/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/js/script.js"></script>
 
-    
+
     <!-- data-table js -->
     <script src="/Content/Templates/GuruTemplate/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="/Content/Templates/GuruTemplate/assets/pages/data-table/extensions/responsive/js/dataTables.responsive.min.js"></script>

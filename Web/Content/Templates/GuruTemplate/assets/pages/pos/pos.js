@@ -659,3 +659,87 @@ function ThanhToan() {
     printData('print-pdf');
     // $('.pdf-print').removeClass('d-none');
 }
+function debounce(func, wait) {
+  var timeout;
+
+  return function() {
+    var context = this,
+        args = arguments;
+
+    var executeFunction = function() {
+      func.apply(context, args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(executeFunction, wait);
+  };
+};
+function searchItem(keyword) {
+    $('#nav-item-search').removeClass('d-none');
+    $.ajax({
+        type: "POST",
+        url: '/TaskList/Home/LoadObjectInChargeType?itemCode=32143&keyword=' + keyword,
+        success: function (response) {
+            var html = '';
+            // listItem = response;
+            if (typeof listItem != 'undefined') {
+                $.map(listItem, function (item) {
+                    html +='<div class="col-12 px-0"><div class="item-search-pos flex-row d-flex" onclick="addItemToTab(' + item.id + ')" title="' + item.name + '"><div class="px-2 pt-2"><img src="' + item.image + '" alt="' + item.name + '" class="img60"></div><div class="h6 pt-2 pr-2 mb-0"><div class="">' + item.name + '</div><div class="color-silver">' + item.sku + '</div><span><span class="font-weight-bold">33,990,000</span> | SL: ' + item.quantity + '</span></div></div></div>';
+                });
+            }
+            $('#nav-item-search').html(html);
+            $('.item-search-pos').on('click', function (e) {
+                $('#nav-item-search').addClass('d-none');
+            });
+        }
+    });
+
+}
+
+$('#nav-search-header').keyup(debounce(function (e) {
+    if ($('#nav-search-header').val() == '') {
+        $('#nav-item-search').addClass('d-none');
+    } else {
+        searchItem($('#nav-search-header').val())
+    }
+}, 300));
+// loadmore
+$('#listProductItem').on('scroll', debounce(function (e) {
+    let div = $(this).get(0);
+    if(div.scrollTop + div.clientHeight + 50 >= div.scrollHeight) { // add them 50px
+        // do the lazy loading here
+        var listItem2 = [
+            {
+                id: 876,
+                name: 'HP 15-da0046TU/Celeron N4000',
+                price: 5990000,
+                sku: 'SP000010',
+                image: 'https://images.fpt.shop/unsafe/fit-in/240x215/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2017/9/15/636410683569855871_HP-15-bs559TU.png',
+                link: '/may-tinh-xach-tay/hp-15-da0046tu-celeron-n4000',
+                quantity: 3,
+            },
+            {
+                id: 370,
+                name: 'HP 15-da0037TX/i3 7020U',
+                price: 10990000,
+                sku: 'SP000029',
+                image: 'https://images.fpt.shop/unsafe/fit-in/240x215/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2017/8/8/636378032368806847_HP-15-bs637TX.png',
+                link: '/may-tinh-xach-tay/hp-15-da0037tx-i3-7020U',
+                quantity: 4,
+            },
+            {
+                id: 438,
+                name: 'HP Envy 13-ah0027TU/Core i7-8550U',
+                price: 26490000,
+                sku: 'SP000017',
+                image: 'https://images.fpt.shop/unsafe/fit-in/240x215/filters:quality(90):fill(white)/cdn.fptshop.com.vn/Uploads/Originals/2017/8/16/636384743489659561_HP-Envy-13-ad076TU.png',
+                link: '/may-tinh-xach-tay/HP-Envy-13-ah0027TUCore-i7-8550U',
+                quantity: 8,
+            },
+        ];
+        for (var i = 0; i < listItem2.length; i++) {
+            listItem.push(listItem2[i]);
+        }
+        LoadListItem();
+    }
+}, 300));
