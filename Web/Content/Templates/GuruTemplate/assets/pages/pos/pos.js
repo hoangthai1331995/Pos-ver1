@@ -684,7 +684,7 @@ function searchItem(keyword) {
             // listItem = response;
             if (typeof listItem != 'undefined') {
                 $.map(listItem, function (item) {
-                    html +='<div class="col-12 px-0"><div class="item-search-pos flex-row d-flex" onclick="addItemToTab(' + item.id + ')" title="' + item.name + '"><div class="px-2 pt-2"><img src="' + item.image + '" alt="' + item.name + '" class="img60"></div><div class="h6 pt-2 pr-2 mb-0"><div class="">' + item.name + '</div><div class="color-silver">' + item.sku + '</div><span><span class="font-weight-bold">33,990,000</span> | SL: ' + item.quantity + '</span></div></div></div>';
+                    html +='<div class="col-12 px-0"><div class="item-search-pos flex-row d-flex" onclick="addItemToTab(' + item.id + ')" title="' + item.name + '"><div class="px-2 pt-2"><img src="' + item.image + '" alt="' + item.name + '" class="img60"></div><div class="h6 py-2 pr-2 mb-0"><div class="">' + item.name + '</div><div class="color-silver">' + item.sku + '</div><span><span class="font-weight-bold">33,990,000</span> | SL: ' + item.quantity + '</span></div></div></div>';
                 });
             }
             $('#nav-item-search').html(html);
