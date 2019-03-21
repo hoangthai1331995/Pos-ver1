@@ -689,6 +689,7 @@ function searchItem(keyword) {
             }
             $('#nav-item-search').html(html);
             $('.item-search-pos').on('click', function (e) {
+                $('#nav-search-header').val('');
                 $('#nav-item-search').addClass('d-none');
             });
         }
