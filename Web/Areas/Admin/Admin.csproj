@@ -189,6 +189,7 @@
     <Content Include="Views\Test\CUSRender.cshtml" />
     <Content Include="Views\Test\ACTRender.cshtml" />
     <Content Include="Views\TestPart\Config.cshtml" />
+    <Content Include="Views\Home\Health.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

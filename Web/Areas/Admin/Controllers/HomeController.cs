@@ -12,6 +12,10 @@ namespace Admin.Controllers
         {
             return View();
         }
+        public ActionResult Health()
+        {
+            return View();
+        }
 
         public ActionResult About()
         {
