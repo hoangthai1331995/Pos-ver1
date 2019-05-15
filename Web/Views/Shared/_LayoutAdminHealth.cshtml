@@ -322,8 +322,8 @@
                                 <div class="main-menu-header">
                                     <img class="img-40 img-radius" src="/Content/Templates/GuruTemplate/assets/images/avatar-4.jpg" alt="User-Profile-Image">
                                     <div class="user-details">
-                                        <span>Nguyễn Văn A</span>
-                                        <span id="more-details">Bệnh nhân 001<i class="ti-angle-down"></i></span>
+                                        <span>Nguyễn Văn An</span>
+                                        <span id="more-details">MS: 000324<i class="ti-angle-down"></i></span>
                                     </div>
                                 </div>
 
@@ -343,11 +343,108 @@
                                     </ul>
                                 </div>
                             </div>
-                            @Html.Action("MenuInfo", "User", new { area = "" })
+                            <div class="d-flex justify-content-center mb-2">
+                                <a href="#">
+                                    <div class="mx-2 text-white">
+                                        <i class="d-block f-36 text-center mb-1 fa fa-calendar-check-o"></i>
+                                        Lịch khám
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="mx-3 text-white">
+                                        <i class="d-block f-36 text-center mb-1 fa fa-pencil-square"></i>
+                                        Ghi chú
+                                    </div>
+                                </a>
+                            </div>
+                            <ul class="pcoded-item pcoded-left-item" item-border="true" item-border-style="none" subitem-border="true">
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-bell-o"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Thông báo</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-users"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Người phụ thuộc</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-stethoscope"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Bác sĩ và y tá của tôi</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-gift"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Giới thiệu gia đình & Bạn bè</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-bar-chart-o"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Sinh hiệu</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-bug"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Dị ứng & Phản ứng</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-file-image-o"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Tài liệu & Ảnh</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-wpforms"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Tình trạng & Ghi chú</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                                <li class="">    
+                                    <a href="#">        
+                                        <span class="pcoded-micon">
+                                            <i class="fa fa-shield"></i><b>N</b>
+                                        </span>       
+                                        <span class="pcoded-mtext" data-i18n="nav.navigate.main">Bảo hiểm</span>
+                                        <span class="pcoded-mcaret"></span>    
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- @Html.Action("MenuInfo", "User", new { area = "" }) -->
                         </div>
                     </nav>
                     <div class="pcoded-content">
-                        <div class="pcoded-inner-content">
+                        <div class="pcoded-inner-content p-0">
 
                             <!-- Main-body start -->
                             <div id="main-content">

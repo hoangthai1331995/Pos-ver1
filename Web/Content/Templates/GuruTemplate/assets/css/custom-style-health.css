@@ -111,3 +111,13 @@
 .chat-reply-box {
     bottom: 55px;
 }
+.pcoded[theme-layout="vertical"] .pcoded-navbar .pcoded-item > li > a .pcoded-mtext {
+    opacity: 1;
+    visibility: visible;
+    position: absolute;
+    top: 7px;
+}
+.pcoded[theme-layout="vertical"] .pcoded-navbar .pcoded-item > li > a {
+    text-align: left;
+    padding: 3px 20px;
+}
