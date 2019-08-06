@@ -190,6 +190,9 @@
     <Content Include="Views\Test\ACTRender.cshtml" />
     <Content Include="Views\TestPart\Config.cshtml" />
     <Content Include="Views\Home\Health.cshtml" />
+    <Content Include="Views\Home\Chart.cshtml" />
+    <Content Include="Views\Home\ChartExample1.cshtml" />
+    <Content Include="Views\Home\ChartExample2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<div class="page-header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"> </i> Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/Training/Chart">Biểu đồ</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Chi tiết</a></li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div id="ChartExample1" class="col-md-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div id="ChartExample2" class="col-md-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.0/raphael-min.js"></script>
+<script src="http://flowchart.js.org/flowchart-latest.js"></script>
+<script>
+    function viewChart(chartView) {
+        if (chartView == "ChartExample1") {
+            $.ajax({
+                type: "GET",
+                url: "/Admin/Home/ChartExample1",
+                data: "",
+                success: function (response) {
+                    $('#ChartExample1').html(response);
+                }
+            });
+        } else if (chartView == "ChartExample2") {
+            $.ajax({
+                type: "GET",
+                url: "/Admin/Home/ChartExample2",
+                data: "",
+                success: function (response) {
+                    $('#ChartExample2').html(response);
+                }
+            });
+        }
+
+    }
+    viewChart("ChartExample1");
+</script>

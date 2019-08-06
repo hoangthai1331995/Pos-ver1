@@ -16,18 +16,16 @@ namespace Admin.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult Chart()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact()
+        public ActionResult ChartExample1()
         {
-            ViewBag.Message = "Your contact page.";
-
+            return View();
+        }
+        public ActionResult ChartExample2()
+        {
             return View();
         }
     }
