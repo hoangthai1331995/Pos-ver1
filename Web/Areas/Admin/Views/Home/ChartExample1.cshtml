@@ -30,7 +30,160 @@ para(path2, top)->op1
     }
 </style>
 <script>
-
+    var obj = {
+        objList: [
+            {
+                "StepCode": "st",
+                "StepName": "Bắt đầu",
+                "StepColor": "Primary",
+                "StepLink": "http://www.google.com",
+                "Description": {
+                    "Image":"/Link/",
+                    "Title":"Tiêu đề",
+                    "Note":"Ghi chú"
+                },
+                "DescriptionViewType": "Toolltip",
+                "StepType": "start",
+            },
+            {
+                "StepCode": "e",
+                "StepName": "Kết thúc",
+                "StepColor": "",
+                "StepLink": "",
+                "Description": {
+                    "Image":"/Link/",
+                    "Title":"Tiêu đề",
+                    "Note":"Ghi chú"
+                },
+                "DescriptionViewType": "Toolltip",
+                "StepType": "end",
+            },
+            {
+                "StepCode": "op1",
+                "StepName": "My Operation",
+                "StepColor": "",
+                "StepLink": "",
+                "Description": {
+                    "Image":"/Link/",
+                    "Title":"Tiêu đề",
+                    "Note":"Ghi chú"
+                },
+                "DescriptionViewType": "Toolltip",
+                "StepType": "operation",
+            },
+            {
+                "StepCode": "sub1",
+                "StepName": "My Subroutine",
+                "StepColor": "",
+                "StepLink": "",
+                "Description": {
+                    "Image":"/Link/",
+                    "Title":"Tiêu đề",
+                    "Note":"Ghi chú"
+                },
+                "DescriptionViewType": "Toolltip",
+                "StepType": "subroutine",
+            },
+            {
+                "StepCode": "cond",
+                "StepName": "Yes or No?",
+                "StepColor": "",
+                "StepLink": "http://www.google.com",
+                "Description": {
+                    "Image":"/Link/",
+                    "Title":"Tiêu đề",
+                    "Note":"Ghi chú"
+                },
+                "DescriptionViewType": "Toolltip",
+                "StepType": "condition",
+            },
+            {
+                "StepCode": "io",
+                "StepName": "catch something...",
+                "StepColor": "",
+                "StepLink": "",
+                "Description": {
+                    "Image":"/Link/",
+                    "Title":"Tiêu đề",
+                    "Note":"Ghi chú"
+                },
+                "DescriptionViewType": "Toolltip",
+                "StepType": "inputoutput",
+            },
+            {
+                "StepCode": "para",
+                "StepName": "parallel tasks",
+                "StepColor": "",
+                "StepLink": "",
+                "Description": {
+                    "Image":"/Link/",
+                    "Title":"Tiêu đề",
+                    "Note":"Ghi chú"
+                },
+                "DescriptionViewType": "Toolltip",
+                "StepType": "parallel",
+            },
+        ],
+        conection: [
+            {
+                "StepFrom": "st",
+                "StepTo": "op1",
+                "CondAction": "",
+                // "Caption": "Đồng ý",
+                "DirectionsStep":"",//  ---"left,top,right,down,''"
+                "StepType": "start",
+            },
+            {
+                "StepFrom": "op1",
+                "StepTo": "cond",
+                "CondAction": "",
+                "DirectionsStep":"",
+                "StepType": "operation",
+            },
+            {
+                "StepFrom": "cond",
+                "StepTo": "io",
+                "CondAction": "yes",
+                "DirectionsStep":"",
+                "StepType": "condition",
+            },
+            {
+                "StepFrom": "io",
+                "StepTo": "e",
+                "CondAction": "",
+                "DirectionsStep":"",
+                "StepType": "inputoutput",
+            },
+            {
+                "StepFrom": "cond",
+                "StepTo": "para",
+                "CondAction": "no",
+                "DirectionsStep":"",
+                "StepType": "condition",
+            },
+            {
+                "StepFrom": "para",
+                "StepTo": "sub1",
+                "CondAction": "",
+                "DirectionsStep":"bottom",
+                "StepType": "parallel",
+            },
+            {
+                "StepFrom": "sub1",
+                "StepTo": "op1",
+                "CondAction": "",
+                "DirectionsStep":"right",
+                "StepType": "subroutine",
+            },
+            {
+                "StepFrom": "para",
+                "StepTo": "op1",
+                "CondAction": "",
+                "DirectionsStep":"top",
+                "StepType": "parallel",
+            },
+        ],
+    };
     window.onload = function () {
         var btn = document.getElementById("run"),
             cd = document.getElementById("code"),
@@ -41,8 +194,47 @@ para(path2, top)->op1
             if (chart) {
                 chart.clean();
             }
-
-            chart = flowchart.parse(code);
+            var data = '';
+            if (obj && obj.objList && obj.conection) {
+                for (var i = 0; i < obj.objList.length; i++) {
+                    var text = '';
+                    text += obj.objList[i].StepCode;
+                    text += '=>';
+                    text += obj.objList[i].StepType;
+                    text += ': ';
+                    text += obj.objList[i].StepName;
+                    if (obj.objList[i].StepLink) {
+                        text += ':>';
+                        text += obj.objList[i].StepLink;
+                        text += '[blank]';
+                    }
+                    text += '\n';
+                    data += text;
+                }
+                data += '\n';
+                var pathNumber = 1;
+                for (var i = 0; i < obj.conection.length; i++) {
+                    var text = '';
+                    text += obj.conection[i].StepFrom;
+                    if (obj.conection[i].StepType == 'condition') {
+                        text += "(" + obj.conection[i].CondAction + ")";
+                    } else if (obj.conection[i].StepType == 'parallel') {
+                        text += "(path" + pathNumber;
+                        pathNumber += 1;
+                        if (obj.conection[i].StepType) {
+                            text += ", " + obj.conection[i].DirectionsStep + ")";
+                        }
+                    } else if (obj.conection[i].StepType == 'subroutine') {
+                        text += "(" + obj.conection[i].DirectionsStep + ")";
+                    }
+                    text += '->';
+                    text += obj.conection[i].StepTo;
+                    text += '\n';
+                    data += text;
+                }
+            }
+            console.log(123, data);
+            chart = flowchart.parse(data);
             chart.drawSVG('canvas', {
                 // 'x': 30,
                 // 'y': 50,
