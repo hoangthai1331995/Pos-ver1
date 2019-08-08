@@ -24,6 +24,30 @@ para(path2, top)->op1
     <div><button id="run" type="button">Run</button></div>
     <div id="canvas"></div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Thông tin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0 pb-0">
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <img id="img-node" src="" />
+                        <div>Tiêu đề:<span id="title-node"></span></div>
+                        <div>Ghi chú:<span id="note-node"></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <style type="text/css">
     .end-element {
         fill: #FFCCFF;
@@ -38,9 +62,9 @@ para(path2, top)->op1
                 "StepColor": "Primary",
                 "StepLink": "http://www.google.com",
                 "Description": {
-                    "Image":"/Link/",
-                    "Title":"Tiêu đề",
-                    "Note":"Ghi chú"
+                    "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
+                    "Title": "Tiêu đề",
+                    "Note": "Ghi chú"
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "start",
@@ -51,9 +75,9 @@ para(path2, top)->op1
                 "StepColor": "",
                 "StepLink": "",
                 "Description": {
-                    "Image":"/Link/",
-                    "Title":"Tiêu đề",
-                    "Note":"Ghi chú"
+                    "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
+                    "Title": "Tiêu đề",
+                    "Note": "Ghi chú"
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "end",
@@ -64,9 +88,9 @@ para(path2, top)->op1
                 "StepColor": "",
                 "StepLink": "",
                 "Description": {
-                    "Image":"/Link/",
-                    "Title":"Tiêu đề",
-                    "Note":"Ghi chú"
+                    "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
+                    "Title": "Tiêu đề",
+                    "Note": "Ghi chú"
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "operation",
@@ -77,9 +101,9 @@ para(path2, top)->op1
                 "StepColor": "",
                 "StepLink": "",
                 "Description": {
-                    "Image":"/Link/",
-                    "Title":"Tiêu đề",
-                    "Note":"Ghi chú"
+                    "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
+                    "Title": "Tiêu đề",
+                    "Note": "Ghi chú"
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "subroutine",
@@ -90,9 +114,9 @@ para(path2, top)->op1
                 "StepColor": "",
                 "StepLink": "http://www.google.com",
                 "Description": {
-                    "Image":"/Link/",
-                    "Title":"Tiêu đề",
-                    "Note":"Ghi chú"
+                    "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
+                    "Title": "Tiêu đề",
+                    "Note": "Ghi chú"
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "condition",
@@ -103,9 +127,9 @@ para(path2, top)->op1
                 "StepColor": "",
                 "StepLink": "",
                 "Description": {
-                    "Image":"/Link/",
-                    "Title":"Tiêu đề",
-                    "Note":"Ghi chú"
+                    "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
+                    "Title": "Tiêu đề",
+                    "Note": "Ghi chú"
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "inputoutput",
@@ -116,9 +140,9 @@ para(path2, top)->op1
                 "StepColor": "",
                 "StepLink": "",
                 "Description": {
-                    "Image":"/Link/",
-                    "Title":"Tiêu đề",
-                    "Note":"Ghi chú"
+                    "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
+                    "Title": "Tiêu đề",
+                    "Note": "Ghi chú"
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "parallel",
@@ -130,60 +154,67 @@ para(path2, top)->op1
                 "StepTo": "op1",
                 "CondAction": "",
                 // "Caption": "Đồng ý",
-                "DirectionsStep":"",//  ---"left,top,right,down,''"
+                "DirectionsStep": "",//  ---"left,top,right,down,''"
                 "StepType": "start",
             },
             {
                 "StepFrom": "op1",
                 "StepTo": "cond",
                 "CondAction": "",
-                "DirectionsStep":"",
+                "DirectionsStep": "",
                 "StepType": "operation",
             },
             {
                 "StepFrom": "cond",
                 "StepTo": "io",
                 "CondAction": "yes",
-                "DirectionsStep":"",
+                "DirectionsStep": "",
                 "StepType": "condition",
             },
             {
                 "StepFrom": "io",
                 "StepTo": "e",
                 "CondAction": "",
-                "DirectionsStep":"",
+                "DirectionsStep": "",
                 "StepType": "inputoutput",
             },
             {
                 "StepFrom": "cond",
                 "StepTo": "para",
                 "CondAction": "no",
-                "DirectionsStep":"",
+                "DirectionsStep": "",
                 "StepType": "condition",
             },
             {
                 "StepFrom": "para",
                 "StepTo": "sub1",
                 "CondAction": "",
-                "DirectionsStep":"bottom",
+                "DirectionsStep": "bottom",
                 "StepType": "parallel",
             },
             {
                 "StepFrom": "sub1",
                 "StepTo": "op1",
                 "CondAction": "",
-                "DirectionsStep":"right",
+                "DirectionsStep": "right",
                 "StepType": "subroutine",
             },
             {
                 "StepFrom": "para",
                 "StepTo": "op1",
                 "CondAction": "",
-                "DirectionsStep":"top",
+                "DirectionsStep": "top",
                 "StepType": "parallel",
             },
         ],
     };
+    function clickNode(i) {
+        console.log(obj.objList[i]);
+        $('#exampleModal').modal('toggle');
+        $('#img-node').attr("src", obj.objList[i].Description.Image);
+        $('#Title-node').text(obj.objList[i].Description.Title);
+        $('#note-node').text(obj.objList[i].Description.Note);
+    }
     window.onload = function () {
         var btn = document.getElementById("run"),
             cd = document.getElementById("code"),
@@ -203,11 +234,13 @@ para(path2, top)->op1
                     text += obj.objList[i].StepType;
                     text += ': ';
                     text += obj.objList[i].StepName;
-                    if (obj.objList[i].StepLink) {
-                        text += ':>';
-                        text += obj.objList[i].StepLink;
-                        text += '[blank]';
-                    }
+                    text += ':>';
+                    text += 'javascript:clickNode(' + i + ')';
+                    // if (obj.objList[i].StepLink) {
+                    //     text += ':>';
+                    //     text += obj.objList[i].StepLink;
+                    //     text += '[blank]';
+                    // }
                     text += '\n';
                     data += text;
                 }
@@ -275,9 +308,9 @@ para(path2, top)->op1
                 }
             });
 
-            $('[id^=sub1]').click(function () {
-                alert('info here');
-            });
+            // $('[id^=sub1]').click(function () {
+            //     alert('info here');
+            // });
         })();
 
     };
