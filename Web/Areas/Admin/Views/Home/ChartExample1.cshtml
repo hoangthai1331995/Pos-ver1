@@ -36,9 +36,22 @@ para(path2, top)->op1
             <div class="modal-body pt-0 pb-0">
                 <div class="row mt-2">
                     <div class="col-md-12">
-                        <img id="img-node" src="" />
-                        <div>Tiêu đề:<span id="title-node"></span></div>
-                        <div>Ghi chú:<span id="note-node"></span></div>
+                        <div class="media bg-white d-flex my-2">
+                            <div class="media-left media-middle">
+                                <a href="#" id="link-node" target="blank">
+                                    <img class="media-object" id="img-node" src="" alt="">
+                                </a>
+                            </div>
+                            <div class="media-body friend-elipsis">
+                                <div class="f-15 f-bold m-b-5">Tên quy trình: <span id="name-node"></span></div>
+                                <input type="hidden" id="EmployeeIdSearch" value="" />
+                                <div class="text-muted social-designation">Mã quy trình: <span id="id-node"></span></div>
+                                <div class="text-muted social-designation">Người tiếp nhận: <span id="job-node"></span></div>
+                                <div class="text-muted social-designation">Số điện thoại: <span id="phone-node"></span></div>
+                                <div class="text-muted social-designation">Email: <span id="mail-node"></span></div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -52,6 +65,11 @@ para(path2, top)->op1
     .end-element {
         fill: #FFCCFF;
     }
+    .media-object {
+        width: 70px !important;
+        height: 70px !important;
+        border-radius: 100%;
+    }
 </style>
 <script>
     var obj = {
@@ -63,8 +81,13 @@ para(path2, top)->op1
                 "StepLink": "http://www.google.com",
                 "Description": {
                     "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
-                    "Title": "Tiêu đề",
-                    "Note": "Ghi chú"
+                    "Name": "Xử lý lỗi",
+                    "Note": "Ghi chú",
+                    "Id": '32324',
+                    "Phone": '0909022365',
+                    "Job": "Nguyễn Văn A",
+                    "Mail": "hoang@fpt.com.vn",
+                    "Link": "https://www.google.com/",
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "start",
@@ -76,8 +99,13 @@ para(path2, top)->op1
                 "StepLink": "",
                 "Description": {
                     "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
-                    "Title": "Tiêu đề",
-                    "Note": "Ghi chú"
+                    "Name": "Xử lý lỗi",
+                    "Note": "Ghi chú",
+                    "Id": '32324',
+                    "Phone": '0909022365',
+                    "Job": "Nguyễn Văn A",
+                    "Mail": "hoang@fpt.com.vn",
+                    "Link": "https://www.google.com/",
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "end",
@@ -89,8 +117,13 @@ para(path2, top)->op1
                 "StepLink": "",
                 "Description": {
                     "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
-                    "Title": "Tiêu đề",
-                    "Note": "Ghi chú"
+                    "Name": "Xử lý lỗi",
+                    "Note": "Ghi chú",
+                    "Id": '32324',
+                    "Phone": '0909022365',
+                    "Job": "Nguyễn Văn A",
+                    "Mail": "hoang@fpt.com.vn",
+                    "Link": "https://www.google.com/",
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "operation",
@@ -102,8 +135,13 @@ para(path2, top)->op1
                 "StepLink": "",
                 "Description": {
                     "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
-                    "Title": "Tiêu đề",
-                    "Note": "Ghi chú"
+                    "Name": "Xử lý lỗi",
+                    "Note": "Ghi chú",
+                    "Id": '32324',
+                    "Phone": '0909022365',
+                    "Job": "Nguyễn Văn A",
+                    "Mail": "hoang@fpt.com.vn",
+                    "Link": "https://www.google.com/",
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "subroutine",
@@ -115,8 +153,13 @@ para(path2, top)->op1
                 "StepLink": "http://www.google.com",
                 "Description": {
                     "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
-                    "Title": "Tiêu đề",
-                    "Note": "Ghi chú"
+                    "Name": "Xử lý lỗi",
+                    "Note": "Ghi chú",
+                    "Id": '32324',
+                    "Phone": '0909022365',
+                    "Job": "Nguyễn Văn A",
+                    "Mail": "hoang@fpt.com.vn",
+                    "Link": "https://www.google.com/",
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "condition",
@@ -128,8 +171,13 @@ para(path2, top)->op1
                 "StepLink": "",
                 "Description": {
                     "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
-                    "Title": "Tiêu đề",
-                    "Note": "Ghi chú"
+                    "Name": "Xử lý lỗi",
+                    "Note": "Ghi chú",
+                    "Id": '32324',
+                    "Phone": '0909022365',
+                    "Job": "Nguyễn Văn A",
+                    "Mail": "hoang@fpt.com.vn",
+                    "Link": "https://www.google.com/",
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "inputoutput",
@@ -141,8 +189,13 @@ para(path2, top)->op1
                 "StepLink": "",
                 "Description": {
                     "Image": "/Content/Templates/GuruTemplate/assets/images/fpt.png",
-                    "Title": "Tiêu đề",
-                    "Note": "Ghi chú"
+                    "Name": "Xử lý lỗi",
+                    "Note": "Ghi chú",
+                    "Id": '32324',
+                    "Phone": '0909022365',
+                    "Job": "Nguyễn Văn A",
+                    "Mail": "hoang@fpt.com.vn",
+                    "Link": "https://www.google.com/",
                 },
                 "DescriptionViewType": "Toolltip",
                 "StepType": "parallel",
@@ -212,8 +265,12 @@ para(path2, top)->op1
         console.log(obj.objList[i]);
         $('#exampleModal').modal('toggle');
         $('#img-node').attr("src", obj.objList[i].Description.Image);
-        $('#Title-node').text(obj.objList[i].Description.Title);
-        $('#note-node').text(obj.objList[i].Description.Note);
+        $('#name-node').text(obj.objList[i].Description.Name);
+        $('#id-node').text(obj.objList[i].Description.Id);
+        $('#phone-node').text(obj.objList[i].Description.Phone);
+        $('#job-node').text(obj.objList[i].Description.Job);
+        $('#mail-node').text(obj.objList[i].Description.Mail);
+        $("#link-node").attr("href", obj.objList[i].Description.Link);
     }
     window.onload = function () {
         var btn = document.getElementById("run"),
