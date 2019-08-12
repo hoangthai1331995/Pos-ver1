@@ -33,30 +33,35 @@
         </div>
     </div>
 </div>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.0/raphael-min.js"></script>
-<script src="http://flowchart.js.org/flowchart-latest.js"></script>
-<script>
-    function viewChart(chartView) {
-        if (chartView == "ChartExample1") {
-            $.ajax({
-                type: "GET",
-                url: "/Admin/Home/ChartExample1",
-                data: "",
-                success: function (response) {
-                    $('#ChartExample1').html(response);
-                }
-            });
-        } else if (chartView == "ChartExample2") {
-            $.ajax({
-                type: "GET",
-                url: "/Admin/Home/ChartExample2",
-                data: "",
-                success: function (response) {
-                    $('#ChartExample2').html(response);
-                }
-            });
-        }
+@section scripts {
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.0/raphael-min.js"></script>
+    <script src="http://flowchart.js.org/flowchart-latest.js"></script>
+    <script>
+        $(document).ready(function () {
 
-    }
-    viewChart("ChartExample1");
-</script>
+            function viewChart(chartView) {
+                if (chartView == "ChartExample1") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Admin/Home/ChartExample1",
+                        data: "",
+                        success: function (response) {
+                            $('#ChartExample1').html(response);
+                        }
+                    });
+                } else if (chartView == "ChartExample2") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Admin/Home/ChartExample2",
+                        data: "",
+                        success: function (response) {
+                            $('#ChartExample2').html(response);
+                        }
+                    });
+                }
+
+            }
+            viewChart("ChartExample1");
+        });
+    </script>
+}
