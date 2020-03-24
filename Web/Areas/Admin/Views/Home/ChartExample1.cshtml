@@ -69,7 +69,24 @@ para(path2, top)->op1
     .start-element {
         fill: #0516ff;
     }
-
+    .info {
+        fill: blue;
+    }
+    .success {
+        fill: green;
+    }
+    .success-t {
+        fill: red;
+    }
+    .cancel {
+        fill: purple;
+    }
+    .danger {
+        fill: red;
+    }
+    .warning {
+        fill: yellow;
+    }
     .media-object {
         width: 70px !important;
         height: 70px !important;
@@ -80,6 +97,7 @@ para(path2, top)->op1
     var obj = {
         objList: [
             {
+                "Status": "1",
                 "StepCode": "st",
                 "StepName": "Bắt đầu",
                 "StepColor": "Primary",
@@ -98,6 +116,7 @@ para(path2, top)->op1
                 "StepType": "start",
             },
             {
+                "Status": "2",
                 "StepCode": "e",
                 "StepName": "Kết thúc",
                 "StepColor": "",
@@ -116,6 +135,7 @@ para(path2, top)->op1
                 "StepType": "end",
             },
             {
+                "Status": "3",
                 "StepCode": "op1",
                 "StepName": "My Operation",
                 "StepColor": "",
@@ -134,6 +154,7 @@ para(path2, top)->op1
                 "StepType": "operation",
             },
             {
+                "Status": "4",
                 "StepCode": "sub1",
                 "StepName": "My Subroutine",
                 "StepColor": "",
@@ -152,6 +173,7 @@ para(path2, top)->op1
                 "StepType": "subroutine",
             },
             {
+                "Status": "5",
                 "StepCode": "cond",
                 "StepName": "Yes or No?",
                 "StepColor": "",
@@ -170,6 +192,7 @@ para(path2, top)->op1
                 "StepType": "condition",
             },
             {
+                "Status": "1",
                 "StepCode": "io",
                 "StepName": "catch something...",
                 "StepColor": "",
@@ -188,6 +211,7 @@ para(path2, top)->op1
                 "StepType": "inputoutput",
             },
             {
+                "Status": "2",
                 "StepCode": "para",
                 "StepName": "parallel tasks",
                 "StepColor": "",
@@ -369,7 +393,22 @@ para(path2, top)->op1
                 'rejected': { 'fill': '#C45879', 'font-size': 12, 'yes-text': 'n/a', 'no-text': 'REJECTED' }
             }
         });
-
+        for (var i = 0; i < obj.objList.length; i++) {
+            if (obj.objList[i] && obj.objList[i].Status) {
+                if (obj.objList[i].Status == "1") {
+                    $('#' + obj.objList[i].StepCode).addClass('info');
+                } else if (obj.objList[i].Status == "2") {
+                    $('#' + obj.objList[i].StepCode).addClass('success');
+                    $('#' + obj.objList[i].StepCode + 't').addClass('success-t');
+                } else if (obj.objList[i].Status == "3") {
+                    $('#' + obj.objList[i].StepCode).addClass('cancel');
+                } else if (obj.objList[i].Status == "4") {
+                    $('#' + obj.objList[i].StepCode).addClass('danger');
+                } else if (obj.objList[i].Status == "5") {
+                    $('#' + obj.objList[i].StepCode).addClass('warning');
+                }
+            }
+        }
         // $('[id^=sub1]').click(function () {
         //     alert('info here');
         // });
