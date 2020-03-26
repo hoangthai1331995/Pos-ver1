@@ -16,6 +16,10 @@ namespace Admin.Controllers
         {
             return View();
         }
+        public ActionResult Educate()
+        {
+            return View();
+        }
         public ActionResult Chart()
         {
             return View();

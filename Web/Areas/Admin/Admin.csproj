@@ -193,6 +193,7 @@
     <Content Include="Views\Home\Chart.cshtml" />
     <Content Include="Views\Home\ChartExample1.cshtml" />
     <Content Include="Views\Home\ChartExample2.cshtml" />
+    <Content Include="Views\Home\Educate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

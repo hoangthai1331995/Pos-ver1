@@ -445,7 +445,7 @@
                     </nav>
                     <div class="pcoded-content">
                         @* p-0 *@
-                        <div class="pcoded-inner-content">
+                        <div class="pcoded-inner-content p-0">
 
                             <!-- Main-body start -->
                             <div id="main-content">
@@ -515,23 +515,27 @@
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
-
-        $('.datepicker').datetimepicker({
-            format: 'HH:mm DD/MM/YYYY',
-            locale: 'vi',
-            icons: {
-                time: "fa fa-clock-o",
-                date: "fa fa-calendar",
-            }
-        });
-        $('.datepicker2').datetimepicker({
-            format: 'DD/MM/YYYY',
-            locale: 'vi',
-            icons: {
-                time: "fa fa-clock-o",
-                date: "fa fa-calendar",
-            }
-        });
+        if ($('.datepicker').length) {
+            $('.datepicker').datetimepicker({
+                format: 'HH:mm DD/MM/YYYY',
+                locale: 'vi',
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                }
+            });
+        }
+        if ($('.datepicker2').length) {
+            $('.datepicker2').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'vi',
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                }
+            });
+        }
+        
         function notify(from, align, icon, type, animIn, animOut, title, message) {
             $.growl({
                 icon: icon,
