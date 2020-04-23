@@ -1,8 +1,50 @@
 <style>
-    
+    .showEducateBoxLeft {
+        z-index: 70;
+        display: none; 
+    }
+    .showEducateBoxRight {
+        z-index: 70;
+        display: none; 
+    }
 </style>
-<div id="touchsurface">Swipe Me</div>
-
+<div>
+    <div id="EducateBoxMiddle" class="d-flex justify-content-center">
+        <a class="mobile-options displayEducateBoxLeft pointer">
+                            
+            <i class="ti-comments"></i>
+            <span class="badge bg-c-green"></span>
+        </a>
+        <a class="mobile-options displayEducateBoxRight pointer">
+                                    
+            <i class="ti-comments"></i>
+            <span class="badge bg-c-yellow"></span>
+        </a>
+    </div>
+    <div class="users p-chat-user showEducateBoxLeft" style="right: unset;">
+        <div class="had-container">
+            <div class="card card_main p-fixed users-main">
+                <div id="EducateBoxLeft" class="user-box">
+                    <div class="main-friend-list">
+                        Box left
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="users p-chat-user showEducateBoxRight" style="border-left: unset;">
+        <div class="had-container">
+            <div class="card card_main p-fixed users-main">
+                <div id="EducateBoxRight" class="user-box">
+                    <div class="main-friend-list">
+                        Box right
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Content/Templates/GuruTemplate/assets/js/swipe.js"></script>
 <script>
     // if (my_val == 'right') {
     //     var options = {
@@ -14,58 +56,64 @@
     //     };
     // }
     // $('.showChat').toggle('slide', options, 500);
-    var isShowBoxLeft = false,
-    isShowBoxRight = false;
-    window.addEventListener('load', function(){
-
-        var touchsurface = document.getElementsByTagName("BODY")[0],
-        startX,
-        startY,
-        dist,
-        threshold = 150, //required min distance traveled to be considered swipe
-        allowedTime = 200, // maximum time allowed to travel that distance
-        elapsedTime,
-        startTime
-
-        function handleswipe(isrightswipe){
-            console.log(123, isrightswipe)
-            if (isrightswipe) {
-                console.log(123, 'right');
-                var options = {
-                    direction: 'right'
-                };
-            } else{
-                console.log(123, 'left');
-                var options = {
-                    direction: 'left'
-                };
+    var showEducateBoxLeft = false;
+    var showEducateBoxRight = false;
+    $("body").onSwipe(function(results) {
+        if (results.right == true) {
+            if (showEducateBoxLeft == true) {
+                return;
+            } else if (showEducateBoxRight == true) {
+                // showEducateBoxRight = false;
+                toggleBoxRight();
+            } else {
+                // showEducateBoxLeft = true;
+                toggleBoxLeft();
             }
-             $('.showChat').toggle('slide', options, 500);
+            
+        } else if (results.left == true) {
+            if (showEducateBoxRight == true) {
+                return;
+            } else if (showEducateBoxLeft == true) {
+                // showEducateBoxLeft = false;
+                toggleBoxLeft();
+            } else {
+                // showEducateBoxRight = true;
+                toggleBoxRight();
+            }
         }
-
-        touchsurface.addEventListener('touchstart', function(e){
-            // touchsurface.innerHTML = 'false rồi'
-            var touchobj = e.changedTouches[0]
-            dist = 0
-            startX = touchobj.pageX
-            startY = touchobj.pageY
-        startTime = new Date().getTime() // record time when finger first makes contact with surface
-        e.preventDefault()
-        }, false)
-
-        touchsurface.addEventListener('touchmove', function(e){
-        e.preventDefault() // prevent scrolling when inside DIV
-        }, false)
-
-        touchsurface.addEventListener('touchend', function(e){
-            var touchobj = e.changedTouches[0]
-        dist = touchobj.pageX - startX // get total dist traveled by finger while in contact with surface
-        elapsedTime = new Date().getTime() - startTime // get time elapsed
-        // check that elapsed time is within specified, horizontal dist traveled >= threshold, and vertical dist traveled <= 100
-        var swiperightBol = (elapsedTime <= allowedTime && dist >= threshold && Math.abs(touchobj.pageY - startY) <= 100)
-        handleswipe(swiperightBol)
-        e.preventDefault()
-        }, false)
-
-    }, false) // end window.onload
+    });
+    $('.displayEducateBoxLeft').on('click', function() {
+        toggleBoxLeft();
+    });
+    $('.displayEducateBoxRight').on('click', function() {
+        toggleBoxRight();
+    });
+    function toggleBoxRight() {
+        showEducateBoxRight = !showEducateBoxRight;
+        var options = {
+            direction: 'right'
+        };
+        if (window && window.innerWidth && window.innerWidth > 768) {
+            if (showEducateBoxRight) {
+                $('#EducateBoxMiddle').css('margin-right', 300);
+            } else {
+                $('#EducateBoxMiddle').css('margin-right', 0);
+            }
+        }
+        $('.showEducateBoxRight').toggle('slide', options, 500);
+    }
+    function toggleBoxLeft() {
+        showEducateBoxLeft = !showEducateBoxLeft;
+        var options = {
+            direction: 'left'
+        };
+        if (window && window.innerWidth && window.innerWidth > 768) {
+            if (showEducateBoxLeft) {
+                $('#EducateBoxMiddle').css('margin-left', 300);
+            } else {
+                $('#EducateBoxMiddle').css('margin-left', 0);
+            }
+        }
+        $('.showEducateBoxLeft').toggle('slide', options, 500);
+    }
 </script>
